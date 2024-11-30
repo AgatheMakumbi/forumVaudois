@@ -1,7 +1,7 @@
-#Forum Vaudois
+Forum Vaudois
 ================
 
-##Commment installer et faire tourner ce programme sur votre machine
+Commment installer et faire tourner ce programme sur votre machine
 
 Getting Started
 ---------------
