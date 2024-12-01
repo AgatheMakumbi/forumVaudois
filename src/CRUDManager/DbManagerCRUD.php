@@ -4,6 +4,13 @@ namespace M521\ForumVaudois\CRUDManager;
 
 use M521\ForumVaudois\CRUDManager\I_ApiCRUD;
 use M521\ForumVaudois\Entity\Personne;
+use M521\ForumVaudois\Entity\Category;
+use M521\ForumVaudois\Entity\City;
+use M521\ForumVaudois\Entity\Comment;
+use M521\ForumVaudois\Entity\Post;
+use M521\ForumVaudois\Entity\User;
+use M521\ForumVaudois\Entity\Media;
+use M521\ForumVaudois\Entity\Like;
 
 class DbManagerCRUD implements I_ApiCRUD {
 
