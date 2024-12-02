@@ -37,7 +37,6 @@ echo "<br>";
             </div>
 
             <button type="submit" class="submit-btn">se connecter</button>
-             
             <a href="/ForumVaudois/pages/signUp.php" class="btn btn-signup" style="margin-top: 50px;">Sign Up</a>
         </form>
     </main>

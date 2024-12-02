@@ -63,7 +63,7 @@ class User {
         $this->id = $id;
         $this->isBlocked = $isBlocked;
         $this->isVerified = $isVerified;
-        $this->test = "Personne fonctionne :-)";
+        $this->test = "User fonctionne :-)";
     }
 
     /**
