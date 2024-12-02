@@ -19,9 +19,13 @@ class DbManagerCRUD implements I_ApiCRUD {
 
     public function __construct() {
         $this->test = "DbManagerCRUD fonctionne :-)";
-        //$config = parse_ini_file('config' . DIRECTORY_SEPARATOR . 'db.ini', true);
+        //$config = parse_ini_file('/Applications/MAMP/htdocs/ForumVaudois/config/db.ini');
         $config = parse_ini_file(__DIR__ . '/../../config/db.ini');
-        $dsn = $config['dsn'];
+        // Détermine la base path dynamiquement pour le fichier db.ini
+        $basePath = dirname(__DIR__, 2); // Remonte de 2 niveaux pour atteindre la racine
+        $dsn = str_replace('%BASE_PATH%', $basePath, $config['dsn']);
+
+        //$dsn = $config['dsn'];
         $username = $config['username'];
         $password = $config['password'];
         

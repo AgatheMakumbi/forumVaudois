@@ -3,11 +3,16 @@ require_once '../vendor/autoload.php';
 
 
 use M521\ForumVaudois\Entity\Personne;
+use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 
 $personne = new Personne("agathe", "makumbi", "makagathe7@gmail.com", "0779553315", "shitIsReal");
 echo $personne;
 echo "<br>";
 
+$db = new DbManagerCRUD();
+echo $db;
+echo "<br>";
+echo $db->showCategories();
 
 
 ?>

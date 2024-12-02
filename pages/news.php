@@ -5,13 +5,18 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Personne;
 
 $personne = new Personne("agathe", "makumbi", "makagathe7@gmail.com", "0779553315", "shitIsReal");
-echo $personne;
+echo $personne->__toString2();  
 echo "<br>";
 
 $db = new DbManagerCRUD();
 echo $db;
 echo "<br>";
-echo $db->__toString();
+echo $db->showCategories();
+
+$dbPath = '/Applications/MAMP/htdocs/ForumVaudois/db/forumvaudois.db';
+if (!file_exists($dbPath)) {
+    die("Database file not found: " . $dbPath);
+}
 
 ?>
 <!DOCTYPE html>

@@ -13,6 +13,11 @@ echo $db;
 echo "<br>";
 echo $db->showCategories();
 
+$dbPath = '/Applications/MAMP/htdocs/ForumVaudois/db/forumvaudois.db';
+if (!file_exists($dbPath)) {
+    die("Database file not found: " . $dbPath);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
