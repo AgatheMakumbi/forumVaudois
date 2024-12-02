@@ -34,7 +34,7 @@ class DbManagerCRUD implements I_ApiCRUD {
             die("Problème de connection à la base de données");
         }
     }
-
+    /* Methode crée pour un test*/
     public function showCategories(): string
     {
         $query = "SELECT * FROM Category";

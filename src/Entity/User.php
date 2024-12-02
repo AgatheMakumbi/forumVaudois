@@ -173,6 +173,9 @@ class User {
             $this->isBlocked = $newActivityStatus;
         }
     }
+    public function generateToken(): string{
+        return bin2hex(random_bytes(16));
+    }
 
 
     /**
