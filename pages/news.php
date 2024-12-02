@@ -11,7 +11,7 @@ echo "<br>";
 $db = new DbManagerCRUD();
 echo $db;
 echo "<br>";
-echo $db->showCategories();
+echo $db->__toString();
 
 ?>
 <!DOCTYPE html>

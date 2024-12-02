@@ -128,6 +128,24 @@ class DbManagerCRUD implements I_ApiCRUD {
         return $this->test;
         }
 
-    
+    /* ------------------- Methothes du User ------------------- */  
+    public function signUp(string $username, string $email, string $password): bool{
+        return true;
+    }
+    public function login(string $email, string $password): bool{
+        return true;
+    }
+    public function createUser(User $user): bool{
+        return true;
+    }
+    public function updateProfil(string $username, string $email, string $password): bool{
+        return true;
+    }
+    public function deleteUser(int $id): bool{
+        return true;
+    }
+    public function verifyUser(string $email, string $token, bool $isVerified): bool{
+        return true;
+    } 
 
 }
