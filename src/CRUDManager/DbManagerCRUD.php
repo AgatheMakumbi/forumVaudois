@@ -142,7 +142,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'isVerified' => $user->getIsVerified(),
 
         ];
-        $sql = "INSERT INTO users (username, email, password, token, isVerified, isBlocked) VALUES "
+        $sql = "INSERT INTO user (username, email, password, token, isVerified, isBlocked) VALUES "
             . "(:username,:email, :password, :token, :isVerified, :isBlocked)";
         $this->db->prepare($sql)->execute($datas);
         $result = $this->db->lastInsertId() !== null;
@@ -151,7 +151,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function existsUsername(string $username): bool
     {
-        $sql = "SELECT COUNT(*) FROM users WHERE username = :username";
+        $sql = "SELECT COUNT(*) FROM user WHERE username = :username";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('username', $username, \PDO::PARAM_STR);
         $stmt->execute();
@@ -160,7 +160,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function existsEmail(string $email): bool
     {
-        $sql = "SELECT COUNT(*) FROM users WHERE email = :email";
+        $sql = "SELECT COUNT(*) FROM user WHERE email = :email";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('email', $email, \PDO::PARAM_STR);
         $stmt->execute();
@@ -181,7 +181,7 @@ class DbManagerCRUD implements I_ApiCRUD
         // Si l'utilisateur n'est pas encore vérifié, on le vérifie
         $isVerified = !$user->getIsVerified();
 
-        $sql = "UPDATE users SET isVerified = :isVerified WHERE id = :id";
+        $sql = "UPDATE user SET isVerified = :isVerified WHERE id = :id";
         $stmt = $this->db->prepare($sql);
 
         // on lie les valeurs de la bd aux valeurs de l'objet User
@@ -202,7 +202,7 @@ class DbManagerCRUD implements I_ApiCRUD
     }
     public function existsToken(string $token): bool
     {
-        $sql = "SELECT COUNT(*) FROM users WHERE token = :token";
+        $sql = "SELECT COUNT(*) FROM user WHERE token = :token";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('token', $token, \PDO::PARAM_STR);
         $stmt->execute();
@@ -211,7 +211,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function getUserByToken(string $token): User
     {
-        $sql = "SELECT * FROM users WHERE token = :token";
+        $sql = "SELECT * FROM user WHERE token = :token";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('token', $token, \PDO::PARAM_STR);
         $stmt->execute();

@@ -1,6 +1,10 @@
 <?php
 require_once '../vendor/autoload.php';
 
+use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
+use M521\ForumVaudois\Entity\User;
+
+$dbManager = new DbManagerCRUD();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,14 +20,16 @@ require_once '../vendor/autoload.php';
     <?php include '../components/header.php' ?>
     <?php
     // Token validation
+    if (isset($_GET['token']) && !empty($_GET['token'])) {
     $UserToken = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_SPECIAL_CHARS);
+    }
     if ($UserToken && preg_match("/^[a-zA-Z0-9_-]+$/", $UserToken)) {
         // Find corresonding User
-        $user = $dbUser->getUserByToken($UserToken);
+        $user = $$dbManager->getUserByToken($UserToken);
 
         if ($user !==null) {
             // User Validation
-            if ($dbUser->verifyUser($user['id'], $user)) {
+            if ($dbManager->verifyUser($user['id'], $user)) {
                 $confirmationMessage = "Votre compte est bien confirmé !";
             } else {
                 $confirmationMessage ="Une erreur est survenue lors de la confirmation. Veuillez réessayer plus tard.";
