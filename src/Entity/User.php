@@ -23,7 +23,7 @@ class User {
     private $password;
     private $isBlocked;
     private $isVerified;
-    private $test;
+    
 
 
     /**
@@ -38,159 +38,137 @@ class User {
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
     public function __construct(string $username, string $email, string $password, string $token , int $id = 0, bool $isBlocked =false,bool $isVerified=false ) {
-        if (empty($username)) {
-            throw new Exception('Il faut un username');
-        }
-        if (empty($email)) {
-            throw new Exception('Il faut un email');
-        }
-        if (empty($password)) {
-            throw new Exception('Il faut un password');
-        }
-        if (empty($token)) {
-            throw new Exception('Il faut un token');
-            
-        }
-        if ($id < 0) {
-            throw new Exception('Il faut un id valide');
-        }
-        
-
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
-        $this->$token = $token;
-        $this->id = $id;
-        $this->isBlocked = $isBlocked;
-        $this->isVerified = $isVerified;
-        $this->test = "User fonctionne :-)";
+        $this->setId($id);
+        $this->setUsername($username);
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setToken($token);
+        $this->setIsBlocked($isBlocked);
+        $this->setIsVerified($isVerified);
     }
 
     /**
-     * Rend l'id de la personne
-     * @return int L'identifiant
+     * Vérifie l'id et le définit
+     * @return User  (pour le chainage)
      */
+    public function setId(int $id): self {
+        if ($id >= 0) {
+            $this->id = $id;
+        } else {
+            throw new Exception('L\'id doit être supérieur ou égal à 0.');
+        }
+        return $this;
+    }
+
     public function getId(): int {
         return $this->id;
     }
 
     /**
-     * Defini l'id du post
-      *@param int $id Identifiant de la personne
+     * Définit le username
+     * @return User  (pour le chainage)
      */
-    public function setId($id): void {
-        if ($id > 0) {
-            $this->id = $id;
+    public function setUsername(string $username): self {
+        if (preg_match("/^[A-ZÇÉÈÊËÀÂÎÏÔÙÛ]{1}([a-zçéèêëàâîïôùû]+){1,19}$/", $username)) {
+            $this->username = $username;
+        } else {
+            throw new Exception('Le username doit commencer par une majuscule suivie de 1 à 19 lettres minuscules.');
         }
+        return $this;
     }
 
-    /**
-     * Rend le username
-     * @return string Username
-     */
     public function getUsername(): string {
         return $this->username;
     }
-    
-    /**
-     * Permet de changer le username
-     * @param string $newUsername Nouveau username
-     */
-    public function setUsername(string $newUsername) {
-        if (!empty($newUsername)) { // à valider avec une fonction validateUsername avec des regex etc
-            $this->username = $newUsername;
-        }
-    }
 
     /**
-     * Rend le token 
-     * @return string Le token
+     * Définit l'email
+     * @return User  (pour le chainage)
      */
-    public function getToken(): string {
-        return $this->token;
-    }
-    
-    /**
-     * Permet de définir le token
-     * @param string $newToken nouveau Token
-     */
-    public function changeNom(string $newToken) {
-        if (!empty($newToken)) {
-            $this->token = $newToken;
+    public function setEmail(string $email): self {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->email = $email;
+        } else {
+            throw new Exception('L\'adresse email n\'est pas valide.');
         }
+        return $this;
     }
 
-    /**
-     * Rend l'email
-     * @return string L'email
-     */
     public function getEmail(): string {
         return $this->email;
     }
-    
+
+
     /**
-     * Permet de changer l'email
-     * @param string $newEmail Nouveau email
+     * Définit le token
+     * @return User  (pour le chainage)
      */
-    public function setEmail(string $newEmail) {
-        if (!empty($newEmail)) {
-            $this->email = $newEmail;
+    public function setToken(string $token): self {
+        if (!empty($token) && preg_match("/^[a-zA-Z0-9_-]+$/", $token)) {
+            $this->token = $token;
+        } else {
+            throw new Exception('Le token doit être une chaîne alphanumérique non vide (caractères - et _ autorisés).');
         }
+        return $this;
+    }
+
+    public function getToken(): string {
+        return $this->token;
+    }
+
+
+    /**
+     * Définit le mot de passe
+     * @return User  (pour le chainage)
+     */
+    public function setPassword(string $password): self {
+        if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/", $password)) {
+            $this->password = password_hash($password, PASSWORD_DEFAULT);
+        } else {
+            throw new Exception('Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, et une longueur de 8 à 20 caractères.');
+        }
+        return $this;
+    }
+
+    public function getPassword(): string {
+        return $this->password;
     }
 
     /**
-     * Rend le status de verification du compte
-     * @return string $isVerified
+     * Définit si l'utilisateur est vérifié
+     * @return User  (pour le chainage)
      */
+    public function setIsVerified(bool $isVerified): self {
+        $this->isVerified = $isVerified;
+        return $this;
+    }
+
     public function getIsVerified(): bool {
         return $this->isVerified;
     }
-    
-    /**
-     * Permet de changer le status de verification
-     * @param string $newVerificationStatus Nouveau email
-     */
-    public function setIsVerified(bool $newVerificationStatus) {
-        if (!empty($newVerificationStatus)) {
-            $this->isVerified = $newVerificationStatus;
-        }
-    }
 
     /**
-     * Rend le status d'activité du compte
-     * @return string $isBlocked
+     * Définit si l'utilisateur est bloqué
+     * @return User  (pour le chainage)
      */
+    public function setIsBlocked(bool $isBlocked): self {
+        $this->isBlocked = $isBlocked;
+        return $this;
+    }
+
     public function getIsBlocked(): bool {
         return $this->isBlocked;
     }
     
-    /**
-     * Permet de changer le d'activité du compte
-     * @param string $newVerificationStatus Nouveau email
-     */
-    public function setIsBlocked(bool $newActivityStatus) {
-        if (!empty($newActivityStatus)) {
-            $this->isBlocked = $newActivityStatus;
-        }
-    }
-    public function generateToken(): string{
-        return bin2hex(random_bytes(16));
-    }
-
 
     /**
-     * Rend une description complète de la personne
-     * @return string La description de la personne
+     * Affiche une description de l'utilisateur
      */
-    public function __toString2(): string {
-        return $this->id . " " .
-                $this->username . " " .
-                $this->email . " " .
-                $this->isBlocked . " " .
-                $this->isVerified . '<br>';
+    public function __toString(): string {
+        return "Utilisateur : [ID: {$this->id}, Username: {$this->username}, Email: {$this->email}, Bloqué: " 
+            . ($this->isBlocked ? 'Oui' : 'Non') 
+            . ", Vérifié: " 
+            . ($this->isVerified ? 'Oui' : 'Non') . "]";
     }
-    public function __toString() {
-        return $this->test;
-        }
 
 }

@@ -15,24 +15,28 @@ interface I_ApiCRUD
 {
     // methodes du prof
 
-    public function ajoutePersonne(Personne $personne): int;
+    //public function ajoutePersonne(Personne $personne): int;
     public function rendPersonnes(string $nom): array;
     public function modifiePersonne(int $id, Personne $personne): bool;
     public function supprimePersonne(int $id): bool;
     //public function supprimeTable():bool;
-    public function existePersonne(string $noTel, string $email): bool;
+    //public function existePersonne(string $noTel, string $email): bool;
+
+    //methodes DB_MANAGER
+    public function generateToken(): string;
 
     //methodes User - Agathe
-    public function signUp(string $username, string $email, string $password): bool;
-    public function login(string $email, string $password): bool;
     public function createUser(User $user): bool;
     public function updateProfil(string $username, string $email, string $password): bool;
     public function deleteUser(int $id): bool;
-    public function verifyUser(string $email, string $token, bool $isVerified): bool;
+    public function verifyUser(int $id, User $user ): bool;
+    public function existsUsername(string $username): bool;
+    public function existsEmail(string $email): bool;
+    public function existsToken(string $token): bool;
     /*public function blockUser(int $id, $isBlocked): bool;
     public function getUser(int $id): User;
-    public function getUserByUsername(string $username): User;
-    public function getUserByToken(string $token): User;*/
+    public function getUserByUsername(string $username): User;*/
+    public function getUserByToken(string $token): User;
     
 
     //methodes Post - Michael
