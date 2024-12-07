@@ -23,9 +23,25 @@ voici une commande qui pourrait vous aider:
 git clone git@github.com:AgatheMakumbi/forumVaudois.git
 ```
 
-2. Cd dans /ForumVaudois et Installer symfony mailer
+2. Installer Mailhog avec Homebrew pour MacOs
 ```bash
-composer require symfony/mailer
+brew update && brew install mailhog
+```
+
+Ou pour Debian / Ubuntu Go < v1.18
+```bash
+sudo apt-get -y install golang-go
+go get github.com/mailhog/MailHog
+```
+
+3. Lancer Mailhog avant de lancer le programme ForumVaudois
+**Pour MacOs **
+```bash
+mailhog
+```
+**Pour Windows **
+```bash
+/path/to/MailHog
 ```
 
 3. Pour utiliser les methodes des classes, veuillez ajouter le require_once pour le autoload.php ainsi que le use pour la classe dont vous vouez utiliser les methodes.

@@ -12,5 +12,7 @@
             "name": "m521"
         }
     ],
-    "require": {}
+    "require": {
+        "symfony/mailer": "^7.2"
+    }
 }
