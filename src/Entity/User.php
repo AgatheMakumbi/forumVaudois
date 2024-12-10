@@ -4,17 +4,18 @@ namespace M521\ForumVaudois\Entity;
 
 use \Exception;
 
+class User {
 /**
  * Represente une personne ayant :
  *  - un id 
  *  - un username
  *  - un email
- *  - un token
  * - un mot de passe (hash)
+ * - une date de création
  * - un champs isBlocked
  * - un champs isVerified
+ * - un token
  */
-class User {
 
     private $id;
     private $username;
@@ -27,12 +28,11 @@ class User {
 
 
     /**
-     * Construit une nouvelle personne avec les paramètres spécifiés
+     * Construit un nouveau user avec les paramètres spécifiés
      * @param string $username Username
      * @param string $email Email
      * @param string $password Mot de passe
-     * @param string $token Token
-     * @param int $id Identifiant de la personne
+     * @param int $id Identifiant de la personne (0 sauf si spécifié, puisqu'il sera ainsi généré par la DB)
      * @param bool $isBlocked Si la personne est bloquée
      * @param bool $isVerified Si la personne est vérifiée
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
@@ -171,4 +171,6 @@ class User {
             . ($this->isVerified ? 'Oui' : 'Non') . "]";
     }
 
+
+    
 }
