@@ -8,32 +8,32 @@ use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\City;
 use M521\ForumVaudois\Entity\Category;
 
-
-
 /**
- * Represente une personne ayant :
- * - id: int
- * - title: string
- * - text: string
- * - budget: float
- * - address: string
- * - author: User
- * - city : City
- * - category : Category
- * - created_at: DateTime
- * - last_update : DateTime
+ * Represente un post ayant :
+ * - un id: int
+ * - un titre: string
+ * - un contenu texte : string
+ * - un budget : int
+ * - (optionnel) une addresse: string
+ * - un auteur : User
+ * - une ville : City
+ * - une catégorie : Category
+ * - une date de créaiton : DateTime
+ * - une date de dernière modification : DateTime
  */
-class Post {
-    private $id;
-    private $title;
-    private $text;
-    private $budget;
-    private $address;
-    private $author;
-    private $city;
-    private $category;
-    private $created_at;
-    private $last_update;
+
+class Post
+{
+    private int $id;
+    private string $title;
+    private string $text;
+    private int $budget;
+    private string $address;
+    private int $author;
+    private int $city;
+    private int $category;
+    private DateTime $created_at;
+    private DateTime $last_update;
 
 
     /**
@@ -41,197 +41,153 @@ class Post {
      * @param int $id Identifiant du post
      * @param string $title titre du post
      * @param string $text contenu textuel du post
-     * @param float $budget 
+     * @param int $budget 
      * @param string $address adresse
-     * @param User $author auteur du post
-     * @param City $city ville
-     * @param Category $category categorie du post
+     * @param int $author id de l'auteur du post
+     * @param int $city id de la ville
+     * @param int $category id de la catégorie du post
      * @param \DateTime $created_at date de creation du post
      * @param \DateTime $last_update date de derniere mise a jour
-     * 
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
-    public function __construct(int $id, string $title, string $text , float $budget ,string $address =" " , User $author , City $city, Category $category,DateTime $created_at,DateTime $last_update ) {
-        if (empty($title)) {
-            throw new Exception('Il faut un titre');
-        }
-        if (empty($text)) {
-            throw new Exception('Il faut un text');
-        }
-        if (empty($category)) {
-            throw new Exception('Il faut une categorie');
-        }
-        if (empty($author)) {
-            throw new Exception('Il faut un auteur du post');
-        }
-        if (empty($city)) {
-            throw new Exception('Il faut une ville');
-        }if ($id < 0) {
-            throw new Exception('Il faut un id valide');
-        }
-        
-        
-
+    public function __construct(string $title, string $text, int $budget, int $author, int $city, int $category, DateTime $created_at, DateTime $last_update, int $id = 0, string $address = "")
+    {
         $this->id = $id;
-        $this->title = $title;
-        $this->text = $text;
-        $this->$budget = $budget;
-        $this->address = $address;
+        $this->setTitle($title);
+        $this->setText($text);
+        $this->setBudget($budget);
+        $this->setAddress($address);
         $this->author = $author;
-        $this->city = $city;
-        $this->category = $category;
-        $this->created_at = $created_at;
+        $this->setCity($city);
+        $this->setCategory($category);
+        $this->created_at = new DateTime('now');
         $this->last_update = $last_update;
-        
     }
 
-    /**
-     * Rend l'id du post
-     * @return int L'identifiant
-     */
-    public function getId(): int {
+    // Rend l'id du post 
+    //@return (int) id
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    /**
-     * Defini l'id du post 
-      *@param int $id Identifiant du post 
-     */
-    public function setId($id): void {
-        if ($id > 0) {
-            $this->id = $id;
+    //Définit le titre 
+    //@param (string) title
+    public function setTitle(string $title): void
+    {
+        $options = "/^.{5,50}$/";
+        if (!preg_match($options, $title)) {
+            throw new Exception('Title must be between 5 and 50 characters.');
         }
+        $this->title = htmlspecialchars($title);
     }
 
-    /**
-     * Rend le titre
-     * @return string title
-     */
-    public function getTitle(): string {
+    //Rend le titre 
+    //@return (string) title 
+    public function getTitle(): string
+    {
         return $this->title;
     }
-    
-    /**
-     * Permet de changer le titre
-     * @param string $newTitle Nouveau titre
-     */
-    public function setTitle(string $newTitle) {
-        if (!empty($newTitle)) { // à valider avec une fonction validateUsername avec des regex etc
-            $this->title = $newTitle;
+
+    //Définit le contenu texte
+    //@param (string) text 
+    public function setText(string $text): void
+    {
+        $options = "/^.{10,}$/";
+        if (!preg_match($options, $text)) {
+            throw new Exception('Text must be at least 10 characters');
         }
+        $this->text = htmlspecialchars($text);
     }
 
-    /**
-     * Rend le text
-     * @return string text
-     */
-    public function getText(): string {
+    //Rend le contenu texte
+    //@return (string) text
+    public function getText(): string
+    {
         return $this->text;
     }
-    
-    /**
-     * Permet de changer le text
-     * @param string $newText Nouveau titre
-     */
-    public function setText(string $newText) {
-        if (!empty($newText)) { // à valider avec une fonction validateUsername avec des regex etc
-            $this->text = $newText;
+
+    //Définit le budget 
+    //@param (int) budget
+    public function setBudget(int $budget)
+    {
+        if ($budget < 0 || $budget > 999000) {
+            throw new Exception('Budget must be a whole number between 0 and 999000');
         }
+        $this->budget = $budget;
     }
 
-    /**
-     * Rend le budget
-     * @return string budget
-     */
-    public function getBudget(): float {
+    //Rend le budget 
+    //@return (int) budget
+    public function getBudget(): int
+    {
         return $this->budget;
     }
-    
-    /**
-     * Permet de changer le budget
-     * @param string $newBudget nouveau budget
-     */
-    public function setBudget(string $newBudget) {
-        if (!empty($newBudget)) { // à valider avec une fonction  avec des regex etc
-            $this->budget = $newBudget;
+
+    //Définit l'adresse
+    //@param (string) address
+    public function setAddress(string $address)
+    {
+        $options = "/^.{5,300}$/";
+        if (!preg_match($options, $address)) {
+            throw new Exception('Address must be between 5 and 300 characters.');
         }
+        $this->address = htmlspecialchars($address);
     }
 
-    /**
-     * Rend l'adresse
-     * @return string adresse
-     */
-    public function getAddress(): string {
-        return $this->address;
+    //Rend l'adresse
+    //@return (string) address
+    public function getAddress(): string
+    {
+        return ($this->address != "") ? $this->address : "No address given";
     }
-    
-    /**
-     * Permet de changer l'adresse
-     * @param string $newAddress Nouvel adresse
-     */
-    public function setAddress(string $newAddress) {
-        if (!empty($newAddress)) { // à valider avec une fonction validateUsername avec des regex etc
-            $this->address = $newAddress;
-        }
-    }
-    /**
-     * Rend l'auteur
-     * @return string author
-     */
-    public function getAuthor(): User {
+
+    //Rend l'id de l'auteur
+    //@return (int) author
+    public function getAuthor(): int
+    {
         return $this->author;
     }
 
-    /**
-     * Rend la ville
-     * @return string city
-     */
-    public function getCity(): City {
+    //Définit l'id de la ville
+    //@param (int) city
+    public function setCity(int $city): void
+    {
+        $this->city = $city;
+    }
+
+    //Rend l'id de la ville
+    //@return (int) city
+    public function getCity(): int
+    {
         return $this->city;
     }
-    
-    /**
-     * Permet de changer la ville
-     * @param string $newCity Nouvel ville
-     */
-    public function setCity(string $newCity) {
-        if (!empty($newCity)) { // à valider avec une fonction  avec des regex etc
-            $this->city = $newCity;
-        }
+
+    //Définit l'id de la catégorie
+    //@param (id) category
+    public function setCategory(int $category): void
+    {
+        $this->category = $category;
     }
 
-    /**
-     * Rend la categorie
-     * @return string categorie
-     */
-    public function getCategory(): Category {
+    //Rend l'id de la catégorie
+    //@return (id) category
+    public function getCategory(): int
+    {
         return $this->category;
     }
-    
-    /**
-     * Permet de changer la categorie
-     * @param string $newCategory Nouvel categorie
-     */
-    public function setCategory(string $newCategory) {
-        if (!empty($newCategory)) { // à valider avec une fonction  avec des regex etc
-            $this->category = $newCategory;
-        }
-    }
 
-    /**
-     * Rend la date de creation
-     * @return \DateTime date de creation
-     */
-    public function getCreatedAt(): DateTime {
+    //Rend la date de création
+    //@return (DateTime) createdAt
+    public function getCreatedAt(): DateTime
+    {
         return $this->created_at;
     }
 
-    /**
-     * Rend la date de modification
-     * @return \DateTime date de modif
-     */
-    public function getLastUpdate(): DateTime {
+    //Rend la date de dernière modification
+    //@return (DateTime) lastUpdate
+    public function getLastUpdate(): DateTime
+    {
         return $this->last_update;
     }
-
 }
