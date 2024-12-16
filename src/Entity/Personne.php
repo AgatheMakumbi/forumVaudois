@@ -169,3 +169,14 @@ class Personne {
         }
 
 }
+public function setEmail(string $email): self {
+    //var_dump($email);
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $this->email = $email;
+    } else {
+        throw new Exception('L\'adresse email n\'est pas valide.');
+    }
+    $this->email = $email;
+
+    return $this;
+}

@@ -43,9 +43,9 @@ class User
         $this->setUsername($username);
         $this->setEmail($email);
         $this->setPassword($password);
+        $this->setToken($token);
         $this->setIsBlocked($isBlocked);
         $this->setIsVerified($isVerified);
-        $this->generateToken($token);
     }
 
     /**
@@ -113,12 +113,6 @@ class User
         }
         $this->email = $email;
 
-
-        // if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        //     $this->email = $email;
-        // } else {
-        //     throw new Exception('L\'adresse email n\'est pas valide.');
-        // }
         return $this;
     }
 
