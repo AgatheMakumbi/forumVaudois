@@ -36,6 +36,7 @@ class DbManagerCRUD implements I_ApiCRUD
             die("Problème de connection à la base de données");
         }
     }
+
     /* Methode crée pour un test*/
     public function showCategories(): string
     {
@@ -238,5 +239,238 @@ class DbManagerCRUD implements I_ApiCRUD
         }
 
         return null;
+    }
+
+    public function createPost(Post $post): bool
+    {
+        $datas = [
+            'title' => $post->getTitle(),
+            'text' => $post->getText(),
+            'budget' => $post->getBudget(),
+            'address' => $post->getAddress(),
+            'author' => $post->getAuthor(),
+            'city' => $post->getCity(),
+            'category' => $post->getCategory(),
+            'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
+            'last_update' => $post->getLastUpdate()->format('Y-m-d H:i:s'),
+        ];
+
+        $sql = "INSERT INTO post (title, text, budget, address, id_user, id_city, id_category, created_at, last_update)
+                VALUES (:title, :text, :budget, :address, :author, :city, :category, :created_at, :last_update)";
+
+        $this->db->prepare($sql)->execute($datas);
+        return $this->db->lastInsertId() !== null;
+    }
+
+    public function showPosts(): array
+    {
+        $sql = "SELECT * FROM post";
+        $stmt = $this->db->query($sql);
+
+        $posts = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $posts[] = new Post(
+                $row['title'],
+                $row['text'],
+                $row['budget'],
+                $row['author'],
+                $row['city'],
+                $row['category'],
+                new DateTime($row['created_at']),
+                new DateTime($row['last_update']),
+                $row['id'],
+                $row['address']
+            );
+        }
+
+        return $posts;
+    }
+
+    public function updatePost(Post $post): bool
+    {
+        $datas = [
+            'id' => $post->getId(),
+            'title' => $post->getTitle(),
+            'text' => $post->getText(),
+            'budget' => $post->getBudget(),
+            'address' => $post->getAddress(),
+            'author' => $post->getAuthor(),
+            'city' => $post->getCity(),
+            'category' => $post->getCategory(),
+            'last_update' => $post->getLastUpdate()->format('Y-m-d H:i:s'),
+        ];
+
+        $sql = "UPDATE post 
+                SET title = :title, text = :text, budget = :budget, address = :address,
+                    author = :author, city = :city, category = :category, last_update = :last_update
+                WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($datas);
+    }
+
+    public function deletePost(int $id): bool
+    {
+        $sql = "DELETE FROM post WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function createComment(Comment $comment): bool
+    {
+        $datas = [
+            'text' => $comment->getText(),
+            'author' => $comment->getAuthor(),
+            'post' => $comment->getPost(),
+            'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
+        ];
+
+        $sql = "INSERT INTO comment (text, author, post, created_at) 
+                VALUES (:text, :author, :post, :created_at)";
+
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($datas);
+    }
+
+    public function showComments(): array
+    {
+        $sql = "SELECT * FROM comment";
+        $stmt = $this->db->query($sql);
+
+        $comments = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment(
+                $row['id'],
+                $row['text'],
+                $row['author'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
+                $row['post']     // Assurez-vous que l'id du post est valide (ou récupérez l'objet Post selon vos besoins)
+            );
+        }
+
+        return $comments;
+    }
+
+    public function updateComment(Comment $comment): bool
+    {
+        $datas = [
+            'id' => $comment->getId(),
+            'text' => $comment->getText(),
+            'author' => $comment->getAuthor(),
+            'post' => $comment->getPost(),
+            'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
+        ];
+
+        $sql = "UPDATE comment 
+                SET text = :text, author = :author, post = :post, created_at = :created_at 
+                WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($datas);
+    }
+
+    public function deleteComment(int $id): bool
+    {
+        $sql = "DELETE FROM comment WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function createLike(Like $like): bool
+    {
+        // Données à insérer dans la base de données
+        $datas = [
+            'author' => $like->getAuthor(),
+            'post' => $like->getPost()
+        ];
+
+        // Requête SQL pour insérer un like dans la base de données
+        $sql = "INSERT INTO likes (author, post) VALUES (:author, :post)";
+        
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+        
+        return $stmt->execute($datas);
+    }
+
+    public function deleteLike(int $id): bool
+    {
+        // Requête SQL pour supprimer un like par son ID
+        $sql = "DELETE FROM likes WHERE id = :id";
+        
+        // Préparation de la requête
+        $stmt = $this->db->prepare($sql);
+        
+        // Lier l'ID et exécuter la requête
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        // Retourne true si la suppression a réussi
+        return $stmt->execute();
+    }
+
+    public function createCity(City $city): bool
+    {
+        // Données à insérer dans la base de données
+        $datas = [
+            'cityName' => $city->getCityName()
+        ];
+
+        // Requête SQL pour insérer une ville dans la base de données
+        $sql = "INSERT INTO cities (cityName) VALUES (:cityName)";
+        
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+        
+        // Retourne true si l'insertion a réussi
+        return $stmt->execute($datas);
+    }
+
+    public function showCities(): array
+    {
+        // Requête SQL pour récupérer toutes les villes
+        $sql = "SELECT * FROM cities";
+        
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        
+        // Récupération de toutes les villes sous forme de tableau d'objets City
+        $cities = $stmt->fetchAll(PDO::FETCH_CLASS, 'M521\\ForumVaudois\\Entity\\City');
+        
+        return $cities;
+    }
+
+    public function updateCity(City $city): bool
+    {
+        // Données à mettre à jour dans la base de données
+        $datas = [
+            'id' => $city->getId(),
+            'cityName' => $city->getCityName()
+        ];
+
+        // Requête SQL pour mettre à jour le nom de la ville
+        $sql = "UPDATE cities SET cityName = :cityName WHERE id = :id";
+        
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+        
+        // Retourne true si la mise à jour a réussi
+        return $stmt->execute($datas);
+    }
+
+    public function deleteCity(int $id): bool
+    {
+        // Requête SQL pour supprimer une ville par son ID
+        $sql = "DELETE FROM cities WHERE id = :id";
+        
+        // Préparation de la requête
+        $stmt = $this->db->prepare($sql);
+        
+        // Lier l'ID et exécuter la requête
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        // Retourne true si la suppression a réussi
+        return $stmt->execute();
     }
 }

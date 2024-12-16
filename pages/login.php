@@ -4,6 +4,10 @@ require_once '../vendor/autoload.php';
 use M521\ForumVaudois\Entity\Personne;
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Exemple de données simulées pour le test
 $personne = new Personne("agathe", "makumbi", "makagathe7@gmail.com", "0779553315", "examplePassword");
 $db = new DbManagerCRUD();

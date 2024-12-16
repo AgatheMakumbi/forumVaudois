@@ -8,42 +8,52 @@ use \Exception;
  * Represente une category :
  * -categoryName: enum {food, activity, nature, culture}
  */
-class Category {
+class Category
+{
 
-    private $categoryName;
-    
+    private int $id;
+    private string $categoryName;
+
     /**
      * Construit une nouvelle category avec les paramètres spécifiés
      * @param string $categoryNmae 
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
-    public function __construct(string $categoryName ) {
-        if (empty($categoryName)) {
-            throw new Exception('Il faut une category');
-        }
-        
-
-        $this->categoryName;
-        
+    public function __construct(string $categoryName, int $id = 0)
+    {
+        $this->id = $id;
+        $this->setCategoryName($categoryName);
     }
-
 
     /**
-     * Rend le nom de la categorie
-     * @return string  nom de la categorie
+     * Rend l'id de la catégorie
+     * @return int L'identifiant
      */
-    public function getCategoryName(): string {
-        return $this->categoryName;
+    public function getId(): int
+    {
+        return $this->id;
     }
-    
+
     /**
      * Permet de changer le  nom de la categorie
      * @param string $categoryName
      * @param string $newCategoryName Nouveau nom de la categorie
      */
-    public function setCityName(string $newCategoryName ) {
-        if (!empty($newCategoryName )) { // à valider avec une fonction validateUsername avec des regex etc
-            $this->categoryName = $newCategoryName ;
+    public function setCategoryName(string $categoryName)
+    {
+        $options = "/^.{1,20}$/";
+        if (!preg_match($options, $categoryName)) {
+            throw new Exception('Name of cateogry must be between 1 and 20 characters.');
         }
+        $this->categoryName = htmlspecialchars($categoryName);
+    }
+
+    /**
+     * Rend le nom de la categorie
+     * @return string  nom de la categorie
+     */
+    public function getCategoryName(): string
+    {
+        return $this->categoryName;
     }
 }

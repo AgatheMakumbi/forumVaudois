@@ -1,10 +1,9 @@
-
-
 <?php
 
 namespace M521\ForumVaudois\Entity;
 
 use \Exception;
+use DateTime;
 
 /**
  * Represente une ville :
@@ -12,11 +11,12 @@ use \Exception;
  * - file_path: string
  * - upload_date: datetime
  */
-class Media {
+class Media
+{
     private $id;
     private $file_path;
     private $upload_date;
-    
+
     /**
      * Construit un nouveau media avec les paramètres spécifiés
      * @param int $id Identifiant du media
@@ -24,54 +24,40 @@ class Media {
      * @param \DateTime $upload_date Date de téléchargement
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
-    public function __construct(int $id=0,string $file_path,\DateTime $upload_date ) {
-        if ($id < 0) {
-            throw new Exception('Il faut un id valide');
-        }
-        if (empty($file_path)) {
-            throw new Exception('Il faut un chemin de fichier valide');
-        }
-        if ($upload_date === null) {
-            throw new Exception('Il faut une date de téléchargement valide');
-        }
-    
-        $this->id = $id;
-        $this->file_path = $file_path;
-        $this->upload_date = $upload_date;
+    public function __construct(string $file_path, DateTime $upload_date, int $id = 0,)
+    {
+        $this->setFilePath($file_path);
+        $this->upload_date = new DateTime(('now'));
     }
+
     /**
-     * Rend l'id du media
-     * @return int L'identifiant
+     * Rend l'id
+     * @return int id
      */
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
     /**
-     * Defini l'id du media
-      *@param int $id Identifiant 
+     * Définit le chemin du media
+     * @param string $filePath 
      */
-    public function setId($id): void {
-        if ($id > 0) {
-            $this->id = $id;
+    public function setFilePath(string $filePath)
+    {
+        $options = "/^.{5,10}$/";
+        if (!preg_match($options, $filePath)) {
+            throw new Exception('Filepath must be between 5 and 10 characters.');
         }
+        $this->file_path = htmlspecialchars($filePath);
     }
 
     /**
      * Rend le chemin du media
-     * @return string  chemin du media
+     * @return string  file_path
      */
-    public function getFilePath(): string {
+    public function getFilePath(): string
+    {
         return $this->file_path;
-    }
-    
-    /**
-     * Permet de changer le  chemin du fichier
-     * @param string $newFilePath Nouveau  chemin du fichier
-     */
-    public function setFilePath(string $newFilePath ) {
-        if (!empty($newFilePath )) { // à valider avec une fonction validateUsername avec des regex etc
-            $this->file_path =  $newFilePath;
-        }
     }
 }
