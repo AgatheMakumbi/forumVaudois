@@ -36,6 +36,7 @@ class DbManagerCRUD implements I_ApiCRUD
             die("Problème de connection à la base de données");
         }
     }
+
     /* Methode crée pour un test*/
     public function showCategories(): string
     {
@@ -247,7 +248,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'last_update' => $post->getLastUpdate()->format('Y-m-d H:i:s'),
         ];
 
-        $sql = "INSERT INTO post (title, text, budget, address, author, city, category, created_at, last_update)
+        $sql = "INSERT INTO post (title, text, budget, address, id_user, id_city, id_category, created_at, last_update)
                 VALUES (:title, :text, :budget, :address, :author, :city, :category, :created_at, :last_update)";
 
         $this->db->prepare($sql)->execute($datas);

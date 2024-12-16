@@ -13,8 +13,6 @@ echo $db;
 echo "<br>";
 echo $db->showCategories();
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

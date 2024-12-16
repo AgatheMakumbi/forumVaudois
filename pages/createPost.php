@@ -5,10 +5,15 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $text = $_POST['post-content'];
-    $city = $_POST['city'];
+    //$city = $_POST['city'];
+    $city = 2;
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
     $authorId = 1; // Exemple : récupérez-le depuis la session utilisateur
@@ -38,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             0,
             $address
         );
-
         // Insérer le post dans la base de données
         $dbManager = new DbManagerCRUD(); // Assurez-vous que DbManager est initialisé correctement
         if ($dbManager->createPost($post)) {
