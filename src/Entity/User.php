@@ -48,19 +48,6 @@ class User
         $this->setIsVerified($isVerified);
     }
 
-    /**
-     * Vérifie l'id et le définit
-     * @return User  (pour le chainage)
-     */
-    // public function setId(int $id): self
-    // {
-    //     if ($id >= 0) {
-    //         $this->id = $id;
-    //     } else {
-    //         throw new Exception('L\'id doit être supérieur ou égal à 0.');
-    //     }
-    //     return $this;
-    // }
 
     /**
      * Rend l'id
@@ -82,12 +69,6 @@ class User
             throw new Exception('Username must be between 5 and 10 characters.');
         }
         $this->username = htmlspecialchars($username);
-
-        // if (preg_match("/^[A-ZÇÉÈÊËÀÂÎÏÔÙÛ]{1}([a-zçéèêëàâîïôùû]+){1,19}$/", $username)) {
-        //     $this->username = $username;
-        // } else {
-        //     throw new Exception('Le username doit commencer par une majuscule suivie de 1 à 19 lettres minuscules.');
-        // }
         return $this;
     }
 
@@ -104,7 +85,8 @@ class User
      * Définit l'email
      * @return User  (pour le chainage)
      */
-    public function setEmail(string $email): self {
+    public function setEmail(string $email): self
+    {
         //var_dump($email);
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = $email;
@@ -125,9 +107,10 @@ class User
      * Définit le mot de passe
      * @return User  (pour le chainage)
      */
-    public function setPassword(string $password): self {
-            $this->password = password_hash($password, PASSWORD_DEFAULT);
-        
+    public function setPassword(string $password): self
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+
         // if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/", $password)) {
         //     $this->password = password_hash($password, PASSWORD_DEFAULT);
         // } else {
@@ -175,20 +158,16 @@ class User
      * Définit le token
      * @return User  (pour le chainage)
      */
-    public function generateToken(): string
-    {
-        return bin2hex(random_bytes(16));
-    }
 
-    // public function setToken(string $token): self
-    // {
-    //     if (!empty($token) && preg_match("/^[a-zA-Z0-9_-]+$/", $token)) {
-    //         $this->token = $token;
-    //     } else {
-    //         throw new Exception('Le token doit être une chaîne alphanumérique non vide (caractères - et _ autorisés).');
-    //     }
-    //     return $this;
-    // }
+    public function setToken(string $token): self
+    {
+        if (!empty($token) && preg_match("/^[a-zA-Z0-9_-]+$/", $token)) {
+            $this->token = $token;
+        } else {
+            throw new Exception('Le token doit être une chaîne alphanumérique non vide (caractères - et _ autorisés).');
+        }
+        return $this;
+    }
 
     public function getToken(): string
     {
