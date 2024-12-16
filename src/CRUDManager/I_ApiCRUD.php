@@ -38,6 +38,7 @@ interface I_ApiCRUD
     public function getUserByUsername(string $username): User;*/
     public function getUserByToken(string $token): int;
     public function getUserById(int $id): ?User;
+    public function loginUser(string $email, string $password): int;
     
 
     //methodes Post - Michael

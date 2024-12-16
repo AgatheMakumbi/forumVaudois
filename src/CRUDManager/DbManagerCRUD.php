@@ -133,7 +133,9 @@ class DbManagerCRUD implements I_ApiCRUD
         return $this->test;
     }
 
-    /* ------------------- Methothes du User ------------------- */
+    // ================================================================
+    //                       METHODES POUR LES USERS
+    // ================================================================
     public function createUser(User $user): bool
     {
         $datas = [
@@ -222,11 +224,14 @@ class DbManagerCRUD implements I_ApiCRUD
         $userData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $userId = null;
         // var_dump($userData);
-        if ($userData) {$userId = $userData[0]["id"];}
+        if ($userData) {
+            $userId = $userData[0]["id"];
+        }
         return $userId;
     }
 
-    public function getUserById(int $id): ?User{
+    public function getUserById(int $id): ?User
+    {
         $sql = "SELECT * FROM user WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('id', $id, \PDO::PARAM_STR);
@@ -247,6 +252,54 @@ class DbManagerCRUD implements I_ApiCRUD
 
         return $user;
     }
+    public function loginUser(string $email, string $password): int
+    {
+
+        try {
+            // Préparer la déclaration SQL pour éviter l'injection SQL
+            $sql = "SELECT * FROM user WHERE email = :email";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Récupérer les données de l'utilisateur
+            $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            // Vérifier si l'utilisateur existe
+            if (!$userData) {
+                error_log("Tentative de connexion avec un email inexistant: " . $email);
+                return 0;
+            }
+
+            // Vérifier le mot de passe
+            if (!password_verify($password, $userData['password'])) {
+                error_log("Échec de connexion avec l'email: " . $email);
+                return 0;
+            }
+
+            // Vérifier si l'utilisateur est vérifié
+            if ($userData['isVerified']!== true) {
+                error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
+                return 0;
+            }
+
+            // Vérifier si l'utilisateur est bloqué
+            if ($userData['isBlocked']) {
+                error_log("Tentative de connexion par un utilisateur bloqué: " . $email);
+                return 0;
+            }
+
+            // Connexion réussie
+            return $userData['id'];
+        } catch (\PDOException $e) {
+            // Enregistrer les éventuelles erreurs de la base de données
+            error_log("Erreur de base de données lors de la connexion: " . $e->getMessage());
+            return 0;
+        }
+    }
+    // ================================================================
+    //                       METHODES POUR LES POSTES
+    // ================================================================
 
     public function createPost(Post $post): bool
     {
@@ -394,10 +447,10 @@ class DbManagerCRUD implements I_ApiCRUD
 
         // Requête SQL pour insérer un like dans la base de données
         $sql = "INSERT INTO likes (author, post) VALUES (:author, :post)";
-        
+
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
-        
+
         return $stmt->execute($datas);
     }
 
@@ -405,13 +458,13 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         // Requête SQL pour supprimer un like par son ID
         $sql = "DELETE FROM likes WHERE id = :id";
-        
+
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);
-        
+
         // Lier l'ID et exécuter la requête
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
-        
+
         // Retourne true si la suppression a réussi
         return $stmt->execute();
     }
@@ -425,10 +478,10 @@ class DbManagerCRUD implements I_ApiCRUD
 
         // Requête SQL pour insérer une ville dans la base de données
         $sql = "INSERT INTO cities (cityName) VALUES (:cityName)";
-        
+
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
-        
+
         // Retourne true si l'insertion a réussi
         return $stmt->execute($datas);
     }
@@ -437,14 +490,14 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         // Requête SQL pour récupérer toutes les villes
         $sql = "SELECT * FROM cities";
-        
+
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        
+
         // Récupération de toutes les villes sous forme de tableau d'objets City
         $cities = $stmt->fetchAll(\PDO::FETCH_CLASS, 'M521\\ForumVaudois\\Entity\\City');
-        
+
         return $cities;
     }
 
@@ -458,10 +511,10 @@ class DbManagerCRUD implements I_ApiCRUD
 
         // Requête SQL pour mettre à jour le nom de la ville
         $sql = "UPDATE cities SET cityName = :cityName WHERE id = :id";
-        
+
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
-        
+
         // Retourne true si la mise à jour a réussi
         return $stmt->execute($datas);
     }
@@ -470,13 +523,13 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         // Requête SQL pour supprimer une ville par son ID
         $sql = "DELETE FROM cities WHERE id = :id";
-        
+
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);
-        
+
         // Lier l'ID et exécuter la requête
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
-        
+
         // Retourne true si la suppression a réussi
         return $stmt->execute();
     }

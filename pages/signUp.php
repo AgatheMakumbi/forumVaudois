@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $validationMessage = "<p style='color: red;'>Une erreur est survenue. Veuillez réessayer.</p>";
             }
         } catch (Exception $e) {
-            $validationMessage = "<p style='color: red;'>Erreur lors de l'envoi de l'e-mail.</p>";
+            $validationMessage = "Erreur lors de l'envoi de l'e-mail.</p>";
         }
     }
 }
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php echo htmlspecialchars($validationMessage); ?>
+    <?php echo $validationMessage; ?>
     <?php include '../components/header.php' ?>
     <main class="main-content">
         <form class="signup-form" action="signup.php" method="POST">

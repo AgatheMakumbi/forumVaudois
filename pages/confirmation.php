@@ -8,7 +8,7 @@ $dbManager = new DbManagerCRUD();
 $confirmationMessage = '';
 $canConnect = false;
 
-// Token validation
+//  validation du Token
 $UserToken = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
@@ -17,13 +17,13 @@ if (!$UserToken) {
 } elseif (!preg_match("/^[a-zA-Z0-9]{32}$/", $UserToken)) {
     $confirmationMessage = "Token invalide.";
 } else {
-    // Find corresponding User
+    // Trouver l'utilisateur correspondant
     $userId = $dbManager->getUserByToken($UserToken);
 
     if ($userId === null) {
         $confirmationMessage = "Lien de confirmation invalide ou expiré.";
     } else {
-        // User Validation
+        // Verification de l'utilisateur
         if ($dbManager->verifyUser($userId)) {
             $confirmationMessage = "Votre compte est bien confirmé !";
             $canConnect = true;

@@ -8,21 +8,39 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//Initialisation
 $db = new DbManagerCRUD();
+$erreurs = ['email' => '', 'password' => ''];
+$password = '';
+$email = '';
 
 // Traitement de la connexion
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
 
-    // Exemple de validation (vous pouvez connecter à une base de données pour authentification)
-    if ($email === $personne->getEmail() && $password === $personne->getPassword()) {
-        echo "Connexion réussie";
-        // Redirection ou chargement de la session utilisateur
-    } else {
-        $error = "Email ou mot de passe incorrect.";
+    // Récupération des entrées utilisateur
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    //Vérification si l'utilisateur est déjà connecté
+    if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
+        header('Location: index.php');
+    }else{
+        // Vérification des champs
+        if (empty($email) || empty($password)) {
+            $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
+            $erreurs['password'] = 'Veuillez renseigner votre mot de passe';
+        }else{
+            // Tentative de connextion
+            $userId = $db->loginUser($email,$password);
+            if ($userId) {
+                $_SESSION["isConnected"] = true;
+                $_SESSION["id"] = $userId;
+                header('Location: index.php');
+            }
+        }
     }
-}
+    
+}   
 ?>
 
 <!DOCTYPE html>
@@ -69,12 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="yayan@durian.cc" required>
+                    <input type="email" id="email" name="email" placeholder="yayan@durian.cc" required autocomplete="username" maxlength="50" value="<?php echo htmlspecialchars($email); ?>">
+                    <p style="color:red;"><?php echo $erreurs['email']; ?></p>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="********" required>
+                    <input type="password" id="password" name="password" placeholder="********" minlength="8" maxlength="20" autocomplete="current-password" required value="<?php echo htmlspecialchars($password); ?>" required>
+                    <p style="color:red;"><?php echo $erreurs['password']; ?></p>
                 </div>
 
                 <div class="form-links">
