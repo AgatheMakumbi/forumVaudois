@@ -8,8 +8,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Exemple de données simulées pour le test
-$personne = new Personne("agathe", "makumbi", "makagathe7@gmail.com", "0779553315", "examplePassword");
 $db = new DbManagerCRUD();
 
 // Traitement de la connexion
@@ -62,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="right-side">
-            <form class="login-form" action="login.php" method="POST">
+            <form class="login-form, signup-form"  action="login.php" method="POST">
                 <h2 class="form-title">Login</h2>
 
                 <?php if (!empty($error)) : ?>
@@ -83,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="#" class="forgot-password">Forgot Password?</a>
                 </div>
 
-                <button type="submit" class="btn-submit">Login</button>
+                <button type="submit" class="submit-btn">Login</button>
 
                 <p class="signup-text">Don't have an account? <a href="/ForumVaudois/pages/signUp.php">Create one!</a></p>
             </form>

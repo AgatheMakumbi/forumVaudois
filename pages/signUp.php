@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php echo $validationMessage; ?>
+    <?php echo htmlspecialchars($validationMessage); ?>
     <?php include '../components/header.php' ?>
     <main class="main-content">
         <form class="signup-form" action="signup.php" method="POST">
