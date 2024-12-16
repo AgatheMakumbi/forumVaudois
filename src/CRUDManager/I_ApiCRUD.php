@@ -40,20 +40,20 @@ interface I_ApiCRUD
     
 
     //methodes Post - Michael
-    /*public function createPost(Post $post): bool;
+    public function createPost(Post $post): bool;
     public function showPosts(): array;
     public function updatePost(Post $post): bool;
-    public function deletePost(int $id): bool;*/
+    public function deletePost(int $id): bool;
 
     //methodes Commentaire - Michael
-    /*public function createComment(Comment $comment): bool;
+    public function createComment(Comment $comment): bool;
     public function showComments(): array;
     public function updateComment(Comment $comment): bool;
-    public function deleteComment(int $id): bool;*/
+    public function deleteComment(int $id): bool;
 
     //methodes Like - Michael
-    /* public function createLike(Like $like): bool;
-    public function deleteLike(int $id): bool; */
+    public function createLike(Like $like): bool;
+    public function deleteLike(int $id): bool;
 
     //methodes Category - Joanah
    /*  public function createCategory(Category $category): bool;
@@ -62,10 +62,10 @@ interface I_ApiCRUD
     public function deleteCategory(int $id): bool; */
 
     // methodes City - Michael
-    /* public function createCity(City $city): bool;
+    public function createCity(City $city): bool;
     public function showCities(): array;
     public function updateCity(City $city): bool;
-    public function deleteCity(int $id): bool; */
+    public function deleteCity(int $id): bool;
 
     //methodes media - Agathe
     /* public function uploadMedia(Media $media): bool;
