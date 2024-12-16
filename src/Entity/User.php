@@ -86,6 +86,7 @@ class User {
      * @return User  (pour le chainage)
      */
     public function setEmail(string $email): self {
+        //var_dump($email);
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = $email;
         } else {
@@ -122,10 +123,11 @@ class User {
      * @return User  (pour le chainage)
      */
     public function setPassword(string $password): self {
-        if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/", $password)) {
+        var_dump($password);
+        if ($password<=20 && $password>= 8) {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         } else {
-            throw new Exception('Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, et une longueur de 8 à 20 caractères.');
+            throw new Exception('Le mot de passe doit avoir une longueur de 8 à 20 caractères.');
         }
         return $this;
     }

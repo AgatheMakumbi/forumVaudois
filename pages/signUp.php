@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newUser = new User($username, $email, $password, $UserToken);
 
             if ($dbManager->createUser($newUser)) {
-                $confirmationLink = "http://localhost/:8888/ForumVaudois/pages/confirmation.php?token=" . urlencode($UserToken);
+                $confirmationLink = "http://localhost/ForumVaudois/pages/confirmation.php?token=" . urlencode($UserToken);
 
                 $transport = Transport::fromDsn('smtp://localhost:1025');
                 $mailer = new Mailer($transport);
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="lucamartin@gmail.com" autocomplete="username" maxlength="20" required value="<?php echo htmlspecialchars($email); ?>">
+                <input type="email" id="email" name="email" placeholder="lucamartin@gmail.com" autocomplete="username" maxlength="50" required value="<?php echo htmlspecialchars($email); ?>">
                 <p style="color:red;"><?php echo $erreurs['email']; ?></p>
             </div>
 

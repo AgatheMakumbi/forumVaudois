@@ -136,7 +136,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $datas = [
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
-            'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
+            'password' => $user->getPassword(),
             'token' => $user->getToken(),
             'isBlocked' => $user->getIsBlocked(),
             'isVerified' => $user->getIsVerified(),
@@ -176,8 +176,9 @@ class DbManagerCRUD implements I_ApiCRUD
         return true;
     }
 
-    public function verifyUser(int $id, User $user): bool
+    public function verifyUser(int $id): bool
     {
+
         // Si l'utilisateur n'est pas encore vérifié, on le vérifie
         $isVerified = !$user->getIsVerified();
 
@@ -209,27 +210,33 @@ class DbManagerCRUD implements I_ApiCRUD
         return $stmt->fetchColumn() > 0;
     }
 
-    public function getUserByToken(string $token): User
+    public function getUserByToken(string $token): int
     {
         $sql = "SELECT * FROM user WHERE token = :token";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('token', $token, \PDO::PARAM_STR);
         $stmt->execute();
         $userData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $userId = null;
+        var_dump($userData);
+        if ($userData) {$userId = $userData[0]["id"];}
+        return $userId;
+    }
+
+    public function getUserById(int $id): ?User{
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id', $id, \PDO::PARAM_STR);
+        $stmt->execute();
+        $userData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $user = null;
         if ($userData) {
-
             $user = new User(
-                $userData["username"],
-                $userData["password"],
-                $userData["email"],
-                $userData["token"],
-                $userData["id"],
-                $userData["isVerified"],
-                $userData["isBlocked"]
-
-            );
+                
+            )
+            $userData[0]["id"];
         }
-        return $user;
+
+        return null;
     }
 }

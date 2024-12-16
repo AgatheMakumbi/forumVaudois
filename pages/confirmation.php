@@ -5,6 +5,33 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
 
 $dbManager = new DbManagerCRUD();
+$confirmationMessage = '';
+$canConnect = false;
+
+// Token validation
+$UserToken = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_SPECIAL_CHARS);
+
+
+if (!$UserToken) {
+    $confirmationMessage = "Token manquant. Veuillez vérifier le lien envoyé par e-mail.";
+} elseif (!preg_match("/^[a-zA-Z0-9]{32}$/", $UserToken)) {
+    $confirmationMessage = "Token invalide.";
+} else {
+    // Find corresponding User
+    $userId = $dbManager->getUserByToken($UserToken);
+
+    if ($userId === null) {
+        $confirmationMessage = "Lien de confirmation invalide ou expiré.";
+    } else {
+        // User Validation
+        if ($dbManager->verifyUser($userId)) {
+            $confirmationMessage = "Votre compte est bien confirmé !";
+            $canConnect = true;
+        } else {
+            $confirmationMessage = "Erreur lors de la confirmation. Veuillez réessayer.";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,33 +45,18 @@ $dbManager = new DbManagerCRUD();
 
 <body>
     <?php include '../components/header.php' ?>
-    <?php
-    // Token validation
-    if (isset($_GET['token']) && !empty($_GET['token'])) {
-    $UserToken = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_SPECIAL_CHARS);
-    }
-    if ($UserToken && preg_match("/^[a-zA-Z0-9_-]+$/", $UserToken)) {
-        // Find corresonding User
-        $user = $$dbManager->getUserByToken($UserToken);
-
-        if ($user !==null) {
-            // User Validation
-            if ($dbManager->verifyUser($user['id'], $user)) {
-                $confirmationMessage = "Votre compte est bien confirmé !";
-            } else {
-                $confirmationMessage ="Une erreur est survenue lors de la confirmation. Veuillez réessayer plus tard.";
-            }
-        } else {
-            $confirmationMessage = "Lien de confirmation invalide ou expiré.";
-        }
-    } else {
-        $confirmationMessage = "Token non valide ou absent. Veuillez vérifier le lien envoyé par e-mail.";
-    }
-    ?>
+    
     <main class="main-content">
-        <h1 class="welcome-text"><? $confirmationMessage ?></h1>
-        <p class="subtitle">Découvrez notre plateforme et rejoignez notre communauté grandissante. Connectez-vous pour accéder à tout le contenu </p>
-        <button class="submit-btn"><a href="/ForumVaudois/pages/login.php">Se connecter</a></button>
+    <h1 class="welcome-text"><?php echo htmlspecialchars($confirmationMessage) ?></h1>
+        
+        <?php if ($canConnect): ?>
+            <p class="subtitle">Découvrez notre plateforme et rejoignez notre communauté.</p>
+            <button class="submit-btn"><a href="/ForumVaudois/pages/login.php">Se connecter</a></button>
+        <?php else: ?>
+            <p class="subtitle">Vous rencontrez des difficultés ?</p>
+            <button ><a href="/ForumVaudois/pages/signUp.php" class="btn btn-login">Réessayer l'inscription</a></button>
+            
+        <?php endif; ?> 
 
     </main>
 

@@ -29,14 +29,15 @@ interface I_ApiCRUD
     public function createUser(User $user): bool;
     public function updateProfil(string $username, string $email, string $password): bool;
     public function deleteUser(int $id): bool;
-    public function verifyUser(int $id, User $user ): bool;
+    public function verifyUser(int $id ): bool;
     public function existsUsername(string $username): bool;
     public function existsEmail(string $email): bool;
     public function existsToken(string $token): bool;
     /*public function blockUser(int $id, $isBlocked): bool;
     public function getUser(int $id): User;
     public function getUserByUsername(string $username): User;*/
-    public function getUserByToken(string $token): User;
+    public function getUserByToken(string $token): int;
+    public function getUserById(int $id): ?User;
     
 
     //methodes Post - Michael

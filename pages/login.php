@@ -32,7 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login</title>
 </head>
 <body>
+<!-- svp ne pas enlever le inlude pour la nav bar svp (Agathe) -->
+<?php include '../components/header.php'?>
+
 <main class="main-content">
+    
     <div class="login-container">
         <div class="left-side">
             <img src="../assets/images/logo.png" alt="Forum Vaudois Logo" class="logo">
