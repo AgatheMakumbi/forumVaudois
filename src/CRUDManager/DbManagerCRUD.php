@@ -11,6 +11,8 @@ use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Media;
 use M521\ForumVaudois\Entity\Like;
+use \DateTime;
+
 
 class DbManagerCRUD implements I_ApiCRUD
 {
@@ -179,7 +181,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function verifyUser(int $id): bool
     {
-
+        $user = DbManagerCRUD::getUserById($id);
         // Si l'utilisateur n'est pas encore vérifié, on le vérifie
         $isVerified = !$user->getIsVerified();
 
@@ -219,7 +221,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt->execute();
         $userData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $userId = null;
-        var_dump($userData);
+        // var_dump($userData);
         if ($userData) {$userId = $userData[0]["id"];}
         return $userId;
     }
@@ -233,12 +235,17 @@ class DbManagerCRUD implements I_ApiCRUD
         $user = null;
         if ($userData) {
             $user = new User(
-                
-            )
-            $userData[0]["id"];
+                $userData[0]["username"],
+                $userData[0]["email"],
+                $userData[0]["password"],
+                $userData[0]["token"],
+                $userData[0]["id"],
+                $userData[0]["isBlocked"],
+                $userData[0]["isVerified"]
+            );
         }
 
-        return null;
+        return $user;
     }
 
     public function createPost(Post $post): bool
@@ -268,7 +275,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt = $this->db->query($sql);
 
         $posts = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $posts[] = new Post(
                 $row['title'],
                 $row['text'],
@@ -313,7 +320,7 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         $sql = "DELETE FROM post WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
     }
 
@@ -339,7 +346,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt = $this->db->query($sql);
 
         $comments = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $comments[] = new Comment(
                 $row['id'],
                 $row['text'],
@@ -373,7 +380,7 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         $sql = "DELETE FROM comment WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
     }
 
@@ -403,7 +410,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt = $this->db->prepare($sql);
         
         // Lier l'ID et exécuter la requête
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         
         // Retourne true si la suppression a réussi
         return $stmt->execute();
@@ -436,7 +443,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt->execute();
         
         // Récupération de toutes les villes sous forme de tableau d'objets City
-        $cities = $stmt->fetchAll(PDO::FETCH_CLASS, 'M521\\ForumVaudois\\Entity\\City');
+        $cities = $stmt->fetchAll(\PDO::FETCH_CLASS, 'M521\\ForumVaudois\\Entity\\City');
         
         return $cities;
     }
@@ -468,7 +475,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt = $this->db->prepare($sql);
         
         // Lier l'ID et exécuter la requête
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         
         // Retourne true si la suppression a réussi
         return $stmt->execute();

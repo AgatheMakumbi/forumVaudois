@@ -104,19 +104,12 @@ class User
      * Définit l'email
      * @return User  (pour le chainage)
      */
-<<<<<<< HEAD
     public function setEmail(string $email): self {
         //var_dump($email);
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = $email;
         } else {
             throw new Exception('L\'adresse email n\'est pas valide.');
-=======
-    public function setEmail(string $email): self
-    {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception('Invalid email address');
->>>>>>> df9dcfd8b2873726cf3a4b3b5d9e7c4b3d84480c
         }
         $this->email = $email;
 
@@ -138,24 +131,9 @@ class User
      * Définit le mot de passe
      * @return User  (pour le chainage)
      */
-<<<<<<< HEAD
     public function setPassword(string $password): self {
-        var_dump($password);
-        if ($password<=20 && $password>= 8) {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
-        } else {
-            throw new Exception('Le mot de passe doit avoir une longueur de 8 à 20 caractères.');
-=======
-    public function setPassword(string $password): self
-    {
-        $options = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d)(?=.*?[\W_])[a-zA-Z\d\W_]{8,}$/";
-
-        if (!preg_match($options, $password)) {
-            throw new Exception('Password must be at least 8 characters long, include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character. ');
->>>>>>> df9dcfd8b2873726cf3a4b3b5d9e7c4b3d84480c
-        }
-        $this->password = $password;
-
+        
         // if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/", $password)) {
         //     $this->password = password_hash($password, PASSWORD_DEFAULT);
         // } else {
