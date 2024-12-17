@@ -29,7 +29,7 @@ interface I_ApiCRUD
     public function createUser(User $user): bool;
     public function updateProfil(string $username, string $email, string $password): bool;
     public function deleteUser(int $id): bool;
-    public function verifyUser(int $id ): bool;
+    public function verifyUser(int $id): bool;
     public function existsUsername(string $username): bool;
     public function existsEmail(string $email): bool;
     public function existsToken(string $token): bool;
@@ -39,7 +39,7 @@ interface I_ApiCRUD
     public function getUserByToken(string $token): int;
     public function getUserById(int $id): ?User;
     public function loginUser(string $email, string $password): int;
-    
+
 
     //methodes Post - Michael
     public function createPost(Post $post): bool;
@@ -58,10 +58,10 @@ interface I_ApiCRUD
     public function deleteLike(int $id): bool;
 
     //methodes Category - Joanah
-   /*  public function createCategory(Category $category): bool;
-    public function showCategories(): string;
+    public function createCategory(Category $category): bool;
+    public function showCategories(): array;
     public function updateCategory(Category $category): bool;
-    public function deleteCategory(int $id): bool; */
+    public function deleteCategory(int $id): bool;
 
     // methodes City - Michael
     public function createCity(City $city): bool;

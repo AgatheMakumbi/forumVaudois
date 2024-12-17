@@ -40,18 +40,18 @@ class DbManagerCRUD implements I_ApiCRUD
     }
 
     /* Methode crée pour un test*/
-    public function showCategories(): string
-    {
-        $query = "SELECT * FROM Category";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        $categories = $stmt->fetchAll();
-        $result = "";
-        foreach ($categories as $categorie) {
-            $result .= $categorie['category_name'] . "\n";
-        }
-        return $result;
-    }
+    // public function showCategories(): string
+    // {
+    //     $query = "SELECT * FROM Category";
+    //     $stmt = $this->db->prepare($query);
+    //     $stmt->execute();
+    //     $categories = $stmt->fetchAll();
+    //     $result = "";
+    //     foreach ($categories as $categorie) {
+    //         $result .= $categorie['category_name'] . "\n";
+    //     }
+    //     return $result;
+    // }
 
     /*public function ajoutePersonne(Personne $personne): int {
         $datas = [
@@ -278,7 +278,7 @@ class DbManagerCRUD implements I_ApiCRUD
             }
 
             // Vérifier si l'utilisateur est vérifié
-            if ($userData['isVerified']!== true) {
+            if ($userData['isVerified'] !== true) {
                 error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
                 return 0;
             }
@@ -298,7 +298,7 @@ class DbManagerCRUD implements I_ApiCRUD
         }
     }
     // ================================================================
-    //                       METHODES POUR LES POSTES
+    //                       METHODES POUR LES POSTS
     // ================================================================
 
     public function createPost(Post $post): bool
@@ -469,6 +469,10 @@ class DbManagerCRUD implements I_ApiCRUD
         return $stmt->execute();
     }
 
+    // ================================================================
+    //                       METHODES POUR LES CITY
+    // ================================================================
+
     public function createCity(City $city): bool
     {
         // Données à insérer dans la base de données
@@ -523,6 +527,75 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         // Requête SQL pour supprimer une ville par son ID
         $sql = "DELETE FROM cities WHERE id = :id";
+
+        // Préparation de la requête
+        $stmt = $this->db->prepare($sql);
+
+        // Lier l'ID et exécuter la requête
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+        // Retourne true si la suppression a réussi
+        return $stmt->execute();
+    }
+
+    // ================================================================
+    //                       METHODES POUR LES CATEGORY
+    // ================================================================
+
+    public function createCategory(Category $category): bool
+    {
+        // Données à insérer dans la base de données
+        $datas = [
+            'cityName' => $category->getCategoryName()
+        ];
+
+        // Requête SQL pour insérer une catégorie dans la base de données
+        $sql = "INSERT INTO category (categoryName) VALUES (:categoryName)";
+
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+
+        // Retourne true si l'insertion a réussi
+        return $stmt->execute($datas);
+    }
+
+    public function showCategories(): array
+    {
+        // Requête SQL pour récupérer toutes les villes
+        $sql = "SELECT * FROM category";
+
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        // Récupération de toutes les catégories sous forme de tableau d'objets City
+        $cities = $stmt->fetchAll(\PDO::FETCH_CLASS, 'M521\\ForumVaudois\\Entity\\Category');
+
+        return $cities;
+    }
+
+    public function updateCategory(Category $category): bool
+    {
+        // Données à mettre à jour dans la base de données
+        $datas = [
+            'id' => $category->getId(),
+            'categoryName' => $category->getCategoryName()
+        ];
+
+        // Requête SQL pour mettre à jour le nom de la catégorie
+        $sql = "UPDATE category SET categoryName = :categoryName WHERE id = :id";
+
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+
+        // Retourne true si la mise à jour a réussi
+        return $stmt->execute($datas);
+    }
+
+    public function deleteCategory(int $id): bool
+    {
+        // Requête SQL pour supprimer une catégorie par son ID
+        $sql = "DELETE FROM category WHERE id = :id";
 
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);
