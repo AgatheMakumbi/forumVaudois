@@ -32,6 +32,7 @@ echo $db->showCategories();
         <p class="subtitle">Découvrez notre plateforme et rejoignez notre communauté grandissante. Connectez-vous ou inscrivez-vous pour accéder à tout le contenu exclusif.</p>
 
     </main>
+    <?php include './components/footer.php' ?>
 </body>
 
 </html>
