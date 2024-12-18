@@ -1,195 +1,223 @@
 /* Reset et styles globaux */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header et Navigation */
 .header {
-    background-color: #ffffff;
-    padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #ffffff;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
 .nav-buttons {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-login {
-    background-color: #4CAF50;
-    color: white;
+  background-color: #4caf50;
+  color: white;
 }
 
 .btn-signup {
-    background-color: #2196F3;
-    color: white;
+  background-color: #2196f3;
+  color: white;
 }
 
 .btn-news {
-    background-color: #9C27B0;
-    color: white;
+  background-color: #9c27b0;
+  color: white;
 }
 
 .btn-logout {
-    background-color: #e16c2c;
-    color: white;
+  background-color: #e16c2c;
+  color: white;
 }
 
 /* Main content */
 .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
 /* Styles pour la page d'accueil */
 .welcome-text {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 1.5rem;
-    text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 2rem;
-    max-width: 600px;
-    text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  text-align: center;
 }
 
 /* Styles pour les formulaires */
 .signup-form {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
 }
 
 .form-title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .form-group {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
 }
 
 .form-group input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
 .form-group input:focus {
-    outline: none;
-    border-color: #2196F3;
+  outline: none;
+  border-color: #2196f3;
 }
 
 .submit-btn {
-    width: 100%;
-    padding: 1rem;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  width: 100%;
+  padding: 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .submit-btn:hover {
-    background-color: #1976D2;
+  background-color: #1976d2;
 }
 
 /* Messages d'erreur et de succès */
 .alert {
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    width: 100%;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .alert-success {
-    background-color: #dff0d8;
-    color: #3c763d;
-    border: 1px solid #d6e9c6;
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
 }
 
 .alert-error {
-    background-color: #f2dede;
-    color: #a94442;
-    border: 1px solid #ebccd1;
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
 }
 
 /* Media Queries */
 @media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-        gap: 1rem;
-    }
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-    .nav-buttons {
-        flex-direction: column;
-        width: 100%;
-    }
+  .nav-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
 
-    .btn {
-        width: 100%;
-        text-align: center;
-    }
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
 
-    .signup-form {
-        padding: 1rem;
-    }
+  .signup-form {
+    padding: 1rem;
+  }
+  /* Footer styles */
+  footer {
+    background-color: #15a64f;
+    color: white;
+    padding: 20px;
+  }
+
+  footer h4 {
+    margin-bottom: 1rem;
+  }
+
+  footer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  footer ul li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  footer p {
+    margin-bottom: 0.5rem;
+  }
+
+  footer .text-center {
+    text-align: center;
+  }
 }
