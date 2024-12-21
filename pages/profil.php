@@ -11,7 +11,6 @@ $posts = [
     new Post(2, "Deuxième post", "Voici le contenu du deuxième post.", 0, "Adresse", $loggedUser, new M521\ForumVaudois\Entity\City(), new M521\ForumVaudois\Entity\Category(), new DateTime(), new DateTime()),
     new Post(3, "Troisième post", "Encore un autre post.", 0, "Adresse", $loggedUser, new M521\ForumVaudois\Entity\City(), new M521\ForumVaudois\Entity\Category(), new DateTime(), new DateTime()),
 ];
-
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +24,7 @@ $posts = [
 </head>
 
 <body>
+    <?php include '../components/header.php'; ?>
     <a href="/ForumVaudois/pages/logout.php" class="btn btn-logout">Logout</a>
     <main class="main-content">
         <!-- Profil de l'utilisateur -->
@@ -38,7 +38,7 @@ $posts = [
             </div>
         </section>
 
-        <!-- Historique des postes -->
+        <!-- Historique des posts -->
         <section class="posts-history">
             <h2>Mes posts</h2>
             <?php if (!empty($posts)) : ?>
@@ -58,43 +58,8 @@ $posts = [
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="info">
-                <h3>Information</h3>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </div>
-            <div class="company">
-                <h3>Company</h3>
-                <p>Adresse : Av. des Sports 20, 1401 Yverdon-les-Bains</p>
-                <p>Téléphone : <a href="tel:+41245577600">024 557 76 00</a></p>
-            </div>
-            <div class="contact-form">
-                <form action="#" method="post">
-                    <label for="name">Nom</label>
-                    <input type="text" id="name" name="name" placeholder="Nom" required>
-
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-
-                    <label for="phone">Téléphone</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Téléphone" required>
-
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Message" required></textarea>
-
-                    <button type="submit">Envoyer</button>
-                </form>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>Copyright 2024 HEIG-VD ProgServ2</p>
-        </div>
-    </footer>
+    <!-- Footer Inclusion -->
+    <?php include '../components/footer.php'; ?>
 </body>
 
 </html>
