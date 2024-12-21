@@ -54,7 +54,7 @@
         <div class="member">
             <div class="photo"></div>
             <p>Mayor Joanah</p>
-            <p class="role">Expert en Base de Données</p>
+            <p class="role">Experte en Base de Données</p>
         </div>
     </div>
 </section>
