@@ -1,16 +1,18 @@
 <footer>
     <div class="footer-content">
         <div class="info">
-            <h3>Information</h3>
+            <h3>Liens Utiles</h3>
             <ul>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Support</a></li>
+                <li><a href="/ForumVaudois/pages/news.php">Voir les Posts</a></li>
+                <li><a href="/ForumVaudois/pages/createPost.php">Créer un Post</a></li>
+                <li><a href="/ForumVaudois/pages/about.php">À Propos</a></li>
             </ul>
         </div>
         <div class="company">
-            <h3>Company</h3>
+            <h3>Contact</h3>
             <p>Adresse : Av. des Sports 20, 1401 Yverdon-les-Bains</p>
             <p>Téléphone : <a href="tel:+41245577600">024 557 76 00</a></p>
+            <p>Email : <a href="mailto:contact@forumvaudois.ch">contact@forumvaudois.ch</a></p>
         </div>
         <div class="contact-form">
             <form action="#" method="post">
@@ -20,9 +22,6 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>
 
-                <label for="phone">Téléphone</label>
-                <input type="tel" id="phone" name="phone" placeholder="Téléphone" required>
-
                 <label for="message">Message</label>
                 <textarea id="message" name="message" placeholder="Message" required></textarea>
 
@@ -31,6 +30,6 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>Copyright 2024 HEIG-VD ProgServ2</p>
+        <p>&copy; 2024 Forum Vaudois - HEIG-VD ProgServ2</p>
     </div>
 </footer>
