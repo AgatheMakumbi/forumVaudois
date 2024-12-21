@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = $_POST['addresse'] ?? "";
     $authorId = 1; // Exemple : récupérez-le depuis la session utilisateur
     $category = 1; // Exemple : attribuez une catégorie par défaut
+    $city = 2;
 
     // Gestion des fichiers
     $imagePath = null;

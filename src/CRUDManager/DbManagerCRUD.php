@@ -252,6 +252,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
         return $user;
     }
+
     public function loginUser(string $email, string $password): int
     {
 
@@ -322,6 +323,31 @@ class DbManagerCRUD implements I_ApiCRUD
         return $this->db->lastInsertId() !== null;
     }
 
+    public function getPostsByCategory(int $id_category): array
+    {
+        $sql = "SELECT * FROM Post WHERE id_category = :id_category";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_category', $id_category, \PDO::PARAM_INT);
+        $stmt->execute();
+        $posts = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $posts[] = new Post(
+                $row['title'],
+                $row['text'],
+                $row['budget'],
+                $row['id_user'],
+                $row['id_city'],
+                $row['id_category'],
+                new DateTime($row['created_at']),
+                new DateTime($row['last_update']),
+                $row['id'],
+                $row['address']
+            );
+        }
+
+        return $posts;
+    }
+
     public function showPosts(): array
     {
         $sql = "SELECT * FROM post";
@@ -344,6 +370,32 @@ class DbManagerCRUD implements I_ApiCRUD
         }
 
         return $posts;
+    }
+
+    public function getPostById(int $id): ?Post
+    {
+        $sql = "SELECT * FROM Post WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+        $postData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $post = null;
+        if ($postData) {
+            $post = new Post(
+                $postData[0]['title'],
+                $postData[0]['text'],
+                $postData[0]['budget'],
+                $postData[0]['id_user'],
+                $postData[0]['id_city'],
+                $postData[0]['id_category'],
+                new DateTime($postData[0]['created_at']),
+                new DateTime($postData[0]['last_update']),
+                $postData[0]['id'],
+                $postData[0]['address']             
+            );
+        }
+
+        return $post;
     }
 
     public function updatePost(Post $post): bool
@@ -386,11 +438,29 @@ class DbManagerCRUD implements I_ApiCRUD
             'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
         ];
 
-        $sql = "INSERT INTO comment (text, author, post, created_at) 
+        $sql = "INSERT INTO comment (text, id_user, id_post, created_at) 
                 VALUES (:text, :author, :post, :created_at)";
 
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($datas);
+    }
+
+    public function getCommentsById(int $id_post): array
+    {
+        $sql = "SELECT * FROM Comment WHERE id_post = :id_post";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
+        $stmt->execute();
+        $comments = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment(
+                $row['text'],
+                $row['id_user'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
+                $row['id_post']
+            );
+        }
+
+        return $comments;
     }
 
     public function showComments(): array
@@ -446,12 +516,29 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour insérer un like dans la base de données
-        $sql = "INSERT INTO likes (author, post) VALUES (:author, :post)";
+        $sql = "INSERT INTO like (id_user, id_post) VALUES (:author, :post)";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute($datas);
+    }
+
+    public function getLikesById(int $id_post): array
+    {
+        $sql = "SELECT * FROM Like WHERE id_post = :id_post";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
+        $stmt->execute();
+        $likes = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $likes[] = new Like(
+                $row['id_user'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
+                $row['id_post']
+            );
+        }
+
+        return $likes;
     }
 
     public function deleteLike(int $id): bool

@@ -32,7 +32,7 @@ class Comment
      * @param Post $post Post auquel le commentaire est associé
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
-    public function __construct(int $id = 0, string $text, int $author, int $post)
+    public function __construct(string $text, int $author, int $post, int $id = 0)
     {
         $this->id = $id;
         $this->setText($text);
@@ -84,7 +84,7 @@ class Comment
      * Rend le post auquel le commentaire est associé
      * @return Post post du commentaire
      */
-    public function getPost(): Post
+    public function getPost(): int
     {
         return $this->post;
     }
@@ -93,7 +93,7 @@ class Comment
      * Rend la date de creation du poste 
      * @return User date de creation
      */
-    public function getAuthor(): User
+    public function getAuthor(): int
     {
         return $this->author;
     }
