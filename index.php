@@ -32,10 +32,10 @@ $db = new DbManagerCRUD();
         </section>
 
         <section class="thread-section">
-            <a href="activite.php" class="thread-btn">Thread Activité</a>
-            <a href="food.php" class="thread-btn">Thread Food</a>
-            <a href="nature.php" class="thread-btn">Thread Nature</a>
-            <a href="culture.php" class="thread-btn">Thread Culture</a>
+            <a href="activite.php" class="thread-btn">🪂 Rubrique Activité 🪂</a>
+            <a href="food.php" class="thread-btn">🍴 Rubrique Food 🍴</a>
+            <a href="nature.php" class="thread-btn">🌿 Rubrique Nature 🌿</a>
+            <a href="culture.php" class="thread-btn">🎥 Rubrique Culture 🎥</a>
         </section>
     </main>
 

@@ -348,6 +348,7 @@ class DbManagerCRUD implements I_ApiCRUD
         return $posts;
     }
 
+    
     public function showPosts(): array
     {
         $sql = "SELECT * FROM post";
@@ -355,22 +356,27 @@ class DbManagerCRUD implements I_ApiCRUD
 
         $posts = [];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $posts[] = new Post(
-                $row['title'],
-                $row['text'],
-                $row['budget'],
-                $row['author'],
-                $row['city'],
-                $row['category'],
-                new DateTime($row['created_at']),
-                new DateTime($row['last_update']),
-                $row['id'],
-                $row['address']
-            );
+            try {
+                $posts[] = new Post(
+                    $row['title'] ?? 'Titre par défaut',
+                    $row['text'] ?? 'Contenu par défaut',
+                    $row['budget'] ?? 0,
+                    $row['author'] ?? 1,
+                    $row['city'] ?? 1,
+                    $row['category'] ?? 1,
+                    isset($row['created_at']) ? new DateTime($row['created_at']) : new DateTime(),
+                    isset($row['last_update']) ? new DateTime($row['last_update']) : new DateTime(),
+                    $row['id'] ?? 0,
+                    $row['address'] ?? 'Adresse par défaut'
+                );
+            } catch (\Exception $e) {
+                error_log("Erreur lors de la création du Post : " . $e->getMessage());
+            }
         }
 
         return $posts;
     }
+
 
     public function getPostById(int $id): ?Post
     {

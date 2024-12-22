@@ -5,8 +5,8 @@ $_SESSION["isConnected"] = false;
 
 <header class="header">
     <div class="logo">
-        <a href="/ForumVaudois/">
-            <img src="/ForumVaudois/assets/images/logo.png" alt="Forum Vaudois Logo" class="logo-img">
+        <a href="/ForumVaudois/index.php">
+            <img src="/ForumVaudois/assets/images/logo1.png" alt="Forum Vaudois Logo" class="logo-img">
         </a>
     </div>
     <!-- ./ = la racine du dossier forumvaudois-->

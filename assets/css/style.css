@@ -13,28 +13,30 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin: 0; /* Supprime les marges par défaut */
-    padding: 0; /* Supprime les paddings par défaut */
+    margin: 0;
+    padding: 0;
 }
+
 /* ==========================
    HEADER ET NAVIGATION
 ========================== */
 .header {
-    background-color: #D0EDDC; /* Vert clair */
+    background-color: #D0EDDC;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0rem 2rem; /* Ajout d'espacement équilibré */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    padding: 0rem 2rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.logo-img {
+    height: 100px; /* Réduisez la taille du logo */
+    width: auto; /* Conservez les proportions */
 }
 
-.logo-img {
-    height: 120px; /* Taille agrandie du logo */
-}
 
 .nav-buttons {
     display: flex;
-    gap: 1.5rem; /* Espacement équilibré entre les boutons */
+    gap: 1.5rem;
     align-items: center;
 }
 
@@ -43,43 +45,41 @@ body {
     font-weight: bold;
     text-align: center;
     transition: all 0.3s ease-in-out;
-    color: #15A64F; /* Texte vert foncé par défaut */
-    padding: 0; /* Retrait des bordures padding */
-    background-color: transparent; /* Fond transparent */
+    color: black;
+    padding: 0;
+    background-color: transparent;
 }
 
 .nav-buttons a:hover {
-    color: #107D3F; /* Texte hover plus foncé */
+    color: #107D3F;
 }
 
-/* Bouton spécifique pour "À propos" */
 .nav-buttons .btn-about {
-    color: #107D3F; /* Couleur spécifique au bouton "À propos" */
+    color: #107D3F;
     text-decoration: underline;
-    font-size: 1rem; /* Taille légèrement agrandie */
+    font-size: 1rem;
 }
 
 .nav-buttons .btn-about:hover {
-    color: #15A64F; /* Texte hover inversé pour "À propos" */
+    color: #15A64F;
     text-decoration: none;
 }
 
-/* Bouton de connexion */
 .nav-buttons .btn-login {
-    padding: 0.5rem 1rem; /* Espacement pour le bouton */
-    background-color: #15A64F; /* Vert foncé */
+    padding: 0.5rem 1rem;
+    background-color: #15A64F;
     color: white;
-    border-radius: 5px; /* Légère courbe */
+    border-radius: 5px;
     font-size: 1rem;
     transition: all 0.3s ease-in-out;
 }
 
 .nav-buttons .btn-login:hover {
-    background-color: #107D3F; /* Hover plus foncé */
+    background-color: #107D3F;
 }
 
 /* ==========================
-   STYLES POUR LE MAIN CONTENT
+   STYLES POUR INDEX.PHP
 ========================== */
 .main-content {
     flex: 1;
@@ -88,122 +88,489 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 3rem;
 }
 
-.welcome-text {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 1.5rem;
+.welcome-section {
     text-align: center;
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    max-width: 600px;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-/* ==========================
-   FORMULAIRES ET BOUTONS
-========================== */
-.signup-form {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-}
-
-.form-title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-}
-
-.form-group {
+.welcome-section h1 {
+    font-size: 3rem;
+    color: #15A64F;
     margin-bottom: 1rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
+.welcome-section p {
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.8;
+    max-width: 600px;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
+.thread-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.thread-btn {
+    text-decoration: none;
+    padding: 1.3rem 2.2rem;
     border-radius: 5px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #15A64F;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 1rem;
-    background-color: #15A64F;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
     color: white;
+    background-color: #15A64F;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    width: 80%;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.submit-btn:hover {
+.thread-btn:hover {
     background-color: #107D3F;
-} 
-/* ==========================
-   FOOTER
-========================== */
+    transform: scale(1.05);
+}
 
-.footer-content {
-    background-color: #15A64F !important; /* Vert foncé */
-    color: white !important;
-    padding: 1.5rem 10%; /* Réduction des marges internes */
+/* ==========================
+   STYLES POUR ABOUT.PHP
+========================== */
+.main-content-about {
+    margin: 2rem;
+}
+.introduction {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
-    margin: 0 auto; /* Centrer le footer */
+    margin-bottom: 2rem;
+}
+
+.introduction .content,
+.introduction .objectives {
+    flex: 1;
+    padding: 1rem;
+    background-color: #D0EDDC;
+    color: black;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.introduction h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.introduction p,
+.introduction .objectives ul {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.team {
+    background-color: #D0EDDC;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.team h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.team-members {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.member {
+    flex: 1;
+    max-width: 120px;
+    text-align: center;
+}
+
+.member .icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.member p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.member .role {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* ==========================
+   STYLES POUR LOGIN.PHP
+========================== */
+
+.main-content-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #15A64F;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.left-side .logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.left-side .slogan {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #107D3F;
+}
+
+.login-form {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-form .form-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #333;
+}
+
+.login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.login-form .form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.login-form .form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: #333;
+}
+
+.register-link {
+    text-align: center; /* Centrer le texte */
+    font-size: 14px; /* Taille du texte */
+    color: #333; /* Couleur du texte principal */
+    margin-top: 20px; /* Espacement en haut */
+}
+
+.register-link a {
+    color: #000; /* Couleur du lien en noir */
+    text-decoration: underline; /* Souligne le lien */
+    font-weight: bold; /* Gras pour le lien */
+}
+
+.register-link a:hover {
+    color: #555; /* Couleur légèrement plus claire au survol */
+    text-decoration: none; /* Supprime le soulignement au survol */
+}
+/* Ajout de la phrase pour créer un compte */
+.login-form .create-account {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.login-form .create-account a {
+    color: #48c774;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-form .create-account a:hover {
+    text-decoration: underline;
+}
+
+/* Style pour la flèche de retour */
+.header-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-back:hover {
+    color: #48c774;
+}
+
+.header-back::before {
+    content: '← ';
+    font-size: 20px;
+    margin-right: 5px;
+}
+.back-link {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+}
+
+.back-link svg {
+    margin-right: 5px;
+}
+/* ==========================
+   STYLES POUR SIGNUP.PHP
+========================== */
+
+.main-content-signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Prend toute la hauteur de la page */
+    overflow: hidden;
+    background-color: #15A64F; /* Fond vert */
+}
+
+.signup-container {
+    display: flex;
+    width: 100%;
+    height: 100%; /* Prend toute la hauteur de la page */
+}
+
+.left-side {
+    background: linear-gradient(135deg, #ffffff, #48c774);
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.left-side .logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.left-side .slogan {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #107D3F;
+}
+
+.right-side {
+    background-color: #15A64F;
+    width: 50%;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.signup-form {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form .form-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #333;
+}
+
+.signup-form .form-group {
+    margin-bottom: 20px;
+}
+
+.signup-form .form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.signup-form .form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.submit-btn:hover {
+    background-color: #333;
+}
+
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    color: #555;
+    text-decoration: none;
+}
+
+/* Flèche retour */
+.header-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-back:hover {
+    color: #48c774;
+}
+
+.header-back::before {
+    content: '← ';
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+
+/* ==========================
+   FOOTER
+========================== */
+.footer-content {
+    background-color: #15A64F;
+    color: white;
+    padding: 1.5rem 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin: 0 auto;
 }
 
 .footer-content .company {
     flex: 1;
-    min-width: 200px; /* Ajustement de la largeur minimale */
+    min-width: 200px;
 }
 
 .footer-content .company p {
-    line-height: 1.6; /* Meilleure lisibilité */
-    font-size: 1rem; 
+    line-height: 1.6;
+    font-size: 1rem;
     margin-bottom: 1rem;
 }
+
 .footer-content .company h3 {
-    font-size: 1.5rem; /* Augmente la taille du texte */
-    font-weight: bold; /* Assure que le texte est bien visible */
-    color: #ffffff; /* Assure une bonne visibilité sur fond vert */
-    margin-bottom: 1.5rem; /* Ajoute un espace en dessous pour l'esthétique */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
 }
 
-
 .contact-form {
-    background-color: white !important;
+    background-color: white;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     color: #333;
     flex: 1;
-    max-width: 350px; /* Ajuste la largeur max */
+    max-width: 350px;
 }
 
 .contact-form label {
@@ -224,13 +591,13 @@ body {
 
 .contact-form textarea {
     resize: vertical;
-    height: 120px; /* Ajuste la hauteur */
+    height: 120px;
 }
 
 .contact-form button {
     width: 100%;
     padding: 1rem;
-    background-color: #15A64F !important; /* Vert foncé */
+    background-color: #15A64F;
     color: white;
     border: none;
     border-radius: 5px;
@@ -240,28 +607,36 @@ body {
 }
 
 .contact-form button:hover {
-    background-color: #107D3F; /* Vert plus foncé */
+    background-color: #107D3F;
 }
 
 /* ==========================
    MEDIA QUERIES
 ========================== */
 @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .thread-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
     .footer-content {
         flex-direction: column;
         align-items: center;
         gap: 1.5rem;
     }
 
-    .footer-content .company {
-        text-align: center;
-    }
-
     .contact-form {
-        max-width: 100%; /* S'étend sur toute la largeur */
-    }
-
-    .footer-bottom {
-        font-size: 0.8rem; /* Réduction de taille pour petits écrans */
+        max-width: 100%;
     }
 }
