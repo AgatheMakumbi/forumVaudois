@@ -13,8 +13,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 0; /* Supprime les marges par défaut */
+    padding: 0; /* Supprime les paddings par défaut */
 }
-
 /* ==========================
    HEADER ET NAVIGATION
 ========================== */
@@ -23,44 +24,58 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0rem 2rem; /* Ajout d'espacement équilibré */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
 }
 
 .logo-img {
-    height: 50px;
+    height: 120px; /* Taille agrandie du logo */
 }
 
 .nav-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem; /* Espacement équilibré entre les boutons */
+    align-items: center;
 }
 
 .nav-buttons a {
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
     font-weight: bold;
     text-align: center;
     transition: all 0.3s ease-in-out;
-    color: white;
-    background-color: #15A64F; /* Vert foncé */
+    color: #15A64F; /* Texte vert foncé par défaut */
+    padding: 0; /* Retrait des bordures padding */
+    background-color: transparent; /* Fond transparent */
 }
 
 .nav-buttons a:hover {
-    background-color: #107D3F; /* Hover: Vert plus foncé */
+    color: #107D3F; /* Texte hover plus foncé */
 }
 
 /* Bouton spécifique pour "À propos" */
 .nav-buttons .btn-about {
-    background-color: transparent;
-    color: #15A64F; /* Texte vert foncé */
+    color: #107D3F; /* Couleur spécifique au bouton "À propos" */
     text-decoration: underline;
+    font-size: 1rem; /* Taille légèrement agrandie */
 }
 
 .nav-buttons .btn-about:hover {
+    color: #15A64F; /* Texte hover inversé pour "À propos" */
     text-decoration: none;
-    color: #107D3F; /* Texte hover */
+}
+
+/* Bouton de connexion */
+.nav-buttons .btn-login {
+    padding: 0.5rem 1rem; /* Espacement pour le bouton */
+    background-color: #15A64F; /* Vert foncé */
+    color: white;
+    border-radius: 5px; /* Légère courbe */
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-buttons .btn-login:hover {
+    background-color: #107D3F; /* Hover plus foncé */
 }
 
 /* ==========================
@@ -147,55 +162,106 @@ body {
 
 .submit-btn:hover {
     background-color: #107D3F;
-}
-
+} 
 /* ==========================
    FOOTER
 ========================== */
-.footer {
-    background-color: #15A64F;
-    color: white;
-    padding: 1rem 2rem;
-    text-align: center;
+
+.footer-content {
+    background-color: #15A64F !important; /* Vert foncé */
+    color: white !important;
+    padding: 1.5rem 10%; /* Réduction des marges internes */
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin: 0 auto; /* Centrer le footer */
 }
 
-.footer p {
-    margin: 0;
+.footer-content .company {
+    flex: 1;
+    min-width: 200px; /* Ajustement de la largeur minimale */
 }
 
-.footer a {
-    color: #D0EDDC; /* Vert clair */
-    text-decoration: none;
+.footer-content .company p {
+    line-height: 1.6; /* Meilleure lisibilité */
+    font-size: 1rem; 
+    margin-bottom: 1rem;
+}
+.footer-content .company h3 {
+    font-size: 1.5rem; /* Augmente la taille du texte */
+    font-weight: bold; /* Assure que le texte est bien visible */
+    color: #ffffff; /* Assure une bonne visibilité sur fond vert */
+    margin-bottom: 1.5rem; /* Ajoute un espace en dessous pour l'esthétique */
 }
 
-.footer a:hover {
+
+.contact-form {
+    background-color: white !important;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+    flex: 1;
+    max-width: 350px; /* Ajuste la largeur max */
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    height: 120px; /* Ajuste la hauteur */
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #15A64F !important; /* Vert foncé */
     color: white;
-    text-decoration: underline;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #107D3F; /* Vert plus foncé */
 }
 
 /* ==========================
    MEDIA QUERIES
 ========================== */
 @media (max-width: 768px) {
-    .header {
+    .footer-content {
         flex-direction: column;
-        gap: 1rem;
+        align-items: center;
+        gap: 1.5rem;
     }
 
-    .nav-buttons {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .nav-buttons a {
-        flex: 1 1 auto;
+    .footer-content .company {
         text-align: center;
     }
 
-    .signup-form {
-        padding: 1.5rem;
+    .contact-form {
+        max-width: 100%; /* S'étend sur toute la largeur */
+    }
+
+    .footer-bottom {
+        font-size: 0.8rem; /* Réduction de taille pour petits écrans */
     }
 }
