@@ -2,6 +2,7 @@
 require_once '../vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
+use M521\ForumVaudois\Entity\Post;
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -13,31 +14,48 @@ $erreurs = ['email' => '', 'password' => ''];
 $password = '';
 $email = '';
 
-// Récupération d'un post aléatoire
-$posts = $db->showPosts();
-$randomPost = $posts[array_rand($posts)];
+try {
+    $posts = $db->showPosts();
+    if (empty($posts)) {
+        // Créer un post par défaut si aucun post n'est présent
+        $randomPost = new Post(
+            "Post par défaut", // Titre
+            "Ceci est un contenu d'exemple car aucun post n'est encore disponible.", // Contenu
+            0, // Budget
+            1, // ID de l'auteur par défaut
+            1, // ID de la ville par défaut
+            1, // ID de la catégorie par défaut
+            new DateTime(), // Date de création
+            new DateTime(), // Date de mise à jour
+            0, // ID
+            "Adresse par défaut" // Adresse par défaut
+        );
+    } else {
+        $randomPost = $posts[array_rand($posts)];
+    }
+} catch (Exception $e) {
+    die("Erreur lors de la récupération des posts : " . $e->getMessage());
+}
 
 // Traitement de la connexion
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération des entrées utilisateur
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    // Vérification si l'utilisateur est déjà connecté
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
         header('Location: index.php');
+        exit;
     } else {
-        // Vérification des champs
         if (empty($email) || empty($password)) {
             $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
             $erreurs['password'] = 'Veuillez renseigner votre mot de passe';
         } else {
-            // Tentative de connexion
             $userId = $db->loginUser($email, $password);
             if ($userId) {
                 $_SESSION["isConnected"] = true;
                 $_SESSION["id"] = $userId;
                 header('Location: index.php');
+                exit;
             } else {
                 $erreurs['password'] = 'Identifiants incorrects';
             }
@@ -47,7 +65,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Rafraîchissement de la page pour changer le post
 if (isset($_GET['refresh']) && $_GET['refresh'] === 'true') {
-    $randomPost = $posts[array_rand($posts)];
+    $randomPost = empty($posts) ? new Post(
+        "Post par défaut",
+        "Ceci est un contenu d'exemple car aucun post n'est encore disponible.",
+        0,
+        1,
+        1,
+        1,
+        new DateTime(),
+        new DateTime(),
+        0,
+        "Adresse par défaut"
+    ) : $posts[array_rand($posts)];
+
     echo json_encode([
         'author' => htmlspecialchars($randomPost->getAuthor()),
         'text' => htmlspecialchars(substr($randomPost->getText(), 0, 100)),
@@ -62,14 +92,22 @@ if (isset($_GET['refresh']) && $_GET['refresh'] === 'true') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
+
     <title>Login</title>
 </head>
 <body>
-<!-- Ne pas enlever l'inclusion du header -->
-<?php include '../components/header.php' ?>
 
 <main class="main-content">
+<div class="back-arrow">
+        <a href="javascript:history.back();" class="btn-back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Retour
+        </a>
+    </div>
     <div class="login-container">
         <div class="left-side">
             <img src="../assets/images/logo.png" alt="Forum Vaudois Logo" class="logo">
@@ -94,29 +132,25 @@ if (isset($_GET['refresh']) && $_GET['refresh'] === 'true') {
             <form class="login-form signup-form" action="login.php" method="POST">
                 <h2 class="form-title">Login</h2>
 
-                <?php if (!empty($error)) : ?>
-                    <p class="error-message"><?= htmlspecialchars($error) ?></p>
-                <?php endif; ?>
-
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="yayan@durian.cc" required autocomplete="username" maxlength="50" value="<?= htmlspecialchars($email); ?>">
-                    <p style="color:red;"><?= $erreurs['email']; ?></p>
+                    <input type="email" id="email" name="email" placeholder="email@example.com" required autocomplete="username" maxlength="50" value="<?= htmlspecialchars($email); ?>">
+                    <p style="color:red;"> <?= $erreurs['email']; ?> </p>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mot de passe</label>
                     <input type="password" id="password" name="password" placeholder="********" minlength="8" maxlength="20" autocomplete="current-password" required>
-                    <p style="color:red;"><?= $erreurs['password']; ?></p>
+                    <p style="color:red;"> <?= $erreurs['password']; ?> </p>
                 </div>
 
                 <div class="form-links">
-                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <a href="#" class="forgot-password">Mot de passe oublié ?</a>
                 </div>
 
-                <button type="submit" class="submit-btn">Login</button>
+                <button type="submit" class="submit-btn">Connexion</button>
 
-                <p class="signup-text">Don't have an account? <a href="/ForumVaudois/pages/signUp.php">Create one!</a></p>
+                <p class="signup-text">Pas encore de compte ? <a href="/ForumVaudois/pages/signUp.php">Créer un compte</a></p>
             </form>
         </div>
     </div>

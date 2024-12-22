@@ -15,6 +15,7 @@ $_SESSION["isConnected"] = true; // Simuler un utilisateur connecté pour ce hea
         <a href="/ForumVaudois/pages/news.php?category='food'" class="btn btn-news">Food 🍴</a>
         <a href="/ForumVaudois/pages/news.php?category='nature'" class="btn btn-news">Nature 🌿</a>
         <a href="/ForumVaudois/pages/news.php?category='culture'" class="btn btn-news">Culture 🎥</a>
+        <a href="/ForumVaudois/pages/about.php" class="btn btn-about">À propos</a>
         
         <!-- Boutons spécifiques pour les utilisateurs connectés avec icônes -->
         <a href="/ForumVaudois/pages/createPost.php" class="btn btn-create">Créer un post</a>

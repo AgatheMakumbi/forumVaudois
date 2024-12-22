@@ -12,10 +12,18 @@ $_SESSION["isConnected"] = false;
     <!-- ./ = la racine du dossier forumvaudois-->
     <nav class="nav-buttons">
         <a href="/ForumVaudois/pages/news.php" class="btn btn-news">Tout explorer</a>
+<<<<<<< HEAD
         <a href="/ForumVaudois/pages/news.php?category=2" class="btn btn-news">Activité 🪂</a>
         <a href="/ForumVaudois/pages/news.php?category=1" class="btn btn-news">Food​ 🍴</a>
         <a href="/ForumVaudois/pages/news.php?category=3" class="btn btn-news">Nature 🌿​</a>
         <a href="/ForumVaudois/pages/news.php?category=4" class="btn btn-news">Culture ​​🎥​</a>
+=======
+        <a href="/ForumVaudois/pages/news.php?category='activity'" class="btn btn-news">Activité 🪂</a>
+        <a href="/ForumVaudois/pages/news.php?category='food'" class="btn btn-news">Food​ 🍴</a>
+        <a href="/ForumVaudois/pages/news.php?category='nature'" class="btn btn-news">Nature 🌿​</a>
+        <a href="/ForumVaudois/pages/news.php?category='culture'" class="btn btn-news">Culture ​​🎥​</a>
+        <a href="/ForumVaudois/pages/about.php" class="btn btn-about">À propos</a>
+>>>>>>> 76ef638 (Correction du style CSS du header, ajout des styles pour le bouton 'À propos', vérification du chemin du fichier CSS, et ajustement des styles globaux pour assurer la cohérence visuelle.)
         <?php 
         if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
             // Menu pour utilisateur connecté
