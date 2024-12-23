@@ -195,6 +195,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt->bindValue(':isVerified', $isVerified, \PDO::PARAM_BOOL);
 
         // Exécute la requête et retourne true ou false en fonction du succès
+
         return $stmt->execute();
     }
 
@@ -265,12 +266,16 @@ class DbManagerCRUD implements I_ApiCRUD
             // Récupérer les données de l'utilisateur
             $userData = $stmt->fetch(\PDO::FETCH_ASSOC);
 
+            //var_dump($userData['isVerified']);
+            //var_dump($userData);
             // Vérifier si l'utilisateur existe
             if (!$userData) {
                 error_log("Tentative de connexion avec un email inexistant: " . $email);
                 return 0;
             }
 
+            //var_dump($userData['password']);
+            //var_dump($password);
             // Vérifier le mot de passe
             if (!password_verify($password, $userData['password'])) {
                 error_log("Échec de connexion avec l'email: " . $email);
@@ -278,7 +283,10 @@ class DbManagerCRUD implements I_ApiCRUD
             }
 
             // Vérifier si l'utilisateur est vérifié
-            if ($userData['isVerified']!== true) {
+            
+            $lol = $userData['isVerified']== 0;
+            var_dump($lol);
+            if ($userData['isVerified'] == 0) {
                 error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
                 return 0;
             }

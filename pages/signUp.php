@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     
     // Validation du username (max 20 caractères, commence par majuscule, suit des minuscules)
-    if (!filter_input(INPUT_POST, 'username', FILTER_VALIDATE_REGEXP, ["options" =>["regexp" => "/^[A-ZÇÉÈÊËÀÂÎÏÔÙÛ]{1}([a-zçéèêëàâîïôùû]+|([a-zçéèêëàâîïôùû]+-[A-ZÇÉÈÊËÀÂÎÏÔÙÛ]{1}[a-zçéèêëàâîïôùû]+)){1,19}$/"]])) {
+    if (!filter_input(INPUT_POST, 'username', FILTER_VALIDATE_REGEXP, ["options" =>["regexp" => "/^[A-Za-z0-9_]{1,20}$/"]])) {
         $erreurs['username'] = "Veuillez saisir un nom d'utilisateur de max 20 caractères.";
     } elseif ($dbManager->existsUsername($username)) {
         $erreurs['username'] = "Ce nom d'utilisateur est déjà pris.";

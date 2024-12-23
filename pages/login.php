@@ -23,8 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //Vérification si l'utilisateur est déjà connecté
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
-        header('Location: index.php');
+        header('Location: /ForumVaudois/index.php');
+        exit(); 
     }else{
+        var_dump($email, $password);
         // Vérification des champs
         if (empty($email) || empty($password)) {
             $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
@@ -32,10 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }else{
             // Tentative de connextion
             $userId = $db->loginUser($email,$password);
+            var_dump($userId);
             if ($userId) {
                 $_SESSION["isConnected"] = true;
                 $_SESSION["id"] = $userId;
-                header('Location: index.php');
+                header('Location: /ForumVaudois/index.php');
+                exit(); 
+            }else{
+                $erreurs['email'] = 'Adresse e-mail ou mot de passe incorrect';
             }
         }
     }
@@ -81,8 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form class="login-form, signup-form"  action="login.php" method="POST">
                 <h2 class="form-title">Login</h2>
 
-                <?php if (!empty($error)) : ?>
-                    <p class="error-message"><?= htmlspecialchars($error) ?></p>
+                <?php if (!empty($erreurs['email']) || !empty($erreurs['password'])) : ?>
+                    <p class="error-message"><?= htmlspecialchars($erreurs['email']) ?></p>
                 <?php endif; ?>
 
                 <div class="form-group">
