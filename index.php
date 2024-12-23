@@ -2,6 +2,7 @@
 require_once 'vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
+use M521\ForumVaudois\lang\lang_func;
 
 // Initialisation de la connexion avec la base de données
 $db = new DbManagerCRUD();
@@ -26,8 +27,8 @@ $db = new DbManagerCRUD();
         <section class="welcome-section">
             <h1>Forum Vaudois</h1>
             <p>
-                Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce qui touche au canton de Vaud et bien plus encore. 
-                <br>#LibertéDExpression
+                Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce qui touche au canton de Vaud et bien plus encore.
+                <br>#LibertéDExpression</br>
             </p>
         </section>
 
