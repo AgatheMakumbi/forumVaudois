@@ -284,14 +284,10 @@ class DbManagerCRUD implements I_ApiCRUD
             }
 
             // Vérifier si l'utilisateur est vérifié
-<<<<<<< HEAD
             
             $lol = $userData['isVerified']== 0;
             var_dump($lol);
             if ($userData['isVerified'] == 0) {
-=======
-            if ($userData['isVerified'] !== true) {
->>>>>>> ef226d102b24507f529f19052d4907dbf5601efa
                 error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
                 return 0;
             }

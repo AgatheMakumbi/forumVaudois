@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
-<<<<<<< HEAD
         header('Location: /ForumVaudois/index.php');
         exit(); 
     }else{
@@ -41,23 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit(); 
             }else{
                 $erreurs['email'] = 'Adresse e-mail ou mot de passe incorrect';
-=======
-        header('Location: ../index.php');
-        exit;
-    } else {
-        if (empty($email) || empty($password)) {
-            $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
-            $erreurs['password'] = 'Veuillez renseigner votre mot de passe';
-        } else {
-            $userId = $db->loginUser($email, $password);
-            if ($userId) {
-                $_SESSION["isConnected"] = true;
-                $_SESSION["id"] = $userId;
-                header('Location: ../index.php');
-                exit;
-            } else {
-                $erreurs['password'] = 'Identifiants incorrects';
->>>>>>> ef226d102b24507f529f19052d4907dbf5601efa
             }
         }
     }
@@ -81,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1 class="slogan">Le forum de la région</h1>
         </div>
         <div class="right-side">
-<<<<<<< HEAD
             <form class="login-form, signup-form"  action="login.php" method="POST">
                 <h2 class="form-title">Login</h2>
 
@@ -89,10 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="error-message"><?= htmlspecialchars($erreurs['email']) ?></p>
                 <?php endif; ?>
 
-=======
-            <form class="login-form" action="login.php" method="POST">
-                <h2 class="form-title">Connexion</h2>
->>>>>>> ef226d102b24507f529f19052d4907dbf5601efa
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" value="<?= htmlspecialchars($email); ?>" required>
