@@ -12,12 +12,12 @@ error_reporting(E_ALL);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $text = $_POST['post-content'];
-    //$city = $_POST['city'];
-    $city = 2;
+    $city = $_POST['city'];
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
     $authorId = 1; // Exemple : récupérez-le depuis la session utilisateur
     $category = 1; // Exemple : attribuez une catégorie par défaut
+    $city = 2;
 
     // Gestion des fichiers
     $imagePath = null;
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $address
         );
         // Insérer le post dans la base de données
-        $dbManager = new DbManagerCRUD(); // Assurez-vous que DbManager est initialisé correctement
+        $dbManager = new DbManagerCRUD();
         if ($dbManager->createPost($post)) {
             echo "Post créé avec succès !";
         } else {
@@ -61,50 +61,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>create post</title>
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
+    <title>Créer un post</title>
 </head>
 <body>
-<?php include '../components/header.php'?>
-<main class="main-content">
-        <form class="signup-form" action="createPost.php" method="POST" enctype="multipart/form-data">
+<?php include '../components/header.php' ?>
+<main class="main-content-createPost">
+    <div class="create-post-container">
+    <div class="post-image">
+            <img src="../assets/images/photoVaud1.jpg" alt="Photo du lac" class="preview-image">
+        </div>
+        <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
             <h2 class="form-title">Créer un post</h2>
-            
-            <div class="form-group">
-                <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required>
-            </div>
 
             <div class="form-group">
-                <label for="post-content">Que souhaite tu partager?</label>
-                <input type="text" id="post-content" name="post-content" required>
-            </div>
-
-            <div class="form-group">
-                <label for="city">Ville</label>
-                <select name="city" id="city"  required>
-                    <option value="Neuchatel">Neuchatel</option>
-                    <option value="Vevey">Vevey</option>
-                    <option value="Lausanne">Lausanne</option>
+                <label for="category">Catégorie</label>
+                <select name="category" id="category" required>
+                    <option value="1">Activités</option>
+                    <option value="2">Nourriture</option>
+                    <option value="3">Culture</option>
+                    <option value="4">Nature</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="budget">Quel budget prévoir ?</label>
-                <input type="number" id="budget" name="budget" required>
+                <label for="city">Ville</label>
+                <select name="city" id="city" required>
+                    <option value="Lausanne">Lausanne</option>
+                    <option value="Yverdon-les-Bains">Yverdon-les-Bains</option>
+                    <option value="Montreux">Montreux</option>
+                    <option value="Vevey">Vevey</option>
+                    <option value="Nyon">Nyon</option>
+                    <option value="Renens">Renens</option>
+                    <option value="Morges">Morges</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="addresse">Si applicable saisit l'adresse</label>
-                <input type="text" id="addresse" name="addresse">
+                <label for="addresse">Adresse (facultatif)</label>
+                <input type="text" id="addresse" name="addresse" placeholder="Adresse (facultatif)">
             </div>
-            
+
             <div class="form-group">
-                <label for="image">Ajoute une image (facultatif)</label>
+                <label for="budget">Budget par personne</label>
+                <div class="budget-input">
+                    <input type="number" id="budget" name="budget" placeholder="Budget" required>
+                    <span>CHF</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Titre de la publication</label>
+                <input type="text" id="title" name="title" placeholder="Titre de la publication" required>
+            </div>
+
+            <div class="form-group">
+                <label for="post-content">Texte</label>
+                <textarea id="post-content" name="post-content" placeholder="Texte ..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Ajouter une image (facultatif)</label>
                 <input type="file" id="image" name="image" accept="image/*">
             </div>
-            <button type="submit" class="submit-btn">Partager</button>
+
+            <button type="submit" class="submit-btn">Publier</button>
         </form>
-    </main>
+    </div>
+</main>
+
+<?php include '../components/footer.php'; ?>
 </body>
 </html>

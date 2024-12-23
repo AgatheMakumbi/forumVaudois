@@ -87,45 +87,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
     <title>Sign up</title>
 </head>
 
 <body>
-    <?php echo $validationMessage; ?>
-    <?php include '../components/header.php' ?>
-    <main class="main-content">
-        <form class="signup-form" action="signup.php" method="POST">
+    <a href="../index.php" class="header-back">Retour à l'accueil</a>
 
-            <h2 class="form-title">Créer un compte</h2>
 
-            <div class="form-group">
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" placeholder="luca1014" maxlength="20" required value="<?php echo htmlspecialchars($username); ?>">
-                <p style="color:red;"><?php echo $erreurs['username']; ?></p>
+    <main class="main-content-signup">
+        <div class="signup-container">
+            <div class="left-side">
+            <img src="../assets/images/logo1.png" alt="Forum Vaudois Logo" class="logo">
+                <h1 class="slogan">Rejoignez le forum de la région!</h1>
             </div>
+            <div class="right-side">
+                <form class="signup-form" action="signup.php" method="POST">
+                    <h2 class="form-title">Créer un compte</h2>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="lucamartin@gmail.com" autocomplete="username" maxlength="50" required value="<?php echo htmlspecialchars($email); ?>">
-                <p style="color:red;"><?php echo $erreurs['email']; ?></p>
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" name="username" placeholder="luca1014" maxlength="20" required value="<?php echo htmlspecialchars($username); ?>">
+                        <p style="color:red;"><?php echo $erreurs['username']; ?></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="lucamartin@gmail.com" autocomplete="username" maxlength="50" required value="<?php echo htmlspecialchars($email); ?>">
+                        <p style="color:red;"><?php echo $erreurs['email']; ?></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" minlength="8" maxlength="20" autocomplete="current-password" required value="<?php echo htmlspecialchars($password); ?>">
+                        <p style="color:red;"><?php echo $erreurs['password']; ?></p>
+                    </div>
+
+                    <button type="submit" class="submit-btn">S'inscrire</button>
+
+                    
+                </form>
+                <br>
+                <div class="login-link">
+                        <p>Vous avez déjà un compte ? <a href="login.php">Connectez-vous</a></p>
+                    </div>
             </div>
-
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" minlength="8" maxlength="20" autocomplete="current-password" required value="<?php echo htmlspecialchars($password); ?>">
-                <p style="color:red;"><?php echo $erreurs['password']; ?></p>
-            </div>
-
-            <button type="submit" class="submit-btn">S'inscrire</button>
-        </form>
-
+        </div>
     </main>
 </body>
+
+</html>

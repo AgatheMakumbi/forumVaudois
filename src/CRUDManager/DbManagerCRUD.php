@@ -40,18 +40,18 @@ class DbManagerCRUD implements I_ApiCRUD
     }
 
     /* Methode crée pour un test*/
-    public function showCategories(): string
-    {
-        $query = "SELECT * FROM Category";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        $categories = $stmt->fetchAll();
-        $result = "";
-        foreach ($categories as $categorie) {
-            $result .= $categorie['category_name'] . "\n";
-        }
-        return $result;
-    }
+    // public function showCategories(): string
+    // {
+    //     $query = "SELECT * FROM Category";
+    //     $stmt = $this->db->prepare($query);
+    //     $stmt->execute();
+    //     $categories = $stmt->fetchAll();
+    //     $result = "";
+    //     foreach ($categories as $categorie) {
+    //         $result .= $categorie['category_name'] . "\n";
+    //     }
+    //     return $result;
+    // }
 
     /*public function ajoutePersonne(Personne $personne): int {
         $datas = [
@@ -253,6 +253,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
         return $user;
     }
+
     public function loginUser(string $email, string $password): int
     {
 
@@ -283,10 +284,14 @@ class DbManagerCRUD implements I_ApiCRUD
             }
 
             // Vérifier si l'utilisateur est vérifié
+<<<<<<< HEAD
             
             $lol = $userData['isVerified']== 0;
             var_dump($lol);
             if ($userData['isVerified'] == 0) {
+=======
+            if ($userData['isVerified'] !== true) {
+>>>>>>> ef226d102b24507f529f19052d4907dbf5601efa
                 error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
                 return 0;
             }
@@ -306,7 +311,7 @@ class DbManagerCRUD implements I_ApiCRUD
         }
     }
     // ================================================================
-    //                       METHODES POUR LES POSTES
+    //                       METHODES POUR LES POSTS
     // ================================================================
 
     public function createPost(Post $post): bool
@@ -330,20 +335,21 @@ class DbManagerCRUD implements I_ApiCRUD
         return $this->db->lastInsertId() !== null;
     }
 
-    public function showPosts(): array
+    public function getPostsByCategory(int $id_category): array
     {
-        $sql = "SELECT * FROM post";
-        $stmt = $this->db->query($sql);
-
+        $sql = "SELECT * FROM Post WHERE id_category = :id_category";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_category', $id_category, \PDO::PARAM_INT);
+        $stmt->execute();
         $posts = [];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $posts[] = new Post(
                 $row['title'],
                 $row['text'],
                 $row['budget'],
-                $row['author'],
-                $row['city'],
-                $row['category'],
+                $row['id_user'],
+                $row['id_city'],
+                $row['id_category'],
                 new DateTime($row['created_at']),
                 new DateTime($row['last_update']),
                 $row['id'],
@@ -352,6 +358,62 @@ class DbManagerCRUD implements I_ApiCRUD
         }
 
         return $posts;
+    }
+
+    
+    public function showPosts(): array
+    {
+        $sql = "SELECT * FROM post";
+        $stmt = $this->db->query($sql);
+
+        $posts = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            try {
+                $posts[] = new Post(
+                    $row['title'] ?? 'Titre par défaut',
+                    $row['text'] ?? 'Contenu par défaut',
+                    $row['budget'] ?? 0,
+                    $row['author'] ?? 1,
+                    $row['city'] ?? 1,
+                    $row['category'] ?? 1,
+                    isset($row['created_at']) ? new DateTime($row['created_at']) : new DateTime(),
+                    isset($row['last_update']) ? new DateTime($row['last_update']) : new DateTime(),
+                    $row['id'] ?? 0,
+                    $row['address'] ?? 'Adresse par défaut'
+                );
+            } catch (\Exception $e) {
+                error_log("Erreur lors de la création du Post : " . $e->getMessage());
+            }
+        }
+
+        return $posts;
+    }
+
+
+    public function getPostById(int $id): ?Post
+    {
+        $sql = "SELECT * FROM Post WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+        $postData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $post = null;
+        if ($postData) {
+            $post = new Post(
+                $postData[0]['title'],
+                $postData[0]['text'],
+                $postData[0]['budget'],
+                $postData[0]['id_user'],
+                $postData[0]['id_city'],
+                $postData[0]['id_category'],
+                new DateTime($postData[0]['created_at']),
+                new DateTime($postData[0]['last_update']),
+                $postData[0]['id'],
+                $postData[0]['address']             
+            );
+        }
+
+        return $post;
     }
 
     public function updatePost(Post $post): bool
@@ -394,11 +456,29 @@ class DbManagerCRUD implements I_ApiCRUD
             'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
         ];
 
-        $sql = "INSERT INTO comment (text, author, post, created_at) 
+        $sql = "INSERT INTO comment (text, id_user, id_post, created_at) 
                 VALUES (:text, :author, :post, :created_at)";
 
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($datas);
+    }
+
+    public function getCommentsById(int $id_post): array
+    {
+        $sql = "SELECT * FROM Comment WHERE id_post = :id_post";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
+        $stmt->execute();
+        $comments = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment(
+                $row['text'],
+                $row['id_user'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
+                $row['id_post']
+            );
+        }
+
+        return $comments;
     }
 
     public function showComments(): array
@@ -454,12 +534,29 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour insérer un like dans la base de données
-        $sql = "INSERT INTO likes (author, post) VALUES (:author, :post)";
+        $sql = "INSERT INTO like (id_user, id_post) VALUES (:author, :post)";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute($datas);
+    }
+
+    public function getLikesById(int $id_post): array
+    {
+        $sql = "SELECT * FROM Like WHERE id_post = :id_post";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
+        $stmt->execute();
+        $likes = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $likes[] = new Like(
+                $row['id_user'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
+                $row['id_post']
+            );
+        }
+
+        return $likes;
     }
 
     public function deleteLike(int $id): bool
@@ -476,6 +573,10 @@ class DbManagerCRUD implements I_ApiCRUD
         // Retourne true si la suppression a réussi
         return $stmt->execute();
     }
+
+    // ================================================================
+    //                       METHODES POUR LES CITY
+    // ================================================================
 
     public function createCity(City $city): bool
     {
@@ -531,6 +632,75 @@ class DbManagerCRUD implements I_ApiCRUD
     {
         // Requête SQL pour supprimer une ville par son ID
         $sql = "DELETE FROM cities WHERE id = :id";
+
+        // Préparation de la requête
+        $stmt = $this->db->prepare($sql);
+
+        // Lier l'ID et exécuter la requête
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+        // Retourne true si la suppression a réussi
+        return $stmt->execute();
+    }
+
+    // ================================================================
+    //                       METHODES POUR LES CATEGORY
+    // ================================================================
+
+    public function createCategory(Category $category): bool
+    {
+        // Données à insérer dans la base de données
+        $datas = [
+            'cityName' => $category->getCategoryName()
+        ];
+
+        // Requête SQL pour insérer une catégorie dans la base de données
+        $sql = "INSERT INTO category (categoryName) VALUES (:categoryName)";
+
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+
+        // Retourne true si l'insertion a réussi
+        return $stmt->execute($datas);
+    }
+
+    public function showCategories(): array
+    {
+        // Requête SQL pour récupérer toutes les villes
+        $sql = "SELECT * FROM category";
+
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+
+        // Récupération de toutes les catégories sous forme de tableau d'objets City
+        $cities = $stmt->fetchAll(\PDO::FETCH_CLASS, 'M521\\ForumVaudois\\Entity\\Category');
+
+        return $cities;
+    }
+
+    public function updateCategory(Category $category): bool
+    {
+        // Données à mettre à jour dans la base de données
+        $datas = [
+            'id' => $category->getId(),
+            'categoryName' => $category->getCategoryName()
+        ];
+
+        // Requête SQL pour mettre à jour le nom de la catégorie
+        $sql = "UPDATE category SET categoryName = :categoryName WHERE id = :id";
+
+        // Préparation et exécution de la requête
+        $stmt = $this->db->prepare($sql);
+
+        // Retourne true si la mise à jour a réussi
+        return $stmt->execute($datas);
+    }
+
+    public function deleteCategory(int $id): bool
+    {
+        // Requête SQL pour supprimer une catégorie par son ID
+        $sql = "DELETE FROM category WHERE id = :id";
 
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);
