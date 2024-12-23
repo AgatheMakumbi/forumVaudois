@@ -61,16 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
-
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
     <title>Créer un post</title>
 </head>
 <body>
 <?php include '../components/header.php' ?>
-<main class="main-content">
+<main class="main-content-createPost">
     <div class="create-post-container">
-        <div class="post-image">
-            <p>Photo</p>
+    <div class="post-image">
+            <img src="../assets/images/photoVaud1.jpg" alt="Photo du lac" class="preview-image">
         </div>
         <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
             <h2 class="form-title">Créer un post</h2>
@@ -112,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="title">Titre du texte</label>
-                <input type="text" id="title" name="title" placeholder="Titre du texte" required>
+                <label for="title">Titre de la publication</label>
+                <input type="text" id="title" name="title" placeholder="Titre de la publication" required>
             </div>
 
             <div class="form-group">
@@ -131,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </main>
 
-<!-- Footer Inclusion -->
 <?php include '../components/footer.php'; ?>
 </body>
 </html>

@@ -1,16 +1,55 @@
 <?php
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
+use M521\ForumVaudois\Entity\City;
+use M521\ForumVaudois\Entity\Category;
 
-// Simuler l'utilisateur connecté (normalement, vous récupéreriez cet utilisateur via une session ou une base de données)
+require_once '../vendor/autoload.php';
+
+// Simuler l'utilisateur connecté
 $loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
 
-// Simuler quelques posts pour cet utilisateur (normalement, récupérés depuis une base de données)
+// Simuler quelques posts pour cet utilisateur
 $posts = [
-    new Post(1, "Premier post", "Ceci est le contenu du premier post.", 0, "Adresse", $loggedUser, new M521\ForumVaudois\Entity\City(), new M521\ForumVaudois\Entity\Category(), new DateTime(), new DateTime()),
-    new Post(2, "Deuxième post", "Voici le contenu du deuxième post.", 0, "Adresse", $loggedUser, new M521\ForumVaudois\Entity\City(), new M521\ForumVaudois\Entity\Category(), new DateTime(), new DateTime()),
-    new Post(3, "Troisième post", "Encore un autre post.", 0, "Adresse", $loggedUser, new M521\ForumVaudois\Entity\City(), new M521\ForumVaudois\Entity\Category(), new DateTime(), new DateTime()),
+    new Post(
+        "Premier post",
+        "Ceci est le contenu du premier post.",
+        100,
+        $loggedUser->getId(),
+        1, // Passez seulement l'ID de la ville
+        1, // ID de la catégorie
+        new DateTime(),
+        new DateTime(),
+        1,
+        "Adresse 1"
+    ),
+    new Post(
+        "Deuxième post",
+        "Voici le contenu du deuxième post.",
+        200,
+        $loggedUser->getId(),
+        2, // Passez seulement l'ID de la ville
+        2,
+        new DateTime(),
+        new DateTime(),
+        2,
+        "Adresse 2"
+    ),
+    new Post(
+        "Troisième post",
+        "Encore un autre post.",
+        300,
+        $loggedUser->getId(),
+        3, // Passez seulement l'ID de la ville
+        3,
+        new DateTime(),
+        new DateTime(),
+        3,
+        "Adresse 3"
+    ),
 ];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +58,14 @@ $posts = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
-
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
     <title>Profil</title>
 </head>
 
 <body>
     <?php include '../components/header.php'; ?>
-    <a href="/ForumVaudois/pages/logout.php" class="btn btn-logout">Logout</a>
+
+<!-- <a href="/ForumVaudois/pages/logout.php" class="btn btn-logout">Logout</a> -->
     <main class="main-content">
         <!-- Profil de l'utilisateur -->
         <section class="profile">
@@ -46,11 +85,14 @@ $posts = [
                 <?php foreach ($posts as $post) : ?>
                     <div class="post">
                         <h3><?= htmlspecialchars($post->getTitle()) ?></h3>
-                        <p><?= htmlspecialchars($post->getText()) ?></p>
                         <div class="post-actions">
-                            <button class="btn-response">Ajouter une réponse</button>
-                            <p>📍 <?= htmlspecialchars($post->getCity()->__toString() ?? "Ville inconnue") ?></p>
-                        </div>
+    <button class="btn-response">Ajouter une réponse</button>
+    <p>📍 <?php
+        $city = City::getCityById($post->getCity()); // Récupère l'objet City par ID
+        echo htmlspecialchars($city->getCityName());
+    ?></p>
+</div>
+
                     </div>
                 <?php endforeach; ?>
             <?php else : ?>

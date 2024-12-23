@@ -24,11 +24,15 @@ $db = new DbManagerCRUD();
 
     <main class="main-content">
         <section class="welcome-section">
+            <br>
+            <br>
             <h1>Forum Vaudois</h1>
+            <br>
             <p>
                 Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce qui touche au canton de Vaud et bien plus encore. 
                 <br>#LibertéDExpression
             </p>
+            <br>
         </section>
 
         <section class="thread-section">

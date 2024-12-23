@@ -41,7 +41,7 @@
                 <p class="role">Développeur Backend</p>
             </div>
             <div class="member">
-                <div class="icon">MJ</div>
+                <div class="icon">JM</div>
                 <p>Jaccard Mathilde</p>
                 <p class="role">Cheffe du Projet</p>
             </div>
