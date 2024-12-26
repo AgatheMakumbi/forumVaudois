@@ -1,14 +1,21 @@
 <?php
 //require_once '../vendor/autoload.php';
 
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mime\Email;
+
 // ============================
 // TRAITEMENT DU FORMULAIRE
 // ============================
+
+//Initialisation des variables
 $errors = ['name' => "", 'email'  => "", 'message' => ""];
 $name = "";
 $email = "";
 $message = "";
 
+//Récupération des entrées utilisateur et validation 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //$name = filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim']);
     //$email = filter_input(INPUT_POST, 'email', FILTER_CALLBACK, ['options' => 'trim']);
@@ -28,7 +35,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($message)) {
         $errors['message'] = "Veuillez saisir un message.";
     }
+
+    //Envoi du mail 
+    $transport = Transport::fromDsn('smtp://localhost:1025');
+    $mailer = new Mailer($transport);
+    $email = (new Email())
+        ->from($email)
+        ->to('contact@forumvaudois.ch')
+        ->subject('Formulaire de contact')
+        ->text($message)
+        ->html("<p>De : {$name}</p> <p>{$message}</p>");
+
+    $result = $mailer->send($email);
+    if ($result == null) {
+        echo "Un mail a été envoyé ! <a href='http://localhost:8025'>voir le mail</a>";
+    } else {
+        echo "Un problème lors de l'envoi du mail est survenu";
+    }
 }
+
+
 ?>
 
 <footer>
