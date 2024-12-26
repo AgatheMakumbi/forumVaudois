@@ -1,3 +1,36 @@
+<?php
+//require_once '../vendor/autoload.php';
+
+// ============================
+// TRAITEMENT DU FORMULAIRE
+// ============================
+$errors = ['name' => "", 'email'  => "", 'message' => ""];
+$name = "";
+$email = "";
+$message = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //$name = filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim']);
+    //$email = filter_input(INPUT_POST, 'email', FILTER_CALLBACK, ['options' => 'trim']);
+    //$message = filter_input(INPUT_POST, 'message', FILTER_CALLBACK, ['options' => 'trim']);
+
+
+    $name = filter_input(INPUT_POST, 'name');
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $message = filter_input(INPUT_POST, 'message');
+
+    if (empty($nom)) {
+        $errors['name'] = "Veuillez saisir votre nom.";
+    }
+    if (empty($email)) {
+        $errors['email'] = "Veuillez saisir une adresse email valide.";
+    }
+    if (empty($message)) {
+        $errors['message'] = "Veuillez saisir un message.";
+    }
+}
+?>
+
 <footer>
     <div class="footer-content">
         <div class="company">
@@ -10,18 +43,24 @@
             <p>&copy; 2024 Forum Vaudois - HEIG-VD ProgServ2</p>
         </div>
         <div class="contact-form">
-            <form action="#" method="post">
+            <form action="" method="POST">
                 <label for="name">Nom</label>
-                <input type="text" id="name" name="name" placeholder="Nom" required>
+                <input type="text" id="name" name="name" placeholder="Nom">
+                <p><?php echo $errors['name'] ?></p>
 
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="text" id="email" name="email" placeholder="Email">
+                <p><?php echo $errors['email'] ?></p>
 
                 <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Message" required></textarea>
+                <textarea id="message" name="message" placeholder="Message"></textarea>
+                <p><?php echo $errors['message'] ?></p>
 
                 <button type="submit">Envoyer</button>
             </form>
+            <p><?php var_dump($name); ?></p>
+            <p><?php var_dump($email); ?></p>
+            <p><?php echo ($message); ?></p>
         </div>
     </div>
 </footer>
