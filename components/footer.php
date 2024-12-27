@@ -15,6 +15,7 @@ $errors = ['name' => "", 'email'  => "", 'message' => ""];
 $name = "";
 $email = "";
 $message = "";
+$status ="";
 
 //Récupération des entrées utilisateur et validation 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

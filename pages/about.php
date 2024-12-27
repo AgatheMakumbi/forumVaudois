@@ -9,7 +9,9 @@
 </head>
 
 <body>
-    <?php include '../components/header.php'; ?>
+    <?php session_start();
+     include '../components/header.php'; 
+    ?>
     <main class="main-content-about">
     <section class="introduction">
         <div class="content">

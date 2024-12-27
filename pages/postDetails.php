@@ -11,6 +11,7 @@ use M521\ForumVaudois\Entity\Comment;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+session_start();
 
 // Vérifier si un identifiant est fourni dans l'URL
 if (!isset($_GET['id_post']) || empty($_GET['id_post'])) {

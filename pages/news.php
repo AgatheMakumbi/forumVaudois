@@ -10,18 +10,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$personne = new Personne("agathe", "makumbi", "makagathe7@gmail.com", "0779553315", "shitIsReal");
-echo $personne->__toString2();  
-echo "<br>";
+// Démarrer la session si ce n'est pas déjà fait
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Récupérer les informations de l'utilisateur connecté
+$id = $_SESSION["id"] ?? null;
+if (!$id) {
+    die("L'utilisateur n'est pas connecté.");
+}
 
 $db = new DbManagerCRUD();
-echo $db;
 
-echo "<br>";
-$categoryId = $_GET['category'];
-$posts = $db->getPostsByCategory($categoryId);
-
-print_r($posts);
+//print_r($posts);
 
 ?>
 <!DOCTYPE html>
@@ -32,14 +34,15 @@ print_r($posts);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
 
-    <title>NewsFeed</title>
+    <title>Tout explorer</title>
 </head>
 
 <body>
     <?php include '../components/header.php' ?>
     <main>
         <!-- IL faut récupérer la valeur de category en GET et display seulement les postes de cettes catégory pour ça il faut créer une methode qui prend en paramètre la catégory et qui select que les postes de cette catégory et return un tableau de post de cette catégory. Après ici on peut boucler sur ce tableau et afficher les postes. Si rien n'est envoyé en paramètre donc qu'il n'y a pas de catégory on display tous les postes toutes catégories confuse.-->
-        <h1>C'est bien ici</h1>
+        
+        <h1> tu es connecté et peux voir les postes</h1>
     </main>
 
 </body>

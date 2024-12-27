@@ -1,6 +1,6 @@
 <?php 
-session_start();
-$_SESSION["isConnected"] = false;
+//session_start();
+
 ?>
 
 <header class="header">

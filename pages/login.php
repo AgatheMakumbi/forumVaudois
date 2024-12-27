@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 
 session_start();
 
+
 // Initialisation
 $db = new DbManagerCRUD();
 $erreurs = ['email' => '', 'password' => ''];
@@ -21,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
-        header('Location: /ForumVaudois/index.php');
+        header('Location: /ForumVaudois/news.php');
         exit(); 
     }else{
-        var_dump($email, $password);
+        //var_dump($email, $password);
         // Vérification des champs
         if (empty($email) || empty($password)) {
             $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
@@ -32,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }else{
             // Tentative de connextion
             $userId = $db->loginUser($email,$password);
-            var_dump($userId);
+            
             if ($userId) {
                 $_SESSION["isConnected"] = true;
                 $_SESSION["id"] = $userId;
-                header('Location: /ForumVaudois/index.php');
+                header('Location: /ForumVaudois/news.php');
                 exit(); 
             }else{
                 $erreurs['email'] = 'Adresse e-mail ou mot de passe incorrect';
