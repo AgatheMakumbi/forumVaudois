@@ -129,6 +129,17 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
                 <p>Aucun post trouvé pour cette catégorie.</p>
             <?php endif; ?>
         </div>
+    <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
+
+    <title>Tout explorer</title>
+</head>
+
+<body>
+    <?php include '../components/header.php' ?>
+    <main>
+        <!-- IL faut récupérer la valeur de category en GET et display seulement les postes de cettes catégory pour ça il faut créer une methode qui prend en paramètre la catégory et qui select que les postes de cette catégory et return un tableau de post de cette catégory. Après ici on peut boucler sur ce tableau et afficher les postes. Si rien n'est envoyé en paramètre donc qu'il n'y a pas de catégory on display tous les postes toutes catégories confuse.-->
+        
+        <h1> tu es connecté et peux voir les postes</h1>
     </main>
     <?php include '../components/footer.php'; ?>
 </body>

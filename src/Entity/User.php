@@ -64,7 +64,7 @@ class User
      */
     public function setUsername(string $username): self
     {
-        $options = "/^.{5,10}$/";
+        $options = "/^.{1,20}$/";
         if (!preg_match($options, $username)) {
             throw new Exception('Username must be between 5 and 10 characters.');
         }

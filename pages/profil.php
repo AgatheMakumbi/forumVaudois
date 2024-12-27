@@ -4,7 +4,7 @@ use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
 require_once '../vendor/autoload.php';
-
+session_start();
 // Simuler l'utilisateur connecté
 $loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
 

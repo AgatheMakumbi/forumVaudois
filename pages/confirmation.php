@@ -45,7 +45,9 @@ if (!$UserToken) {
 </head>
 
 <body>
-    <?php include '../components/header.php' ?>
+    <?php session_start();
+     include '../components/header.php'
+      ?>
     
     <main class="main-content">
     <h1 class="welcome-text"><?php echo htmlspecialchars($confirmationMessage) ?></h1>

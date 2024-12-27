@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 
 session_start();
 
+
 // Initialisation
 $db = new DbManagerCRUD();
 $erreurs = ['email' => '', 'password' => ''];
@@ -21,21 +22,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
-        header('Location: ../index.php');
-        exit;
-    } else {
+        header('Location: /ForumVaudois/news.php');
+        exit(); 
+    }else{
+        //var_dump($email, $password);
+        // Vérification des champs
         if (empty($email) || empty($password)) {
             $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
             $erreurs['password'] = 'Veuillez renseigner votre mot de passe';
-        } else {
-            $userId = $db->loginUser($email, $password);
+        }else{
+            // Tentative de connextion
+            $userId = $db->loginUser($email,$password);
+            
             if ($userId) {
                 $_SESSION["isConnected"] = true;
                 $_SESSION["id"] = $userId;
-                header('Location: ../index.php');
-                exit;
-            } else {
-                $erreurs['password'] = 'Identifiants incorrects';
+                header('Location: /ForumVaudois/news.php');
+                exit(); 
+            }else{
+                $erreurs['email'] = 'Adresse e-mail ou mot de passe incorrect';
             }
         }
     }
@@ -59,8 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1 class="slogan">Le forum de la région</h1>
         </div>
         <div class="right-side">
-            <form class="login-form" action="login.php" method="POST">
-                <h2 class="form-title">Connexion</h2>
+            <form class="login-form, signup-form"  action="login.php" method="POST">
+                <h2 class="form-title">Login</h2>
+
+                <?php if (!empty($erreurs['email']) || !empty($erreurs['password'])) : ?>
+                    <p class="error-message"><?= htmlspecialchars($erreurs['email']) ?></p>
+                <?php endif; ?>
+
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" value="<?= htmlspecialchars($email); ?>" required>

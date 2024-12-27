@@ -1,4 +1,7 @@
 <?php
+session_start();
+$_SESSION["isConnected"]= false;
+
 require_once '../vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
@@ -28,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     
     // Validation du username (max 20 caractères, commence par majuscule, suit des minuscules)
-    if (!filter_input(INPUT_POST, 'username', FILTER_VALIDATE_REGEXP, ["options" =>["regexp" => "/^[A-ZÇÉÈÊËÀÂÎÏÔÙÛ]{1}([a-zçéèêëàâîïôùû]+|([a-zçéèêëàâîïôùû]+-[A-ZÇÉÈÊËÀÂÎÏÔÙÛ]{1}[a-zçéèêëàâîïôùû]+)){1,19}$/"]])) {
-        $erreurs['username'] = "Veuillez saisir un nom d'utilisateur de max 20 caractères.";
+    if (!filter_input(INPUT_POST, 'username', FILTER_VALIDATE_REGEXP, ["options" =>["regexp" => "/^[A-Za-z0-9_]{1,20}$/"]])) {
+        $erreurs['username'] = "Veuillez saisir un nom d'utilisateur qui commence par majuscule suivi de minuscules et de max 20 caractères.";
     } elseif ($dbManager->existsUsername($username)) {
         $erreurs['username'] = "Ce nom d'utilisateur est déjà pris.";
     }
@@ -81,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $validationMessage = "<p style='color: red;'>Une erreur est survenue. Veuillez réessayer.</p>";
             }
         } catch (Exception $e) {
-            $validationMessage = "Erreur lors de l'envoi de l'e-mail.</p>";
+            $validationMessage = $e."Erreur lors de l'envoi de l'e-mail.</p>";
         }
     }
 }
@@ -98,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+
     <a href="../index.php" class="header-back">Retour à l'accueil</a>
 
 
@@ -130,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <button type="submit" class="submit-btn">S'inscrire</button>
-
+                    <?php echo $validationMessage; ?>
                     
                 </form>
                 <br>
