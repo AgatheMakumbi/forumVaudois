@@ -12,10 +12,10 @@ $_SESSION["isConnected"] = false;
     <!-- ./ = la racine du dossier forumvaudois-->
     <nav class="nav-buttons">
         <a href="/ForumVaudois/pages/news.php" class="btn btn-news">Tout explorer</a>
-        <a href="/ForumVaudois/pages/news.php?category='activity'" class="btn btn-news">Activité 🪂</a>
-        <a href="/ForumVaudois/pages/news.php?category='food'" class="btn btn-news">Food​ 🍴</a>
-        <a href="/ForumVaudois/pages/news.php?category='nature'" class="btn btn-news">Nature 🌿​</a>
-        <a href="/ForumVaudois/pages/news.php?category='culture'" class="btn btn-news">Culture ​​🎥​</a>
+        <a href="/ForumVaudois/pages/news.php?category=activity" class="btn btn-news">Activité 🪂</a>
+        <a href="/ForumVaudois/pages/news.php?category=food" class="btn btn-news">Food​ 🍴</a>
+        <a href="/ForumVaudois/pages/news.php?category=nature" class="btn btn-news">Nature 🌿​</a>
+        <a href="/ForumVaudois/pages/news.php?category=culture" class="btn btn-news">Culture ​​🎥​</a>
         <a href="/ForumVaudois/pages/about.php" class="btn btn-news">À propos</a>
         <?php 
         if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {

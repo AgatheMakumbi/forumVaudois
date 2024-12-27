@@ -2,7 +2,6 @@
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
-use M521\ForumVaudois\Entity\Category;
 
 require_once '../vendor/autoload.php';
 
@@ -16,7 +15,7 @@ $posts = [
         "Ceci est le contenu du premier post.",
         100,
         $loggedUser->getId(),
-        1, // Passez seulement l'ID de la ville
+        1, // ID de la ville
         1, // ID de la catégorie
         new DateTime(),
         new DateTime(),
@@ -28,7 +27,7 @@ $posts = [
         "Voici le contenu du deuxième post.",
         200,
         $loggedUser->getId(),
-        2, // Passez seulement l'ID de la ville
+        2, // ID de la ville
         2,
         new DateTime(),
         new DateTime(),
@@ -40,7 +39,7 @@ $posts = [
         "Encore un autre post.",
         300,
         $loggedUser->getId(),
-        3, // Passez seulement l'ID de la ville
+        3, // ID de la ville
         3,
         new DateTime(),
         new DateTime(),
@@ -48,8 +47,6 @@ $posts = [
         "Adresse 3"
     ),
 ];
-
-
 ?>
 
 <!DOCTYPE html>
@@ -64,11 +61,9 @@ $posts = [
 
 <body>
     <?php include '../components/header.php'; ?>
-
-<!-- <a href="/ForumVaudois/pages/logout.php" class="btn btn-logout">Logout</a> -->
-    <main class="main-content">
+    <main class="profile-main">
         <!-- Profil de l'utilisateur -->
-        <section class="profile">
+        <section class="profile-section">
             <div class="profile-header">
                 <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
                 <div class="profile-info">
@@ -79,29 +74,30 @@ $posts = [
         </section>
 
         <!-- Historique des posts -->
-        <section class="posts-history">
+        <section class="profile-posts">
             <h2>Mes posts</h2>
-            <?php if (!empty($posts)) : ?>
-                <?php foreach ($posts as $post) : ?>
-                    <div class="post">
-                        <h3><?= htmlspecialchars($post->getTitle()) ?></h3>
-                        <div class="post-actions">
-    <button class="btn-response">Ajouter une réponse</button>
-    <p>📍 <?php
-        $city = City::getCityById($post->getCity()); // Récupère l'objet City par ID
-        echo htmlspecialchars($city->getCityName());
-    ?></p>
-</div>
-
-                    </div>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <p>Aucun post trouvé.</p>
-            <?php endif; ?>
+            <div class="posts-container">
+                <?php if (!empty($posts)) : ?>
+                    <?php foreach ($posts as $post) : ?>
+                        <div class="post-card">
+                            <div class="post-header">
+                                <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+                            </div>
+                            <p><?= htmlspecialchars($post->getText()) ?></p>
+                            <div class="post-footer">
+                                <button class="btn-response">Ajouter une réponse</button>
+                                <p class="post-location">
+                                    📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p>Aucun post trouvé.</p>
+                <?php endif; ?>
+            </div>
         </section>
     </main>
-
-    <!-- Footer Inclusion -->
     <?php include '../components/footer.php'; ?>
 </body>
 
