@@ -20,32 +20,32 @@ $db = new DbManagerCRUD();
 </head>
 
 <body>
-    <!-- Inclusion de la barre de navigation -->
-    <?php include './components/header.php' ?>
+    <div class="wrapper">
+        <!-- Inclusion du header -->
+        <?php include './components/header.php'; ?>
 
-    <main class="main-content">
-        <section class="welcome-section">
-            <br>
-            <br>
-            <h1>Forum Vaudois</h1>
-            <br>
-            <p>
-                Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce qui touche au canton de Vaud et bien plus encore.
-                <br>#LibertéDExpression</br>
-            </p>
-            <br>
-        </section>
+        <main class="main-content">
+            <section class="welcome-section">
+                <h1>Forum Vaudois</h1>
+                <p>
+                    Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce
+                    qui
+                    touche au canton de Vaud et bien plus encore.
+                    <br>#LibertéDExpression</br>
+                </p>
+            </section>
 
-        <section class="thread-section">
-            <a href="activite.php" class="thread-btn">🪂 Rubrique Activité 🪂</a>
-            <a href="food.php" class="thread-btn">🍴 Rubrique Food 🍴</a>
-            <a href="nature.php" class="thread-btn">🌿 Rubrique Nature 🌿</a>
-            <a href="culture.php" class="thread-btn">🎥 Rubrique Culture 🎥</a>
-        </section>
-    </main>
+            <section class="thread-section">
+                <a href="activite.php" class="thread-btn">🪂 Rubrique Activité 🪂</a>
+                <a href="food.php" class="thread-btn">🍴 Rubrique Food 🍴</a>
+                <a href="nature.php" class="thread-btn">🌿 Rubrique Nature 🌿</a>
+                <a href="culture.php" class="thread-btn">🎥 Rubrique Culture 🎥</a>
+            </section>
+        </main>
 
-    <!-- Inclusion du footer -->
-    <?php include './components/footer.php' ?>
+        <!-- Inclusion du footer -->
+        <?php include './components/footer.php' ?>
+    </div>
 </body>
 
 </html>

@@ -103,45 +103,43 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
 </head>
 
 <body>
-    <!-- Inclusion du header -->
-    <?php include '../components/header.php'; ?>
-    <main class="news-feed">
-        <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
-        <div class="posts-container">
-            <?php if (!empty($filteredPosts)): ?>
-                <?php foreach ($filteredPosts as $post): ?>
-                    <div class="post-card">
-                        <div class="post-header">
-                            <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
-                            <h2><?= htmlspecialchars($post->getTitle()); ?></h2>
-                        </div>
-                        <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
-                        <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
-                        <p class="post-location">
-                            📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?>
-                        </p>
-                        <div class="post-footer">
-                            <button class="btn-response">Ajouter une réponse</button>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Aucun post trouvé pour cette catégorie.</p>
-            <?php endif; ?>
-        </div>
-    <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
+    <div class="wrapper">
+        <!-- Inclusion du header -->
+        <?php include '../components/header.php'; ?>
 
-    <title>Tout explorer</title>
-</head>
+        <main class="news-feed">
+            <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
+            <div class="posts-container">
+                <?php if (!empty($filteredPosts)): ?>
+                    <?php foreach ($filteredPosts as $post): ?>
+                        <div class="post-card">
+                            <div class="post-header">
+                                <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
+                                <h2><?= htmlspecialchars($post->getTitle()); ?></h2>
+                            </div>
+                            <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
+                            <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
+                            <p class="post-location">
+                                📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?>
+                            </p>
+                            <div class="post-footer">
+                                <button class="btn-response">Ajouter une réponse</button>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>Aucun post trouvé pour cette catégorie.</p>
+                <?php endif; ?>
+            </div>
+            <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
+        </main>
 
-<body>
-    <?php include '../components/header.php' ?>
-    <main>
         <!-- IL faut récupérer la valeur de category en GET et display seulement les postes de cettes catégory pour ça il faut créer une methode qui prend en paramètre la catégory et qui select que les postes de cette catégory et return un tableau de post de cette catégory. Après ici on peut boucler sur ce tableau et afficher les postes. Si rien n'est envoyé en paramètre donc qu'il n'y a pas de catégory on display tous les postes toutes catégories confuse.-->
-        
-        <h1> tu es connecté et peux voir les postes</h1>
-    </main>
-    <?php include '../components/footer.php'; ?>
+
+        <!-- Inclusion du footer -->
+        <?php include '../components/footer.php'; ?>
+    </div>
 </body>
+
 
 </html>
