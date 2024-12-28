@@ -1,9 +1,15 @@
 <?php
 require_once '../vendor/autoload.php';
 
+use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+/*
 // Posts fictifs pour chaque catégorie
 $posts = [
     new Post(
@@ -66,7 +72,7 @@ $posts = [
         5,
         "Route des Bains, 1892 Lavey-les-Bains"
     ),
-];
+];*/
 
 // Récupération de la catégorie via l'URL
 $categoryName = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : 'all';
@@ -83,6 +89,20 @@ $categories = [
 // Vérification de la catégorie
 if (!array_key_exists($categoryName, $categories)) {
     die("Catégorie invalide ou non spécifiée.");
+}
+else {
+    try {
+        $dbManager = new DbManagerCRUD();
+        $posts = [];
+        
+        if($categoryName == "all")
+            $posts = $dbManager->showPosts();
+        else
+            $posts = $dbManager->getPostsByCategory($categories[$categoryName]);    
+    } catch (Exception $e) {
+        echo "Erreur lors de la récupération du post : " . $e->getMessage();
+        exit;
+    }
 }
 
 // Filtrage des posts en fonction de la catégorie
@@ -115,7 +135,7 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
                         <div class="post-card">
                             <div class="post-header">
                                 <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
-                                <h2><?= htmlspecialchars($post->getTitle()); ?></h2>
+                                <a href="postDetails.php?id_post=<?php echo $post->getId(); ?>"><h2><?= htmlspecialchars($post->getTitle()); ?></h2></a>
                             </div>
                             <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
                             <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
