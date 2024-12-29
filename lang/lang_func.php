@@ -1,116 +1,139 @@
 <?php
 
-/**
- * Performs the actual translation based on the given key. This is the method that is used
- * in the actual views to translate a message.
- *
- * @param $key
- * @return mixed
- * @throws Exception
- */
-function t($key)
-{
-    $language = getLanguage();
-    $path = realpath(__DIR__);
-    $messages = require $path . "/{$language}.php";
+if (!function_exists('t')) {
+    /**
+     * Performs the actual translation based on the given key.
+     *
+     * @param string $key The translation key.
+     * @return string The translated message or the key if not found.
+     */
+    function t($key)
+    {
+        $language = getLanguage();
+        $path = __DIR__ . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR;
+        $langFile = $path . "{$language}.php";
 
-    return (array_key_exists($key, $messages))
-        ? $messages[$key]
-        : $key;
-}
-
-/**
- * Returns the language as defined by either the URL, session, or browser setting.
- * If a language could not be determined, or is not in a list of supported languages, the default
- * language passed in to this method will be returned.
- *
- * @param string $defaultLanguage
- * @return string
- */
-function getLanguage($defaultLanguage = 'fr')
-{
-    $language = null;
-
-    if (isset($_GET['lang'])) {
-        $language = $_GET['lang'];
-    } elseif (isset($_SESSION['LANG'])) {
-        $language = $_SESSION['LANG'];
-    } else {
-        $language = getLanguageFromBrowser($defaultLanguage);
-    }
-
-    // If the language given to us is not in our list of supported languages, use the default language.
-    if (!isset($language) || !in_array($language, getSupportedLanguages())) {
-        $language = $defaultLanguage;
-    }
-
-    // Store the current language to the session for future use.
-    $_SESSION['LANG'] = $language;
-
-    return $language;
-}
-
-
-/**
- * Returns the language that the client's browser is set to use. If we're unable to
- * determine a language from the browser this will return the default language passed
- * in.
- *
- * @param string $defaultLanguage
- * @return int|string
- */
-function getLanguageFromBrowser($defaultLanguage = 'fr')
-{
-    $languages = [];
-    if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-        // break up string into pieces (languages and q factors)
-        preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $lang_parse);
-
-        if (count($lang_parse[1])) {
-            // create a list like "en" => 0.8
-            $languages = array_combine($lang_parse[1], $lang_parse[4]);
-
-            // set default to 1 for any without q factor
-            foreach ($languages as $lang => $val) {
-                if ($val === '') $languages[$lang] = 1;
-            }
-
-            // sort list based on value
-            arsort($languages, SORT_NUMERIC);
+        if (!file_exists($langFile)) {
+            throw new Exception("Language file not found: {$langFile}");
         }
+
+        $messages = require $langFile;
+
+        return (array_key_exists($key, $messages))
+            ? $messages[$key]
+            : $key;
     }
+}
 
-    $supportedLanguages = getSupportedLanguages();
+if (!function_exists('getLanguage')) {
+    /**
+     * Determines the language from URL, session, or browser settings.
+     *
+     * @param string $defaultLanguage The default language to use if none is set.
+     * @return string The determined language.
+     */
+    function getLanguage($defaultLanguage = 'fr')
+    {
+        $language = null;
 
-    foreach ($languages as $locale => $weighting) {
-
-        // We're dealing with locale: Ex. en-US
-        if (preg_match("/[a-z]{2}-[A-Z]{2}/", $locale)) {
-            $browserLanguage = substr($locale, 0, 2);
+        if (isset($_GET['lang'])) {
+            $language = $_GET['lang'];
+        } elseif (isset($_SESSION['LANG'])) {
+            $language = $_SESSION['LANG'];
         } else {
-            // Probably dealing with a language: Ex. en
-            $browserLanguage = $locale;
+            $language = getLanguageFromBrowser($defaultLanguage);
         }
 
-        if (in_array($browserLanguage, $supportedLanguages)) {
-            return $browserLanguage;
+        // Validate the language against supported languages
+        if (!isset($language) || !in_array($language, getSupportedLanguages())) {
+            $language = $defaultLanguage;
         }
+
+        // Store the current language in the session for later use
+        $_SESSION['LANG'] = $language;
+
+        return $language;
     }
-
-    return $defaultLanguage;
 }
 
-/**
- * Returns an array of languages this web application supports.
- *
- * @return array
- */
-function getSupportedLanguages()
-{
-    $path = getcwd() . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR;
-    $tab = glob($path . "*", GLOB_ONLYDIR);
-    for ($i = 0; $i < count($tab); $i++) {
-        $tab[$i] = basename($tab[$i]);
+if (!function_exists('loadLanguage')) {
+    function loadLanguage($lang)
+    {
+        $path = __DIR__ . DIRECTORY_SEPARATOR;
+        $langFile = $path . "{$lang}.php";
+
+        if (!file_exists($langFile)) {
+            throw new Exception("Le fichier de langue {$langFile} est introuvable.");
+        }
+
+        return require $langFile;
     }
-    return $tab;
+}
+
+if (!function_exists('getLanguageFromBrowser')) {
+    /**
+     * Retrieves the language from the client's browser.
+     *
+     * @param string $defaultLanguage The default language to use if none is detected.
+     * @return string The browser-determined language or the default.
+     */
+    function getLanguageFromBrowser($defaultLanguage = 'fr')
+    {
+        $languages = [];
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            preg_match_all(
+                '/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i',
+                $_SERVER['HTTP_ACCEPT_LANGUAGE'],
+                $lang_parse
+            );
+
+            if (count($lang_parse[1])) {
+                $languages = array_combine($lang_parse[1], $lang_parse[4]);
+
+                foreach ($languages as $lang => $val) {
+                    if ($val === '') {
+                        $languages[$lang] = 1;
+                    }
+                }
+
+                arsort($languages, SORT_NUMERIC);
+            }
+        }
+
+        $supportedLanguages = getSupportedLanguages();
+
+        foreach ($languages as $locale => $weighting) {
+            $browserLanguage = strpos($locale, '-') !== false ? substr($locale, 0, 2) : $locale;
+
+            if (in_array($browserLanguage, $supportedLanguages)) {
+                return $browserLanguage;
+            }
+        }
+
+        return $defaultLanguage;
+    }
+}
+
+if (!function_exists('getSupportedLanguages')) {
+    /**
+     * Returns the list of supported languages.
+     *
+     * @return array An array of supported language codes.
+     */
+    function getSupportedLanguages()
+    {
+        $path = __DIR__ . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($path)) {
+            throw new Exception("Language directory not found: {$path}");
+        }
+
+        $files = glob($path . "*.php");
+        $languages = [];
+        foreach ($files as $file) {
+            $languages[] = pathinfo($file, PATHINFO_FILENAME);
+        }
+
+        return $languages;
+    }
 }

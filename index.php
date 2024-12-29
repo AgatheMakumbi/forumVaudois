@@ -1,13 +1,23 @@
 <?php
 require_once 'vendor/autoload.php';
+require_once __DIR__ . '/lang/lang_func.php'; // Inclusion corrigée du fichier
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
-use M521\ForumVaudois\lang\lang_func;
+
+// Charger les messages de traduction
+try {
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : 'fr';
+    $messages = loadLanguage($lang);
+} catch (Exception $e) {
+    // En cas d'erreur, afficher un message ou une langue par défaut
+    $messages = loadLanguage('fr');
+    error_log($e->getMessage());
+}
 
 // Initialisation de la connexion avec la base de données
 $db = new DbManagerCRUD();
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +25,10 @@ $db = new DbManagerCRUD();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css?v=1">
+    <link rel="stylesheet" href="/ForumVaudois/assets/css/style.css?v=<?= time(); ?>">
+
+
+
     <title>Forum Vaudois - Accueil</title>
 </head>
 
@@ -27,20 +40,20 @@ $db = new DbManagerCRUD();
         <section class="welcome-section">
             <br>
             <br>
-            <h1>Forum Vaudois</h1>
+            <h1><?php echo $messages['home_title']; ?></h1>
             <br>
             <p>
-                Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce qui touche au canton de Vaud et bien plus encore.
-                <br>#LibertéDExpression</br>
+                <?php echo $messages['home_text']; ?>
+                <br><?php echo $messages['home_text_hashtag']; ?></br>
             </p>
             <br>
         </section>
 
         <section class="thread-section">
-            <a href="activite.php" class="thread-btn">🪂 Rubrique Activité 🪂</a>
-            <a href="food.php" class="thread-btn">🍴 Rubrique Food 🍴</a>
-            <a href="nature.php" class="thread-btn">🌿 Rubrique Nature 🌿</a>
-            <a href="culture.php" class="thread-btn">🎥 Rubrique Culture 🎥</a>
+            <a href="activite.php" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
+            <a href="food.php" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
+            <a href="nature.php" class="thread-btn"><?php echo $messages['home_button_nature']; ?></a>
+            <a href="culture.php" class="thread-btn"><?php echo $messages['home_button_culture']; ?></a>
         </section>
     </main>
 

@@ -850,17 +850,20 @@ body {
 .footer-content {
     background-color: #15A64F;
     color: white;
-    padding: 1.5rem 10%;
+    padding: 2rem 10%;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
     margin: 0 auto;
+    flex-wrap: wrap; /* Pour gérer les petits écrans */
 }
 
 .footer-content .company {
     flex: 1;
     min-width: 200px;
+    text-align: left; /* Aligner le texte à gauche */
+    padding-right: 2rem; /* Ajuster l'espacement pour correspondre au contenu de droite */
 }
 
 .footer-content .company p {
@@ -874,6 +877,39 @@ body {
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 1.5rem;
+}
+
+/* Style pour le sélecteur de langue */
+.footer-content .language-selector {
+    margin-bottom: 1rem; /* Ajoute un espacement avec le titre */
+    text-align: left; /* Aligner le sélecteur à gauche */
+}
+
+.footer-content .language-selector label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #ffffff;
+}
+
+.footer-content .language-selector select {
+    width: 100%; /* Ajuste la largeur pour un look uniforme */
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #ffffff;
+    color: #15A64F;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.footer-content .language-selector select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Effet de surbrillance */
 }
 
 .contact-form {
@@ -923,6 +959,7 @@ body {
     background-color: #107D3F;
 }
 
+
 /* ==========================
    MEDIA QUERIES
 ========================== */
@@ -945,12 +982,14 @@ body {
 
     .footer-content {
         flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
+        text-align: center;
     }
 
     .contact-form {
         max-width: 100%;
     }
-}
 
+    .footer-content .company {
+        margin-bottom: 1.5rem;
+    }
+}

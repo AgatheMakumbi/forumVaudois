@@ -4,14 +4,14 @@ require_once '../vendor/autoload.php';
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
-// Posts fictifs pour chaque catégorie
+// Posts fictifs pour chaque catégorie 
 $posts = [
     new Post(
         "Visiter le Château de Chillon",
         "Le Château de Chillon est un site emblématique du canton de Vaud.",
         20,
         1,
-        1,
+        3,
         1,
         new DateTime(),
         new DateTime(),
@@ -23,7 +23,7 @@ $posts = [
         "Une randonnée idéale pour admirer les Alpes vaudoises.",
         0,
         2,
-        2,
+        3,
         2,
         new DateTime(),
         new DateTime(),
@@ -35,7 +35,7 @@ $posts = [
         "Découvrez les vins de Lavaux, classé au patrimoine mondial de UNESCO.",
         50,
         3,
-        3,
+        4,
         3,
         new DateTime(),
         new DateTime(),
@@ -47,7 +47,7 @@ $posts = [
         "Promenez-vous dans la vieille ville et visitez le musée olympique.",
         30,
         4,
-        4,
+        1,
         4,
         new DateTime(),
         new DateTime(),
@@ -59,7 +59,7 @@ $posts = [
         "Profitez de la journée de détente aux bains thermaux.",
         80,
         5,
-        5,
+        3,
         5,
         new DateTime(),
         new DateTime(),
@@ -89,7 +89,6 @@ if (!array_key_exists($categoryName, $categories)) {
 $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, function ($post) use ($categories, $categoryName) {
     return $post->getCategory() === $categories[$categoryName];
 });
-
 ?>
 
 <!DOCTYPE html>
@@ -108,8 +107,8 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
     <main class="news-feed">
         <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
         <div class="posts-container">
-            <?php if (!empty($filteredPosts)): ?>
-                <?php foreach ($filteredPosts as $post): ?>
+            <?php if (!empty($filteredPosts)) : ?>
+                <?php foreach ($filteredPosts as $post) : ?>
                     <div class="post-card">
                         <div class="post-header">
                             <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
@@ -117,30 +116,20 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
                         </div>
                         <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
                         <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
-                        <p class="post-location">
-                            📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?>
-                        </p>
+                        <p class="post-address">Adresse : <?= htmlspecialchars($post->getAddress()); ?></p>
+                        <p class="post-location">📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?></p>
+                        
                         <div class="post-footer">
-                            <button class="btn-response">Ajouter une réponse</button>
+                            <a href="postDetails.php?id=<?= $post->getId(); ?>" class="btn-view-details">Voir les détails</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <p>Aucun post trouvé pour cette catégorie.</p>
             <?php endif; ?>
         </div>
-    <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
-
-    <title>Tout explorer</title>
-</head>
-
-<body>
-    <?php include '../components/header.php' ?>
-    <main>
-        <!-- IL faut récupérer la valeur de category en GET et display seulement les postes de cettes catégory pour ça il faut créer une methode qui prend en paramètre la catégory et qui select que les postes de cette catégory et return un tableau de post de cette catégory. Après ici on peut boucler sur ce tableau et afficher les postes. Si rien n'est envoyé en paramètre donc qu'il n'y a pas de catégory on display tous les postes toutes catégories confuse.-->
-        
-        <h1> tu es connecté et peux voir les postes</h1>
     </main>
+    <!-- Inclusion du footer -->
     <?php include '../components/footer.php'; ?>
 </body>
 

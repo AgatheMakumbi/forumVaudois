@@ -3,7 +3,7 @@ return array(
     //Header
     'nav_all' => "Tout explorer",
     'nav_activities' => "Activités",
-    'nav_food' => "Restauration",
+    'nav_food' => "Nourriture",
     'nav_nature' => "Nature",
     'nav_culture' => "Culture",
     'nav_about' => "A propos",
@@ -23,10 +23,10 @@ return array(
     'home_title' => "Forum Vaudois",
     'home_text' => "Bienvenue sur le forum vaudois ! Un espace d’échange où vous pouvez discuter librement de tout ce qui touche au canton de Vaud et bien plus encore.",
     'home_text_hashtag' => "#LibertéDExpression",
-    'home_button_activities' => "Rubrique Activités",
-    'home_button_food' => "Rubrique Restauration",
-    'home_button_nature' => "Rubrique Nature",
-    'home_button_culture' => "Rubrique Culture",
+    'home_button_activities' => "🪂 Rubrique Activités 🪂",
+    'home_button_food' => "🍴 Rubrique Restauration 🍴",
+    'home_button_nature' => "🌿​ Rubrique Nature 🌿​",
+    'home_button_culture' => "​​🎥​ Rubrique Culture ​​🎥​",
 
     //About 
     'about_intro_title' => "Introduction",
