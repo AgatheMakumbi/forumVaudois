@@ -21,45 +21,6 @@ session_start();
 // Simuler l'utilisateur connecté
 $loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
 
-// Simuler quelques posts pour cet utilisateur
-$posts = [
-    new Post(
-        "Premier post",
-        "Ceci est le contenu du premier post.",
-        100,
-        $loggedUser->getId(),
-        1, // ID de la ville
-        1, // ID de la catégorie
-        new DateTime(),
-        new DateTime(),
-        1,
-        "Adresse 1"
-    ),
-    new Post(
-        "Deuxième post",
-        "Voici le contenu du deuxième post.",
-        200,
-        $loggedUser->getId(),
-        2, // ID de la ville
-        2,
-        new DateTime(),
-        new DateTime(),
-        2,
-        "Adresse 2"
-    ),
-    new Post(
-        "Troisième post",
-        "Encore un autre post.",
-        300,
-        $loggedUser->getId(),
-        3, // ID de la ville
-        3,
-        new DateTime(),
-        new DateTime(),
-        3,
-        "Adresse 3"
-    ),
-];
 ?>
 
 <!DOCTYPE html>

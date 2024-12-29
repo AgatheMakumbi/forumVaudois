@@ -16,69 +16,6 @@ try {
     $messages = loadLanguage('fr'); // Charge par défaut le français en cas d'erreur
     error_log($e->getMessage()); // Log l'erreur pour débogage
 }
-// Posts fictifs pour chaque catégorie 
-$posts = [
-    new Post(
-        "Visiter le Château de Chillon",
-        "Le Château de Chillon est un site emblématique du canton de Vaud.",
-        20,
-        1,
-        3,
-        1,
-        new DateTime(),
-        new DateTime(),
-        1,
-        "Avenue de Chillon, 1820 Veytaux"
-    ),
-    new Post(
-        "Randonnée à la Dent de Jaman",
-        "Une randonnée idéale pour admirer les Alpes vaudoises.",
-        0,
-        2,
-        3,
-        2,
-        new DateTime(),
-        new DateTime(),
-        2,
-        "Dent de Jaman, 1824 Caux"
-    ),
-    new Post(
-        "Dégustation de vins à Lavaux",
-        "Découvrez les vins de Lavaux, classé au patrimoine mondial de UNESCO.",
-        50,
-        3,
-        4,
-        3,
-        new DateTime(),
-        new DateTime(),
-        3,
-        "Chemin de la Vignette, 1091 Grandvaux"
-    ),
-    new Post(
-        "Découvrir Lausanne",
-        "Promenez-vous dans la vieille ville et visitez le musée olympique.",
-        30,
-        4,
-        1,
-        4,
-        new DateTime(),
-        new DateTime(),
-        4,
-        "Place de la Palud, 1003 Lausanne"
-    ),
-    new Post(
-        "Relaxation aux bains de Lavey",
-        "Profitez de la journée de détente aux bains thermaux.",
-        80,
-        5,
-        3,
-        5,
-        new DateTime(),
-        new DateTime(),
-        5,
-        "Route des Bains, 1892 Lavey-les-Bains"
-    ),
-];
 
 // Récupération de la catégorie via l'URL
 $categoryName = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : 'all';
