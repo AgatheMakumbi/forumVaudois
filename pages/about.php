@@ -1,3 +1,9 @@
+<?php
+//require_once '/../vendor/autoload.php';
+require_once '../lang/lang_func.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,28 +23,15 @@
         <main class="main-content-about">
             <section class="introduction">
                 <div class="content">
-                    <h2>Introduction</h2>
-                    <p>Bienvenue sur le Forum Vaudois, une plateforme dédiée aux échanges et aux discussions pour les
-                        habitants et les visiteurs du canton de Vaud. Notre objectif est de faciliter la communication,
-                        de
-                        promouvoir les activités locales, et de renforcer les liens entre les membres de la communauté.
-                        Que
-                        vous soyez à la recherche d'événements, de bons plans, ou simplement d'un espace pour partager
-                        vos
-                        idées, le Forum Vaudois est là pour vous.</p>
+                    <h2><?php echo (t('about_intro_title')) ?></h2>
+                    <p><?php echo (t('about_intro_content')) ?></p>
                 </div>
                 <div class="objectives">
-                    <h2>Objectifs et mission</h2>
+                    <h2><?php echo (t('about_mission_title')) ?></h2>
                     <ul>
-                        <li>Promouvoir les lieux et activités locales : Offrir une visibilité aux événements culturels,
-                            aux
-                            entreprises locales et aux initiatives communautaires.</li>
-                        <li>Faciliter les échanges : Proposer un espace de discussion convivial et inclusif où chacun
-                            peut
-                            contribuer.</li>
-                        <li>Renforcer la communauté : Créer un sentiment d'appartenance en favorisant la collaboration
-                            et le
-                            partage d'expériences.</li>
+                        <li><?php echo (t('about_mission_content1')) ?></li>
+                        <li><?php echo (t('about_mission_content2')) ?>.</li>
+                        <li><?php echo (t('about_mission_content3')) ?></li>
                     </ul>
                 </div>
             </section>
@@ -49,28 +42,28 @@
                 <div class="team-members">
                     <div class="member">
                         <div class="icon">AJ</div>
-                        <p class="name">Abessolo Joshua</p>
-                        <p class="role">Développeur Frontend</p>
+                        <p class="name"><?php echo (t('about_team_josh_name')) ?></p>
+                        <p class="role"><?php echo (t('about_team_josh_role')) ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">DM</div>
-                        <p class="name">Desgalier Michael</p>
-                        <p class="role">Développeur Backend</p>
+                        <p class="name"><?php echo (t('about_team_mic_name')) ?></p>
+                        <p class="role"><?php echo (t('about_team_mic_role')) ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">JM</div>
-                        <p class="name">Jaccard Mathilde</p>
-                        <p class="role">Cheffe de Projet</p>
+                        <p class="name"><?php echo (t('about_team_mat_name')) ?></p>
+                        <p class="role"><?php echo (t('about_team_mat_role')) ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">MA</div>
-                        <p class="name">Makumbi Agathe</p>
-                        <p class="role">Développeuse Backend</p>
+                        <p class="name"><?php echo (t('about_team_aga_name')) ?></p>
+                        <p class="role"><?php echo (t('about_team_aga_role')) ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">MJ</div>
-                        <p class="name">Mayor Joanah</p>
-                        <p class="role">Experte en Base de Données</p>
+                        <p class="name"><?php echo (t('about_team_joa_name')) ?></p>
+                        <p class="role"><?php echo (t('about_team_joa_role')) ?></p>
                     </div>
                 </div>
             </section>

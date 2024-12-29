@@ -1,81 +1,90 @@
 <?php
 
 /**
- * Performs the actual translation based on the given key. This is the method that is used
- * in the actual views to translate a message.
- *
- * @param $key
- * @return mixed
+ * Affiche le texte qui correspond à la clé donnée, dans la langue sélectionnée
+ * Méthode utilisée dans le html
+ * @param string $key 
+ * @return mixed 
+ *      retourne la valeur associée à la clé si la clé existe dans le tableau
+ *      retourne la clé si la clé n'existe pas dans le tableau
  * @throws Exception
  */
 function t($key)
 {
+    // Détermine la langue active
     $language = getLanguage();
-    $path = realpath(__DIR__);
-    $messages = require $path . "/{$language}.php";
 
-    return (array_key_exists($key, $messages))
-        ? $messages[$key]
+    // Construit le chemin vers les dictionnaires de chaque langue
+    $path = realpath(__DIR__);
+
+    // Tableau retourné par le fichier <lang>.php 
+    $dictionary = require $path . "/dictionaries/{$language}.php";
+
+    // Retourne soit la valeur associée à la clé (si la clé existe) soit la clé (si la clé n'existe pas)
+    return (array_key_exists($key, $dictionary))
+        ? $dictionary[$key]
         : $key;
 }
 
 /**
- * Returns the language as defined by either the URL, session, or browser setting.
- * If a language could not be determined, or is not in a list of supported languages, the default
- * language passed in to this method will be returned.
+ * Rend la langue définie soit par l'URL, soit par la session, soit par le navigateur (dans cet ordre de priorité)
+ * Si aucune langue ne peut être déterminée ou que la langue déterminée n'est pas dans la liste des 
+ * langues supportées, utilise la langue par défaut
  *
  * @param string $defaultLanguage
- * @return string
+ * @return string $language
  */
 function getLanguage($defaultLanguage = 'fr')
 {
     $language = null;
 
     if (isset($_GET['lang'])) {
+        // Rend la langue définie par l'URL si elle existe
         $language = $_GET['lang'];
     } elseif (isset($_SESSION['LANG'])) {
+        // Rend la langue définie par la session si elle existe
         $language = $_SESSION['LANG'];
     } else {
+        // Rend la langue définie par le navigateur 
+        // Si aucune langue détectée, rend la langue par défaut
         $language = getLanguageFromBrowser($defaultLanguage);
     }
 
-    // If the language given to us is not in our list of supported languages, use the default language.
+    // Si aucune langue détectée ou qu'elle n'est pas dans la liste des langues supportées, utilise la langue par défaut
     if (!isset($language) || !in_array($language, getSupportedLanguages())) {
         $language = $defaultLanguage;
     }
 
-    // Store the current language to the session for future use.
+    // Enregistre la langue dans la session pour les utilisations futures
     $_SESSION['LANG'] = $language;
 
     return $language;
 }
 
-
 /**
- * Returns the language that the client's browser is set to use. If we're unable to
- * determine a language from the browser this will return the default language passed
- * in.
+ * Rend la langue définie par le navigateur (client) 
+ * Si aucune langue détectée, rend la langue par défaut
  *
  * @param string $defaultLanguage
- * @return int|string
+ * @return int|string 
  */
 function getLanguageFromBrowser($defaultLanguage = 'fr')
 {
     $languages = [];
     if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-        // break up string into pieces (languages and q factors)
+        // séparer la chaîne renvoyée (langues, locales et facteurs q (pondération))
         preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $lang_parse);
 
         if (count($lang_parse[1])) {
-            // create a list like "en" => 0.8
+            // créer une liset de forme  "langue" => facteur q (par exemple "en" => 0.8)
             $languages = array_combine($lang_parse[1], $lang_parse[4]);
 
-            // set default to 1 for any without q factor
+            // pour les langues qui n'ont pas de facteur q, le mettre à 1 par défaut
             foreach ($languages as $lang => $val) {
                 if ($val === '') $languages[$lang] = 1;
             }
 
-            // sort list based on value
+            // trier la liste selon la valeur du facteur q
             arsort($languages, SORT_NUMERIC);
         }
     }
@@ -84,11 +93,11 @@ function getLanguageFromBrowser($defaultLanguage = 'fr')
 
     foreach ($languages as $locale => $weighting) {
 
-        // We're dealing with locale: Ex. en-US
+        // Cas d'utilisation des locales (langue + pays) Ex. "en-US"
         if (preg_match("/[a-z]{2}-[A-Z]{2}/", $locale)) {
             $browserLanguage = substr($locale, 0, 2);
         } else {
-            // Probably dealing with a language: Ex. en
+            // Cas d'utilisation d'une langue uniquement Ex. "en"
             $browserLanguage = $locale;
         }
 
@@ -101,16 +110,17 @@ function getLanguageFromBrowser($defaultLanguage = 'fr')
 }
 
 /**
- * Returns an array of languages this web application supports.
+ * Rend un tableau de toutes les langues supportées par l'application
  *
  * @return array
  */
 function getSupportedLanguages()
 {
-    $path = getcwd() . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR;
-    $tab = glob($path . "*", GLOB_ONLYDIR);
-    for ($i = 0; $i < count($tab); $i++) {
-        $tab[$i] = basename($tab[$i]);
+    $path = getcwd() . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR . "dictionaries" . DIRECTORY_SEPARATOR;
+    $files = glob($path . "*.php");
+    $languages = [];
+    for ($i = 0; $i < count($files); $i++) {
+        $languages[$i] = basename($files[$i], ".php");
     }
-    return $tab;
+    return $languages;
 }
