@@ -1,10 +1,21 @@
 <?php
 require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
+
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
+try {
+    // Récupère la langue depuis la requête GET ou utilise la langue par défaut (français)
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['LANG']) ? $_SESSION['LANG'] : 'fr');
+    $messages = loadLanguage($lang); // Charge les traductions
+    $_SESSION['LANG'] = $lang; // Stocke la langue dans la session
+} catch (Exception $e) {
+    $messages = loadLanguage('fr'); // Charge par défaut le français en cas d'erreur
+    error_log($e->getMessage()); // Log l'erreur pour débogage
+}
 // Posts fictifs pour chaque catégorie 
 $posts = [
     new Post(
@@ -117,37 +128,6 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
 </head>
 
 <body>
-<<<<<<< HEAD
-    <!-- Inclusion du header -->
-    <?php include '../components/header.php'; ?>
-    <main class="news-feed">
-        <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
-        <div class="posts-container">
-            <?php if (!empty($filteredPosts)) : ?>
-                <?php foreach ($filteredPosts as $post) : ?>
-                    <div class="post-card">
-                        <div class="post-header">
-                            <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
-                            <h2><?= htmlspecialchars($post->getTitle()); ?></h2>
-                        </div>
-                        <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
-                        <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
-                        <p class="post-address">Adresse : <?= htmlspecialchars($post->getAddress()); ?></p>
-                        <p class="post-location">📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?></p>
-                        
-                        <div class="post-footer">
-                            <a href="postDetails.php?id=<?= $post->getId(); ?>" class="btn-view-details">Voir les détails</a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <p>Aucun post trouvé pour cette catégorie.</p>
-            <?php endif; ?>
-        </div>
-    </main>
-    <!-- Inclusion du footer -->
-    <?php include '../components/footer.php'; ?>
-=======
     <div class="wrapper">
         <!-- Inclusion du header -->
         <?php include '../components/header.php'; ?>
@@ -184,7 +164,6 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
         <!-- Inclusion du footer -->
         <?php include '../components/footer.php'; ?>
     </div>
->>>>>>> 89f2c3e5625ffac337bd6e3ab48b0100c8a54a7b
 </body>
 
 

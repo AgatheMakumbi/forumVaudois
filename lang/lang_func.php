@@ -5,7 +5,7 @@ if (!function_exists('t')) {
      * Affiche le texte qui correspond à la clé donnée, dans la langue sélectionnée.
      * @param string $key
      * @return string
-     *      Retourne la valeur associée à la clé si elle existe, sinon retourne la clé.
+     *      Retourne la valeur associée à la clé si elle existe, sinon retourne la clé entre crochets.
      * @throws Exception
      */
     function t($key)
@@ -20,9 +20,10 @@ if (!function_exists('t')) {
 
         $dictionary = require $langFile;
 
+        // Si la clé n'existe pas, retourner la clé elle-même comme fallback
         return (array_key_exists($key, $dictionary))
             ? $dictionary[$key]
-            : $key;
+            : "[{$key}]"; // Optionnel : entourer la clé pour identifier les traductions manquantes
     }
 }
 

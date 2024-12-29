@@ -2,10 +2,10 @@
 return array(
     // Header
     'nav_all' => "Esplora tutto",
-    'nav_activities' => "Attività",
-    'nav_food' => "Cibo",
-    'nav_nature' => "Natura",
-    'nav_culture' => "Cultura",
+    'nav_activities' => "Attività 🪂",
+    'nav_food' => "Cibo 🍴",
+    'nav_nature' => "Natura 🌿​",
+    'nav_culture' => "Cultura ​​🎥​",
     'nav_about' => "Chi siamo",
     'nav_button_login' => "Crea un account / Accedi",
 

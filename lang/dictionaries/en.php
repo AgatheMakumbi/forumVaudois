@@ -2,10 +2,10 @@
 return array(
     //Header
     'nav_all' => "Explore all",
-    'nav_activities' => "Activities",
-    'nav_food' => "Food",
-    'nav_nature' => "Nature",
-    'nav_culture' => "Culture",
+    'nav_activities' => "Activities 🪂",
+    'nav_food' => "Food 🍴",
+    'nav_nature' => "Nature 🌿​",
+    'nav_culture' => "Culture ​​🎥​",
     'nav_about' => "About",
     'nav_button_login' => "Create an account / Login",
 

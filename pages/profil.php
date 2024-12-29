@@ -1,7 +1,20 @@
 <?php
+require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
+
+
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
+
+try {
+    // Récupère la langue depuis la requête GET ou utilise la langue par défaut (français)
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['LANG']) ? $_SESSION['LANG'] : 'fr');
+    $messages = loadLanguage($lang); // Charge les traductions
+    $_SESSION['LANG'] = $lang; // Stocke la langue dans la session
+} catch (Exception $e) {
+    $messages = loadLanguage('fr'); // Charge par défaut le français en cas d'erreur
+    error_log($e->getMessage()); // Log l'erreur pour débogage
+}
 
 require_once '../vendor/autoload.php';
 session_start();
