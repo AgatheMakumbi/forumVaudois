@@ -1,6 +1,22 @@
 <?php 
 session_start();
 $_SESSION["isConnected"] = true; // Simuler un utilisateur connecté pour ce header
+require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
+
+// Vérifie si une session est déjà active avant de la démarrer
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Démarre la session si elle n'est pas encore active
+}
+
+try {
+    // Récupère la langue depuis la requête GET ou la session, ou utilise 'fr' par défaut
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['LANG']) ? $_SESSION['LANG'] : 'fr');
+    $messages = loadLanguage($lang); // Charge les traductions
+    $_SESSION['LANG'] = $lang; // Stocke la langue dans la session
+} catch (Exception $e) {
+    $messages = loadLanguage('fr'); // Fallback en cas d'erreur
+    error_log($e->getMessage());
+}
 ?>
 
 <header class="header">

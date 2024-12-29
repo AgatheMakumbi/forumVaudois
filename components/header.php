@@ -25,7 +25,7 @@ try {
     </div>
     <nav class="nav-buttons">
         <a href="/ForumVaudois/pages/news.php" class="btn btn-news"><?php echo isset($messages['nav_all']) ? $messages['nav_all'] : 'Tout explorer'; ?></a>
-        <a href="/ForumVaudois/pages/news.php?category=activity" class="btn btn-news"><?php echo isset($messages['nav_activity']) ? $messages['nav_activity'] : 'Activité'; ?></a>
+        <a href="/ForumVaudois/pages/news.php?category=activity" class="btn btn-news"><?php echo isset($messages['nav_activities']) ? $messages['nav_activities'] : 'Activité'; ?></a>
         <a href="/ForumVaudois/pages/news.php?category=food" class="btn btn-news"><?php echo isset($messages['nav_food']) ? $messages['nav_food'] : 'Food'; ?></a>
         <a href="/ForumVaudois/pages/news.php?category=nature" class="btn btn-news"><?php echo isset($messages['nav_nature']) ? $messages['nav_nature'] : 'Nature'; ?></a>
         <a href="/ForumVaudois/pages/news.php?category=culture" class="btn btn-news"><?php echo isset($messages['nav_culture']) ? $messages['nav_culture'] : 'Culture'; ?></a>
