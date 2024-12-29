@@ -36,7 +36,7 @@ class User
      * @param bool $isVerified Si la personne est vérifiée
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
-    public function __construct(string $username, string $email, string $password, string $token, int $id = 0, bool $isBlocked = 0, bool $isVerified = 0)
+    public function __construct(string $username, string $email, string $password, string $token, int $id = 0, bool $isBlocked = false, bool $isVerified = false)
     {
         //$this->setId($id);
         $this->id = $id;
