@@ -8,7 +8,15 @@ use M521\ForumVaudois\Entity\City;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+ // Démarrer la session si ce n'est pas déjà fait
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+// Récupérer les informations de l'utilisateur connecté
+$id = $_SESSION["id"] ?? null;
+if (!$id) {
+    die("L'utilisateur n'est pas connecté.");
+} 
 /*
 // Posts fictifs pour chaque catégorie
 $posts = [
