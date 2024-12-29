@@ -2,35 +2,35 @@
 
 if (!function_exists('t')) {
     /**
-     * Performs the actual translation based on the given key.
-     *
-     * @param string $key The translation key.
-     * @return string The translated message or the key if not found.
+     * Affiche le texte qui correspond à la clé donnée, dans la langue sélectionnée.
+     * @param string $key
+     * @return string
+     *      Retourne la valeur associée à la clé si elle existe, sinon retourne la clé.
+     * @throws Exception
      */
     function t($key)
     {
         $language = getLanguage();
-        $path = __DIR__ . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR;
+        $path = __DIR__ . DIRECTORY_SEPARATOR . "dictionaries" . DIRECTORY_SEPARATOR;
         $langFile = $path . "{$language}.php";
 
         if (!file_exists($langFile)) {
-            throw new Exception("Language file not found: {$langFile}");
+            throw new Exception("Le fichier de langue {$langFile} est introuvable.");
         }
 
-        $messages = require $langFile;
+        $dictionary = require $langFile;
 
-        return (array_key_exists($key, $messages))
-            ? $messages[$key]
+        return (array_key_exists($key, $dictionary))
+            ? $dictionary[$key]
             : $key;
     }
 }
 
 if (!function_exists('getLanguage')) {
     /**
-     * Determines the language from URL, session, or browser settings.
-     *
-     * @param string $defaultLanguage The default language to use if none is set.
-     * @return string The determined language.
+     * Détermine la langue à utiliser (par URL, session, ou navigateur).
+     * @param string $defaultLanguage La langue par défaut.
+     * @return string La langue détectée ou la langue par défaut.
      */
     function getLanguage($defaultLanguage = 'fr')
     {
@@ -44,38 +44,21 @@ if (!function_exists('getLanguage')) {
             $language = getLanguageFromBrowser($defaultLanguage);
         }
 
-        // Validate the language against supported languages
         if (!isset($language) || !in_array($language, getSupportedLanguages())) {
             $language = $defaultLanguage;
         }
 
-        // Store the current language in the session for later use
         $_SESSION['LANG'] = $language;
 
         return $language;
     }
 }
 
-if (!function_exists('loadLanguage')) {
-    function loadLanguage($lang)
-    {
-        $path = __DIR__ . DIRECTORY_SEPARATOR;
-        $langFile = $path . "{$lang}.php";
-
-        if (!file_exists($langFile)) {
-            throw new Exception("Le fichier de langue {$langFile} est introuvable.");
-        }
-
-        return require $langFile;
-    }
-}
-
 if (!function_exists('getLanguageFromBrowser')) {
     /**
-     * Retrieves the language from the client's browser.
-     *
-     * @param string $defaultLanguage The default language to use if none is detected.
-     * @return string The browser-determined language or the default.
+     * Détecte la langue préférée du navigateur.
+     * @param string $defaultLanguage La langue par défaut si aucune n'est détectée.
+     * @return string La langue détectée ou la langue par défaut.
      */
     function getLanguageFromBrowser($defaultLanguage = 'fr')
     {
@@ -116,16 +99,15 @@ if (!function_exists('getLanguageFromBrowser')) {
 
 if (!function_exists('getSupportedLanguages')) {
     /**
-     * Returns the list of supported languages.
-     *
-     * @return array An array of supported language codes.
+     * Retourne la liste des langues supportées par l'application.
+     * @return array La liste des codes de langues supportées.
      */
     function getSupportedLanguages()
     {
-        $path = __DIR__ . DIRECTORY_SEPARATOR . "lang" . DIRECTORY_SEPARATOR;
+        $path = __DIR__ . DIRECTORY_SEPARATOR . "dictionaries" . DIRECTORY_SEPARATOR;
 
         if (!is_dir($path)) {
-            throw new Exception("Language directory not found: {$path}");
+            throw new Exception("Le répertoire des langues est introuvable : {$path}");
         }
 
         $files = glob($path . "*.php");
@@ -135,5 +117,25 @@ if (!function_exists('getSupportedLanguages')) {
         }
 
         return $languages;
+    }
+}
+
+if (!function_exists('loadLanguage')) {
+    /**
+     * Charge le dictionnaire de la langue spécifiée.
+     * @param string $lang Le code de la langue à charger.
+     * @return array Le tableau associatif contenant les traductions.
+     * @throws Exception
+     */
+    function loadLanguage($lang)
+    {
+        $path = __DIR__ . DIRECTORY_SEPARATOR . "dictionaries" . DIRECTORY_SEPARATOR;
+        $langFile = $path . "{$lang}.php";
+
+        if (!file_exists($langFile)) {
+            throw new Exception("Le fichier de langue {$langFile} est introuvable.");
+        }
+
+        return require $langFile;
     }
 }

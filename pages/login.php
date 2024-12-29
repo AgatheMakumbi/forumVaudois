@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
-        header('Location: /ForumVaudois/news.php');
+        header('Location: /ForumVaudois/pages/news.php');
         exit(); 
     }else{
         //var_dump($email, $password);
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($userId) {
                 $_SESSION["isConnected"] = true;
                 $_SESSION["id"] = $userId;
-                header('Location: /ForumVaudois/news.php');
+                header('Location: /ForumVaudois/pages/news.php');
                 exit(); 
             }else{
                 $erreurs['email'] = 'Adresse e-mail ou mot de passe incorrect';

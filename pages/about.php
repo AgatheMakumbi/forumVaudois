@@ -1,6 +1,5 @@
 <?php
 session_start(); // Démarre la session
-
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
 try {

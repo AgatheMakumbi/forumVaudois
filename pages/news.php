@@ -1,6 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
 
+use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
@@ -84,6 +85,20 @@ $categories = [
 if (!array_key_exists($categoryName, $categories)) {
     die("Catégorie invalide ou non spécifiée.");
 }
+else {
+    try {
+        $dbManager = new DbManagerCRUD();
+        $posts = [];
+        
+        if($categoryName == "all")
+            $posts = $dbManager->showPosts();
+        else
+            $posts = $dbManager->getPostsByCategory($categories[$categoryName]);    
+    } catch (Exception $e) {
+        echo "Erreur lors de la récupération du post : " . $e->getMessage();
+        exit;
+    }
+}
 
 // Filtrage des posts en fonction de la catégorie
 $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, function ($post) use ($categories, $categoryName) {
@@ -102,6 +117,7 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
 </head>
 
 <body>
+<<<<<<< HEAD
     <!-- Inclusion du header -->
     <?php include '../components/header.php'; ?>
     <main class="news-feed">
@@ -131,6 +147,45 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
     </main>
     <!-- Inclusion du footer -->
     <?php include '../components/footer.php'; ?>
+=======
+    <div class="wrapper">
+        <!-- Inclusion du header -->
+        <?php include '../components/header.php'; ?>
+
+        <main class="news-feed">
+            <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
+            <div class="posts-container">
+                <?php if (!empty($filteredPosts)): ?>
+                    <?php foreach ($filteredPosts as $post): ?>
+                        <div class="post-card">
+                            <div class="post-header">
+                                <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
+                                <a href="postDetails.php?id_post=<?php echo $post->getId(); ?>"><h2><?= htmlspecialchars($post->getTitle()); ?></h2></a>
+                            </div>
+                            <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
+                            <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
+                            <p class="post-location">
+                                📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?>
+                            </p>
+                            <div class="post-footer">
+                                <button class="btn-response">Ajouter une réponse</button>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>Aucun post trouvé pour cette catégorie.</p>
+                <?php endif; ?>
+            </div>
+            <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
+        </main>
+
+        <!-- IL faut récupérer la valeur de category en GET et display seulement les postes de cettes catégory pour ça il faut créer une methode qui prend en paramètre la catégory et qui select que les postes de cette catégory et return un tableau de post de cette catégory. Après ici on peut boucler sur ce tableau et afficher les postes. Si rien n'est envoyé en paramètre donc qu'il n'y a pas de catégory on display tous les postes toutes catégories confuse.-->
+
+        <!-- Inclusion du footer -->
+        <?php include '../components/footer.php'; ?>
+    </div>
+>>>>>>> 89f2c3e5625ffac337bd6e3ab48b0100c8a54a7b
 </body>
+
 
 </html>

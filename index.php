@@ -33,8 +33,9 @@ $db = new DbManagerCRUD();
 </head>
 
 <body>
-    <!-- Inclusion de la barre de navigation -->
-    <?php include './components/header.php' ?>
+    <div class="wrapper">
+        <!-- Inclusion du header -->
+        <?php include './components/header.php'; ?>
 
     <main class="main-content">
         <section class="welcome-section">
@@ -57,8 +58,9 @@ $db = new DbManagerCRUD();
         </section>
     </main>
 
-    <!-- Inclusion du footer -->
-    <?php include './components/footer.php' ?>
+        <!-- Inclusion du footer -->
+        <?php include './components/footer.php' ?>
+    </div>
 </body>
 
 </html>

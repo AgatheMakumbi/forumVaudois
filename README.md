@@ -35,11 +35,11 @@ go get github.com/mailhog/MailHog
 ```
 
 3. Lancer Mailhog avant de lancer le programme ForumVaudois
-**Pour MacOs **
+**Pour MacOs**
 ```bash
 mailhog
 ```
-**Pour Windows **
+**Pour Windows**
 ```bash
 /path/to/MailHog
 ```
