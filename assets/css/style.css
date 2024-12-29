@@ -5,34 +5,37 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
 }
 
+html,
 body {
-    background: linear-gradient(135deg, #F5F7FA 0%, #E3EFEA 100%);
-    min-height: 100vh;
+    height: 100%;
+}
+
+.wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3efea 100%);
+    min-height: 100vh;
 }
 
 /* ==========================
    HEADER ET NAVIGATION
 ========================== */
 .header {
-    background-color: #D0EDDC;
+    background-color: #d0eddc;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0rem 2rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .logo-img {
     height: 100px; /* Réduisez la taille du logo */
     width: auto; /* Conservez les proportions */
 }
-
 
 .nav-buttons {
     display: flex;
@@ -51,31 +54,32 @@ body {
 }
 
 .nav-buttons a:hover {
-    color: #107D3F;
+    color: #107d3f;
 }
 
 .nav-buttons .btn-about {
-    color: #107D3F;
+    color: #107d3f;
     text-decoration: underline;
     font-size: 1rem;
 }
 
 .nav-buttons .btn-about:hover {
-    color: #15A64F;
+    color: #15a64f;
     text-decoration: none;
 }
 
 .nav-buttons .btn-login {
     padding: 0.5rem 1rem;
-    background-color: #15A64F;
+    background-color: #15a64f;
     color: white;
     border-radius: 5px;
     font-size: 1rem;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .nav-buttons .btn-login:hover {
-    background-color: #107D3F;
+    color: #fff;
+    background-color: #107d3f;
 }
 
 /* ==========================
@@ -97,7 +101,7 @@ body {
 
 .welcome-section h1 {
     font-size: 3rem;
-    color: #15A64F;
+    color: #15a64f;
     margin-bottom: 1rem;
 }
 
@@ -124,7 +128,7 @@ body {
     font-weight: bold;
     text-align: center;
     color: white;
-    background-color: #15A64F;
+    background-color: #15a64f;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
     width: 80%;
@@ -137,7 +141,7 @@ body {
 }
 
 .thread-btn:hover {
-    background-color: #107D3F;
+    background-color: #107d3f;
     transform: scale(1.05);
 }
 
@@ -146,6 +150,7 @@ body {
 ========================== */
 .main-content-about {
     margin: 2rem;
+    flex: 1;
 }
 .introduction {
     display: flex;
@@ -159,7 +164,7 @@ body {
 .introduction .objectives {
     flex: 1;
     padding: 1rem;
-    background-color: #D0EDDC;
+    background-color: #d0eddc;
     color: black;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -178,8 +183,13 @@ body {
     margin-bottom: 1rem;
 }
 
+.introduction .objectives ul {
+    list-style-type: circle;
+    padding-left: 1rem;
+}
+
 .team {
-    background-color: #D0EDDC;
+    background-color: #d0eddc;
     padding: 2rem;
     border-radius: 8px;
     text-align: center;
@@ -198,7 +208,8 @@ body {
 }
 
 .member {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
     max-width: 120px;
     text-align: center;
 }
@@ -221,6 +232,7 @@ body {
     margin: 0.5rem 0 0;
     font-size: 1rem;
     font-weight: bold;
+    flex: 1;
 }
 
 .member .role {
@@ -240,7 +252,7 @@ body {
     margin: auto;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #15A64F;
+    background-color: #15a64f;
 }
 
 .login-container {
@@ -258,7 +270,7 @@ body {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #107D3F;
+    color: #107d3f;
 }
 
 .login-form {
@@ -365,7 +377,7 @@ body {
 }
 
 .header-back::before {
-    content: '← ';
+    content: "← ";
     font-size: 20px;
     margin-right: 5px;
 }
@@ -394,7 +406,7 @@ body {
     width: 100%;
     height: 100vh; /* Prend toute la hauteur de la page */
     overflow: hidden;
-    background-color: #15A64F; /* Fond vert */
+    background-color: #15a64f; /* Fond vert */
 }
 
 .signup-container {
@@ -424,11 +436,11 @@ body {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #107D3F;
+    color: #107d3f;
 }
 
 .right-side {
-    background-color: #15A64F;
+    background-color: #15a64f;
     width: 50%;
     padding: 60px;
     display: flex;
@@ -525,7 +537,7 @@ body {
 }
 
 .header-back::before {
-    content: '← ';
+    content: "← ";
     font-size: 20px;
     margin-right: 5px;
 }
@@ -538,7 +550,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    background-color: #F9F9F9;
+    background-color: #f9f9f9;
     height: 100vh;
 }
 
@@ -547,14 +559,14 @@ body {
     gap: 2rem;
     max-width: 1200px;
     width: 100%;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 2rem;
 }
 .post-image {
     flex: 1;
-    background-color: #E0E0E0;
+    background-color: #e0e0e0;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -569,8 +581,6 @@ body {
     border-radius: 10px; /* Coin arrondis alignés avec la div */
 }
 
-
-
 .create-post-form {
     flex: 2;
     display: flex;
@@ -581,7 +591,7 @@ body {
 .create-post-form .form-title {
     font-size: 2rem;
     font-weight: bold;
-    color: #15A64F;
+    color: #15a64f;
     margin-bottom: 1.5rem;
     text-align: center;
 }
@@ -628,7 +638,7 @@ body {
 .submit-btn {
     width: 100%;
     padding: 1rem;
-    background-color: #15A64F;
+    background-color: #15a64f;
     color: #fff;
     font-weight: bold;
     border: none;
@@ -643,30 +653,219 @@ body {
 }
 
 .submit-btn:hover {
-    background-color: #107D3F;
+    background-color: #107d3f;
 }
 
 .submit-btn::before {
-    content: '+';
+    content: "+";
     font-size: 1.2rem;
     display: inline-block;
     color: #fff;
     font-weight: bold;
 }
 
+/*  NEWS.PHP */
+.news-feed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    flex: 1;
+}
+
+.news-feed h1 {
+    text-align: center;
+    color: #28a745;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.post-card {
+    background-color: #dfffe5;
+    border: 1px solid #b5d8bb;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    padding: 1.5rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #28a745;
+}
+
+.post-card h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+}
+
+.post-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-response {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-response:hover {
+    background-color: #218838;
+}
+
+.post-location {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ==========================
+   STYLES POUR PROFIL.PHP
+========================== */
+
+.profile-main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #d0edcc;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #28a745;
+}
+
+.profile-info h1 {
+    font-size: 1.8rem;
+    color: #107d3f;
+}
+
+.profile-info p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.profile-posts {
+    width: 90%;
+    max-width: 800px;
+}
+
+.profile-posts h2 {
+    text-align: center;
+    color: #28a745;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-card {
+    background-color: #dfffe5;
+    border: 1px solid #b5d8bb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+.post-header h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0 0 0.5rem;
+}
+
+.post-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-response {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-response:hover {
+    background-color: #218838;
+}
+
+.post-location {
+    font-size: 0.9rem;
+    color: #666;
+}
 
 /* ==========================
    FOOTER
 ========================== */
 .footer-content {
-    background-color: #15A64F;
+    background-color: #15a64f;
     color: white;
     padding: 1.5rem 10%;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    margin: 0 auto;
 }
 
 .footer-content .company {
@@ -685,6 +884,16 @@ body {
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 1.5rem;
+}
+
+.footer-content .company a {
+    /* text-decoration: none; */
+    color: #ffffff;
+    transition: 0.1s ease-in-out;
+}
+
+.footer-content .company a:hover {
+    color: #004a75;
 }
 
 .contact-form {
@@ -721,7 +930,7 @@ body {
 .contact-form button {
     width: 100%;
     padding: 1rem;
-    background-color: #15A64F;
+    background-color: #15a64f;
     color: white;
     border: none;
     border-radius: 5px;
@@ -731,7 +940,7 @@ body {
 }
 
 .contact-form button:hover {
-    background-color: #107D3F;
+    background-color: #107d3f;
 }
 
 /* ==========================
