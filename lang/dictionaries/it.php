@@ -23,10 +23,10 @@ return array(
     'home_title' => "Forum Vaudois",
     'home_text' => "Benvenuto nel Forum Vaudois! Uno spazio di scambio dove puoi discutere liberamente di tutto ciò che riguarda il cantone di Vaud e molto altro ancora.",
     'home_text_hashtag' => "#LibertàDiEspressione",
-    'home_button_activities' => "Sezione Attività",
-    'home_button_food' => "Sezione Cibo",
-    'home_button_nature' => "Sezione Natura",
-    'home_button_culture' => "Sezione Cultura",
+    'home_button_activities' => "🪂 Sezione Attività 🪂",
+    'home_button_food' => "🍴 Sezione Cibo 🍴",
+    'home_button_nature' => "🌿​ Sezione Natura 🌿​",
+    'home_button_culture' => "​​🎥​ Sezione Cultura ​​🎥​",
 
     // About 
     'about_intro_title' => "Introduzione",

@@ -93,9 +93,8 @@ class Post
     //@param (string) text 
     public function setText(string $text): void
     {
-        $options = "/^.{10,}$/";
-        if (!preg_match($options, $text)) {
-            throw new Exception('Text must be at least 10 characters');
+        if (strlen($text) <= 0) {
+            throw new Exception('Text must be at least 1 character');
         }
         $this->text = htmlspecialchars($text);
     }
@@ -128,9 +127,9 @@ class Post
     //@param (string) address
     public function setAddress(string $address)
     {
-        $options = "/^.{5,300}$/";
+        $options = "/^.{0,300}$/";
         if (!preg_match($options, $address)) {
-            throw new Exception('Address must be between 5 and 300 characters.');
+            throw new Exception('Address must be between 0 and 300 characters.');
         }
         $this->address = htmlspecialchars($address);
     }

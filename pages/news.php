@@ -5,27 +5,14 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
- // Démarrer la session si ce n'est pas déjà fait
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-// Récupérer les informations de l'utilisateur connecté
-$id = $_SESSION["id"] ?? null;
-if (!$id) {
-    die("L'utilisateur n'est pas connecté.");
-} 
-/*
-// Posts fictifs pour chaque catégorie
+// Posts fictifs pour chaque catégorie 
 $posts = [
     new Post(
         "Visiter le Château de Chillon",
         "Le Château de Chillon est un site emblématique du canton de Vaud.",
         20,
         1,
-        1,
+        3,
         1,
         new DateTime(),
         new DateTime(),
@@ -37,7 +24,7 @@ $posts = [
         "Une randonnée idéale pour admirer les Alpes vaudoises.",
         0,
         2,
-        2,
+        3,
         2,
         new DateTime(),
         new DateTime(),
@@ -49,7 +36,7 @@ $posts = [
         "Découvrez les vins de Lavaux, classé au patrimoine mondial de UNESCO.",
         50,
         3,
-        3,
+        4,
         3,
         new DateTime(),
         new DateTime(),
@@ -61,7 +48,7 @@ $posts = [
         "Promenez-vous dans la vieille ville et visitez le musée olympique.",
         30,
         4,
-        4,
+        1,
         4,
         new DateTime(),
         new DateTime(),
@@ -73,14 +60,14 @@ $posts = [
         "Profitez de la journée de détente aux bains thermaux.",
         80,
         5,
-        5,
+        3,
         5,
         new DateTime(),
         new DateTime(),
         5,
         "Route des Bains, 1892 Lavey-les-Bains"
     ),
-];*/
+];
 
 // Récupération de la catégorie via l'URL
 $categoryName = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : 'all';
@@ -117,7 +104,6 @@ else {
 $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, function ($post) use ($categories, $categoryName) {
     return $post->getCategory() === $categories[$categoryName];
 });
-
 ?>
 
 <!DOCTYPE html>
@@ -131,6 +117,37 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
 </head>
 
 <body>
+<<<<<<< HEAD
+    <!-- Inclusion du header -->
+    <?php include '../components/header.php'; ?>
+    <main class="news-feed">
+        <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
+        <div class="posts-container">
+            <?php if (!empty($filteredPosts)) : ?>
+                <?php foreach ($filteredPosts as $post) : ?>
+                    <div class="post-card">
+                        <div class="post-header">
+                            <img src="../assets/images/user-avatar.png" alt="Auteur" class="post-avatar">
+                            <h2><?= htmlspecialchars($post->getTitle()); ?></h2>
+                        </div>
+                        <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p>
+                        <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p>
+                        <p class="post-address">Adresse : <?= htmlspecialchars($post->getAddress()); ?></p>
+                        <p class="post-location">📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?></p>
+                        
+                        <div class="post-footer">
+                            <a href="postDetails.php?id=<?= $post->getId(); ?>" class="btn-view-details">Voir les détails</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <p>Aucun post trouvé pour cette catégorie.</p>
+            <?php endif; ?>
+        </div>
+    </main>
+    <!-- Inclusion du footer -->
+    <?php include '../components/footer.php'; ?>
+=======
     <div class="wrapper">
         <!-- Inclusion du header -->
         <?php include '../components/header.php'; ?>
@@ -167,6 +184,7 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
         <!-- Inclusion du footer -->
         <?php include '../components/footer.php'; ?>
     </div>
+>>>>>>> 89f2c3e5625ffac337bd6e3ab48b0100c8a54a7b
 </body>
 
 

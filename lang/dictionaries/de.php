@@ -23,10 +23,10 @@ return array(
     'home_title' => "Waadtländer Forum",
     'home_text' => "Willkommen im Waadtländer Forum! Ein Austauschraum, in dem Sie frei über alles diskutieren können, was den Kanton Waadt betrifft, und vieles mehr.",
     'home_text_hashtag' => "#Meinungsfreiheit",
-    'home_button_activities' => "Rubrik Aktivitäten",
-    'home_button_food' => "Rubrik Essen",
-    'home_button_nature' => "Rubrik Natur",
-    'home_button_culture' => "Rubrik Kultur",
+    'home_button_activities' => "🪂 Rubrik Aktivitäten 🪂",
+    'home_button_food' => "🍴 Rubrik Essen 🍴",
+    'home_button_nature' => "🌿​ Rubrik Natur 🌿​",
+    'home_button_culture' => "​​🎥​ Rubrik Kultur ​​🎥​",
 
     // About 
     'about_intro_title' => "Einführung",

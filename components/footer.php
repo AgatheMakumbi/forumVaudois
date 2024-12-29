@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../lang/lang_func.php';
+
+
 
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
@@ -9,15 +12,24 @@ use Symfony\Component\Mime\Email;
 // TRAITEMENT DU FORMULAIRE
 // ============================
 
-//Initialisation des variables
+// Initialisation des variables
 $validForm = true;
-$errors = ['name' => "", 'email'  => "", 'message' => ""];
+$errors = ['name' => "", 'email' => "", 'message' => ""];
 $name = "";
 $email = "";
 $message = "";
-$status ="";
+$status = "";
 
-//Récupération des entrées utilisateur et validation 
+// Charger les messages de traduction
+try {
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : 'fr'; // Par défaut, 'fr'
+    $messages = loadLanguage($lang);
+} catch (Exception $e) {
+    $messages = loadLanguage('fr'); // Fallback si une erreur survient
+    error_log($e->getMessage());
+}
+
+// Récupération des entrées utilisateur et validation
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (strlen(filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim'])) > 0) {
         $name = filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim']);
@@ -38,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $validForm = false;
     }
 
-    //Envoi du mail 
+    // Envoi du mail
     if ($validForm == true) {
         $transport = Transport::fromDsn('smtp://localhost:1025');
         $mailer = new Mailer($transport);
@@ -49,58 +61,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ->text($message)
             ->html("<p>De : {$name}</p> <p>{$message}</p>");
 
-        $result = $mailer->send($emailToSend);
-        if ($result == null) {
+        try {
+            $mailer->send($emailToSend);
             $status = "Un mail a été envoyé ! <a href='http://localhost:8025'>voir le mail</a>";
-        } else {
+        } catch (Exception $e) {
             $status = "Un problème lors de l'envoi du mail est survenu";
+            error_log($e->getMessage());
         }
     }
 }
-
-
 ?>
 
 <footer>
     <div class="footer-content">
         <div class="company">
-            <h3>Contact</h3>
-            <p>Adresse : Av. des Sports 20, 1401 Yverdon-les-Bains</p>
-            <p>Téléphone : <a href="tel:+41245577600">024 557 76 00</a></p>
-            <p>Email : <a href="mailto:contact@forumvaudois.ch">contact@forumvaudois.ch</a></p>
-            <br>
-            <br><br> <br> <br><br><br><br> <br> <br><br> <br>
+            <!-- Sélecteur de langue placé au-dessus du titre -->
+            <div class="language-selector">
+                <form method="GET">
+                    <label for="language">Changer la langue :</label>
+                    <select name="lang" id="language" onchange="this.form.submit()">
+                        <option value="fr" <?php if ($lang == 'fr') echo 'selected'; ?>>Français</option>
+                        <option value="en" <?php if ($lang == 'en') echo 'selected'; ?>>English</option>
+                        <option value="de" <?php if ($lang == 'de') echo 'selected'; ?>>Deutsch</option>
+                        <option value="it" <?php if ($lang == 'it') echo 'selected'; ?>>Italiano</option>
+                    </select>
+                </form>
+            </div>
+<br><br><br><br>
+            <h3><?php echo $messages['footer_title']; ?></h3>
+            <p><?php echo $messages['footer_address']; ?> : Av. des Sports 20, 1401 Yverdon-les-Bains</p>
+            <p><?php echo $messages['footer_phone']; ?> : <a href="tel:+41245577600">024 557 76 00</a></p>
+            <p><?php echo $messages['footer_email']; ?> : <a href="mailto:contact@forumvaudois.ch">contact@forumvaudois.ch</a></p>
             <p>&copy; 2024 Forum Vaudois - HEIG-VD ProgServ2</p>
         </div>
+
         <div class="contact-form" id="contact-form">
             <form action="#contact-form" method="POST">
-                <label for="name">
-                    Nom
-                    <p style="color:red; font-weight:normal">
-                        <?php echo $errors['name'] ?>
-                    </p>
-                </label>
-                <input type="text" id="name" name="name" placeholder="Nom">
+                <label for="name"><?php echo $messages['footer_form_name']; ?></label>
+                <input type="text" id="name" name="name" placeholder="<?php echo $messages['footer_form_name']; ?>">
 
-                <label for="email">
-                    Email
-                    <p style="color:red; font-weight:normal">
-                        <?php echo $errors['email'] ?>
-                    </p>
-                </label>
-                <input type="text" id="email" name="email" placeholder="Email">
+                <label for="email"><?php echo $messages['footer_form_email']; ?></label>
+                <input type="text" id="email" name="email" placeholder="<?php echo $messages['footer_form_email']; ?>">
 
-                <label for="message">
-                    Message
-                    <p style="color:red; font-weight:normal">
-                        <?php echo $errors['message'] ?>
-                    </p>
-                </label>
-                <textarea id="message" name="message" placeholder="Message"></textarea>
+                <label for="message"><?php echo $messages['footer_form_message']; ?></label>
+                <textarea id="message" name="message" placeholder="<?php echo $messages['footer_form_message']; ?>"></textarea>
 
-                <button type="submit">Envoyer</button>
-
-                <p style="color:red"><?php echo $status ?></p>
+                <button type="submit"><?php echo $messages['footer_form_button']; ?></button>
             </form>
         </div>
     </div>

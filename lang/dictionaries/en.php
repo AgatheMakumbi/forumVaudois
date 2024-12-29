@@ -23,10 +23,10 @@ return array(
     'home_title' => "Vaudois Forum",
     'home_text' => "Welcome to the Vaudois Forum! A space to exchange and freely discuss everything related to the canton of Vaud and much more.",
     'home_text_hashtag' => "#FreedomOfExpression",
-    'home_button_activities' => "Activities Section",
-    'home_button_food' => "Food Section",
-    'home_button_nature' => "Nature Section",
-    'home_button_culture' => "Culture Section",
+    'home_button_activities' => "🪂 Activities Section 🪂",
+    'home_button_food' => "🍴 Food Section 🍴",
+    'home_button_nature' => "🌿​ Nature Section 🌿​",
+    'home_button_culture' => "​​🎥​ Culture Section ​​🎥​",
 
     //About 
     'about_intro_title' => "Introduction",
