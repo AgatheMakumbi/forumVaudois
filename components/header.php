@@ -33,18 +33,20 @@ try {
         <?php 
         if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
             // Menu pour utilisateur connecté
-            echo '<a href="/ForumVaudois/pages/profil.php" class="btn btn-login">' . 
-                 (isset($messages['nav_profile']) ? $messages['nav_profile'] : 'Profil') . 
-                 '</a>';
-            echo '<a href="/ForumVaudois/pages/createPost.php" class="btn btn-login">' . 
-                 (isset($messages['nav_post']) ? $messages['nav_post'] : 'Post it!') . 
-                 '</a>';
+            echo '<a href="/ForumVaudois/pages/profil.php">
+                    <img src="/ForumVaudois/assets/images/profil.png" alt="Profil" class="icon-profile">
+                  </a>';
+            echo '<a href="/ForumVaudois/pages/createPost.php" class="btn btn-login">Post it!</a>';
+            echo '<a href="/ForumVaudois/pages/logout.php">
+                    <img src="/ForumVaudois/assets/images/logout.png" alt="Logout" class="icon-logout">
+                  </a>';
         } else {
             // Menu pour utilisateur non connecté
             echo '<a href="/ForumVaudois/pages/login.php" class="btn btn-login">' . 
                  (isset($messages['nav_login']) ? $messages['nav_login'] : 'Créer un compte / Se connecter') . 
                  '</a>';
         }
+        
         ?>
     </nav>
 </header>

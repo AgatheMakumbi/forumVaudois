@@ -28,18 +28,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0rem 2rem;
+    padding: 0.5rem 2rem; /* Ajusté pour réduire l'espace */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo-img {
-    height: 100px; /* Réduisez la taille du logo */
+    height: 80px; /* Taille ajustée pour un logo plus petit */
     width: auto; /* Conservez les proportions */
 }
 
 .nav-buttons {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem; /* Réduit l'espace entre les éléments */
     align-items: center;
 }
 
@@ -51,21 +51,11 @@ body {
     color: black;
     padding: 0;
     background-color: transparent;
+    font-size: 1rem; /* Uniformise la taille des liens */
 }
 
 .nav-buttons a:hover {
     color: #107d3f;
-}
-
-.nav-buttons .btn-about {
-    color: #107d3f;
-    text-decoration: underline;
-    font-size: 1rem;
-}
-
-.nav-buttons .btn-about:hover {
-    color: #15a64f;
-    text-decoration: none;
 }
 
 .nav-buttons .btn-login {
@@ -81,6 +71,27 @@ body {
     color: #fff;
     background-color: #107d3f;
 }
+
+/* ==========================
+   ICÔNES PROFIL ET LOGOUT
+========================== */
+.nav-buttons .icon-profile,
+.nav-buttons .icon-logout {
+    width: 40px; /* Taille ajustée de l'icône */
+    height: 40px;
+    border-radius: 50%; /* Icône ronde */
+    border: none; /* Pas de bordure */
+    background: none; /* Pas de couleur de fond */
+    object-fit: cover; /* Assure que l'image est bien ajustée */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.nav-buttons .icon-profile:hover,
+.nav-buttons .icon-logout:hover {
+    transform: scale(1.1); /* Légère augmentation de taille au survol */
+}
+
 
 /* ==========================
    STYLES POUR INDEX.PHP
