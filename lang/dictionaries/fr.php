@@ -18,6 +18,8 @@ return array(
     'footer_form_email' => "Email",
     'footer_form_message' => "Message",
     'footer_form_button' => "Envoyer",
+    'change_language' => "Changer la langue :",
+
 
     //Homepage
     'home_title' => "Forum Vaudois",

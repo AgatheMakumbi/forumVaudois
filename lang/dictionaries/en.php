@@ -18,6 +18,8 @@ return array(
     'footer_form_email' => "Email",
     'footer_form_message' => "Message",
     'footer_form_button' => "Send",
+    'change_language' => "Change the language:",
+
 
     //Homepage
     'home_title' => "Vaudois Forum",

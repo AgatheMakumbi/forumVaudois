@@ -18,6 +18,8 @@ return array(
     'footer_form_email' => "E-Mail",
     'footer_form_message' => "Nachricht",
     'footer_form_button' => "Senden",
+    'change_language' => "Sprache ändern:",
+
 
     // Homepage
     'home_title' => "Waadtländer Forum",
