@@ -15,33 +15,10 @@ use DateTime;
  */
 class Media
 {
-<<<<<<< HEAD
     private $id;
     private $file_path;
     private $upload_date;
     private $post;
-=======
-    /**
-     * Identifiant unique du média 
-     * 
-     * @var int
-     */
-    private int $id;
->>>>>>> 125fb99cf49d441ce39b10de3b5bb1114970c0ea
-
-    /**
-     * Chemin du fichier 
-     * 
-     * @var int
-     */
-    private string $file_path;
-
-    /**
-     * Date d'ajout du média
-     * 
-     * @var int
-     */
-    private DateTime $upload_date;
 
     /**
      * Construit un nouveau media avec les paramètres spécifiés : 
@@ -91,21 +68,12 @@ class Media
         return $this->file_path;
     }
 
-<<<<<<< HEAD
     public function getPostId(): int
     {
         return $this->post;
     }
 
     public function getUploadDate(): DateTime
-=======
-    /**
-     * Rend la date d'ajout du média
-     * 
-     * @return string $upload_date La date d'ajout du média
-     */
-    public function getUploadDate(): string
->>>>>>> 125fb99cf49d441ce39b10de3b5bb1114970c0ea
     {
         return $this->upload_date;
     }
