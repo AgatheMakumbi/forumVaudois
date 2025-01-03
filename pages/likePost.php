@@ -24,9 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insérer le post dans la base de données
         $dbManager = new DbManagerCRUD();
         if ($dbManager->createLike($like)) {
-            echo "Like ajouté avec succès !";
+            header("Location: postDetails.php?id_post=" . $id_post);
+            exit;
+            //echo "Like ajouté avec succès !";
         } else {
-            echo "Échec de l'ajout du Like.";
+            header("Location: postDetails.php?id_post=" . $id_post);
+            exit;
+            //echo "Échec de l'ajout du Like.";
         }
     } catch (Exception $e) {
         echo "Erreur : " . $e->getMessage();

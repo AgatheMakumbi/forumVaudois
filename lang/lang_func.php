@@ -3,9 +3,9 @@
 if (!function_exists('t')) {
     /**
      * Affiche le texte qui correspond à la clé donnée, dans la langue sélectionnée.
-     * @param string $key
-     * @return string
-     *      Retourne la valeur associée à la clé si elle existe, sinon retourne la clé entre crochets.
+     * 
+     * @param string $key La clé correspondant au texte à afficher
+     * @return string La valeur associée à la clé si elle existe, sinon la clé entre crochets
      * @throws Exception
      */
     function t($key)
@@ -23,15 +23,16 @@ if (!function_exists('t')) {
         // Si la clé n'existe pas, retourner la clé elle-même comme fallback
         return (array_key_exists($key, $dictionary))
             ? $dictionary[$key]
-            : "[{$key}]"; // Optionnel : entourer la clé pour identifier les traductions manquantes
+            : "[{$key}]"; // Ajout de crochets autour de la clé pour mettre en évidence les traductions manquantes
     }
 }
 
 if (!function_exists('getLanguage')) {
     /**
-     * Détermine la langue à utiliser (par URL, session, ou navigateur).
-     * @param string $defaultLanguage La langue par défaut.
-     * @return string La langue détectée ou la langue par défaut.
+     * Détermine la langue à utiliser (par URL, session, ou navigateur)
+     * 
+     * @param string $defaultLanguage La langue par défaut si aucune n'est détectée ('fr')
+     * @return string La langue détectée ou la langue par défaut
      */
     function getLanguage($defaultLanguage = 'fr')
     {
@@ -57,9 +58,10 @@ if (!function_exists('getLanguage')) {
 
 if (!function_exists('getLanguageFromBrowser')) {
     /**
-     * Détecte la langue préférée du navigateur.
-     * @param string $defaultLanguage La langue par défaut si aucune n'est détectée.
-     * @return string La langue détectée ou la langue par défaut.
+     * Détecte la langue préférée du navigateur
+     * 
+     * @param string $defaultLanguage La langue par défaut si aucune n'est détectée ('fr')
+     * @return string La langue détectée ou la langue par défaut
      */
     function getLanguageFromBrowser($defaultLanguage = 'fr')
     {
@@ -100,8 +102,10 @@ if (!function_exists('getLanguageFromBrowser')) {
 
 if (!function_exists('getSupportedLanguages')) {
     /**
-     * Retourne la liste des langues supportées par l'application.
-     * @return array La liste des codes de langues supportées.
+     * Retourne la liste des langues supportées par l'application
+     * 
+     * @return array La liste des codes de langues supportées
+     * @throws Exception Si le répertoire des langues est introuvable
      */
     function getSupportedLanguages()
     {
@@ -123,10 +127,11 @@ if (!function_exists('getSupportedLanguages')) {
 
 if (!function_exists('loadLanguage')) {
     /**
-     * Charge le dictionnaire de la langue spécifiée.
-     * @param string $lang Le code de la langue à charger.
-     * @return array Le tableau associatif contenant les traductions.
-     * @throws Exception
+     * Charge le dictionnaire de la langue spécifiée
+     * 
+     * @param string $lang Le code de la langue à charger
+     * @return array Le tableau associatif contenant les traductions de la langue spéicifée
+     * @throws Exception Si le fichier de langue est introuvable 
      */
     function loadLanguage($lang)
     {

@@ -6,33 +6,40 @@ use \Exception;
 use DateTime;
 
 /**
- * Represente une ville :
- * - id: int
- * - file_path: string
- * - upload_date: datetime
+ * Represente un média
+ * 
+ * Un média est défini par :
+ * - un identifiant unique
+ * - un chemin de fichier
+ * - une date d'ajout
  */
 class Media
 {
     private $id;
     private $file_path;
     private $upload_date;
+    private $post;
 
     /**
-     * Construit un nouveau media avec les paramètres spécifiés
-     * @param int $id Identifiant du media
-     * @param string $file_path Chemin du fichier
-     * @param \DateTime $upload_date Date de téléchargement
-     * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
+     * Construit un nouveau media avec les paramètres spécifiés : 
+     * 
+     * @param string $file_path Le chemin du fichier
+     * @param \DateTime $upload_date La date d'ajout du média
+     * @param int L'identifiant du post auquel le média est associé
+     * @param int $id L'identifiant unique du média (0 par défaut, sera généré par la DB)
+     * @throws Exception Expection si un des paramètres n'est pas valide
      */
-    public function __construct(string $file_path, DateTime $upload_date, int $id = 0,)
+    public function __construct(string $file_path, DateTime $upload_date, int $post, int $id = 0,)
     {
+        $this->id = $id;
         $this->setFilePath($file_path);
         $this->upload_date = new DateTime(('now'));
+        $this->post = $post;
     }
 
     /**
-     * Rend l'id
-     * @return int id
+     * Rend l'identifiant du média
+     * @return int L'identifiant du média
      */
     public function getId(): int
     {
@@ -40,24 +47,35 @@ class Media
     }
 
     /**
-     * Définit le chemin du media
-     * @param string $filePath 
+     * Définit le chemin du média
+     * 
+     * @param string $filePath Le chemin à attribuer au média
      */
     public function setFilePath(string $filePath)
     {
-        $options = "/^.{5,10}$/";
-        if (!preg_match($options, $filePath)) {
-            throw new Exception('Filepath must be between 5 and 10 characters.');
+        if (strlen($filePath) <= 0) {
+            throw new Exception('Le chemin ne peut pas être vide.');
         }
         $this->file_path = htmlspecialchars($filePath);
     }
 
     /**
-     * Rend le chemin du media
-     * @return string  file_path
+     * Rend le chemin du média
+     * 
+     * @return string $file_path Le chemin du média
      */
     public function getFilePath(): string
     {
         return $this->file_path;
+    }
+
+    public function getPostId(): int
+    {
+        return $this->post;
+    }
+
+    public function getUploadDate(): DateTime
+    {
+        return $this->upload_date;
     }
 }

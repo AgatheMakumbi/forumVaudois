@@ -28,18 +28,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0rem 2rem;
+    padding: 0.5rem 2rem; /* Ajusté pour réduire l'espace */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo-img {
-    height: 100px; /* Réduisez la taille du logo */
+    height: 80px; /* Taille ajustée pour un logo plus petit */
     width: auto; /* Conservez les proportions */
 }
 
 .nav-buttons {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem; /* Réduit l'espace entre les éléments */
     align-items: center;
 }
 
@@ -51,21 +51,11 @@ body {
     color: black;
     padding: 0;
     background-color: transparent;
+    font-size: 1rem; /* Uniformise la taille des liens */
 }
 
 .nav-buttons a:hover {
     color: #107d3f;
-}
-
-.nav-buttons .btn-about {
-    color: #107d3f;
-    text-decoration: underline;
-    font-size: 1rem;
-}
-
-.nav-buttons .btn-about:hover {
-    color: #15a64f;
-    text-decoration: none;
 }
 
 .nav-buttons .btn-login {
@@ -81,6 +71,27 @@ body {
     color: #fff;
     background-color: #107d3f;
 }
+
+/* ==========================
+   ICÔNES PROFIL ET LOGOUT
+========================== */
+.nav-buttons .icon-profile,
+.nav-buttons .icon-logout {
+    width: 40px; /* Taille ajustée de l'icône */
+    height: 40px;
+    border-radius: 50%; /* Icône ronde */
+    border: none; /* Pas de bordure */
+    background: none; /* Pas de couleur de fond */
+    object-fit: cover; /* Assure que l'image est bien ajustée */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.nav-buttons .icon-profile:hover,
+.nav-buttons .icon-logout:hover {
+    transform: scale(1.1); /* Légère augmentation de taille au survol */
+}
+
 
 /* ==========================
    STYLES POUR INDEX.PHP
@@ -655,15 +666,6 @@ body {
 .submit-btn:hover {
     background-color: #107d3f;
 }
-
-.submit-btn::before {
-    content: "+";
-    font-size: 1.2rem;
-    display: inline-block;
-    color: #fff;
-    font-weight: bold;
-}
-
 /*  NEWS.PHP */
 .news-feed {
     display: flex;
@@ -688,8 +690,7 @@ body {
 }
 
 .post-card {
-    background-color: #dfffe5;
-    border: 1px solid #b5d8bb;
+    background-color: #D0EDDC;
     border-radius: 8px;
     width: 90%;
     max-width: 500px;
@@ -717,11 +718,6 @@ body {
     margin: 0;
 }
 
-.post-card p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 1rem;
-}
 
 .post-footer {
     display: flex;
@@ -729,7 +725,7 @@ body {
     align-items: center;
 }
 
-.btn-response {
+.btn-like {
     background-color: #28a745;
     color: white;
     border: none;
@@ -807,14 +803,6 @@ body {
     gap: 1rem;
 }
 
-.post-card {
-    background-color: #dfffe5;
-    border: 1px solid #b5d8bb;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-}
 
 .post-card:hover {
     transform: translateY(-5px);
@@ -857,6 +845,226 @@ body {
     font-size: 0.9rem;
     color: #666;
 }
+/* ==========================
+   STYLES POUR CONFIRMATION.PHP
+========================== */
+
+.main-content-confirmation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Prend toute la hauteur de la page */
+    overflow: hidden;
+    background-color: #15a64f; /* Fond vert */
+}
+
+.confirmation-container {
+    display: flex;
+    width: 100%;
+    height: 100%; /* Prend toute la hauteur de la page */
+}
+
+.left-side {
+    background: linear-gradient(135deg, #ffffff, #48c774);
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+}
+
+.left-side .logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.left-side .slogan {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #107d3f;
+}
+
+.right-side {
+    background-color: #15a64f;
+    width: 50%;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+}
+
+.confirmation-message {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.confirmation-message h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.confirmation-message .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.confirmation-message .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color:#15A64F;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.confirmation-message .submit-btn:hover {
+    background-color: #0b5f2b;
+}
+
+
+/* ==========================
+   STYLES POUR POST DETAIL
+========================== */
+.main-content-post-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.post-detail-container {
+    background-color: #D0EDDC;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    padding: 1.5rem;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #28a745;
+}
+
+.post-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #107d3f;
+    margin-bottom: 0.5rem;
+}
+
+.post-description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.media-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.post-media {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-section {
+    margin-top: 2rem;
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment-item {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-comment-form {
+    margin-top: 2rem;
+}
+
+.add-comment-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    margin-bottom: 1rem;
+}
+
+.submit-comment-button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.submit-comment-button:hover {
+    background-color: #218838;
+}
+
+.like-button {
+    background-color: #15a64f;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.like-button:hover {
+    background-color: #107d3f;
+}
+
 
 /* ==========================
    FOOTER

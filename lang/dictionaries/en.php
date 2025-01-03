@@ -68,4 +68,21 @@ return array(
     'signup_form_button' => "Sign up",
     'signup_text_alreadyAccount' => "Already have an account?",
     'signup_link_login' => "Log in",
+
+    //CreatePost
+    'create_post_title' => 'Create a post',
+    'create_post_form_title' => 'Create a post',
+    'preview_image_alt' => 'Lake photo',
+    'create_post_category' => 'Category',
+    'create_post_city' => 'City',
+    'create_post_address' => 'Address (optional)',
+    'create_post_address_placeholder' => 'Address (optional)',
+    'create_post_budget' => 'Budget per person',
+    'create_post_budget_placeholder' => 'Budget',
+    'create_post_title_label' => 'Post title',
+    'create_post_title_placeholder' => 'Post title',
+    'create_post_text' => 'Text',
+    'create_post_text_placeholder' => 'Text...',
+    'create_post_image' => 'Add an image (optional)',
+    'create_post_submit' => 'Publish',
 );

@@ -68,4 +68,21 @@ return array(
     'signup_form_button' => "Iscriviti",
     'signup_text_alreadyAccount' => "Hai già un account?",
     'signup_link_login' => "Accedi",
+
+    // CreatePost
+    'create_post_title' => 'Crea un post',
+    'create_post_form_title' => 'Crea un post',
+    'preview_image_alt' => 'Foto del lago',
+    'create_post_category' => 'Categoria',
+    'create_post_city' => 'Città',
+    'create_post_address' => 'Indirizzo (opzionale)',
+    'create_post_address_placeholder' => 'Indirizzo (opzionale)',
+    'create_post_budget' => 'Budget per persona',
+    'create_post_budget_placeholder' => 'Budget',
+    'create_post_title_label' => 'Titolo del post',
+    'create_post_title_placeholder' => 'Titolo del post',
+    'create_post_text' => 'Testo',
+    'create_post_text_placeholder' => 'Testo...',
+    'create_post_image' => 'Aggiungi un\'immagine (opzionale)',
+    'create_post_submit' => 'Pubblica',
 );
