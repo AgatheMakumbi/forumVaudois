@@ -18,11 +18,11 @@ class DbManagerCRUD implements I_ApiCRUD
 {
 
     private $db;
-    
+
 
     public function __construct()
     {
-        
+
         //$config = parse_ini_file('/Applications/MAMP/htdocs/ForumVaudois/config/db.ini');
         $config = parse_ini_file(__DIR__ . '/../../config/db.ini');
         // Détermine la base path dynamiquement pour le fichier db.ini
@@ -278,8 +278,8 @@ class DbManagerCRUD implements I_ApiCRUD
             }
 
             // Vérifier si l'utilisateur est vérifié
-            
-            $lol = $userData['isVerified']== 0;
+
+            $lol = $userData['isVerified'] == 0;
             var_dump($lol);
             if ($userData['isVerified'] == 0) {
                 error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
@@ -350,7 +350,31 @@ class DbManagerCRUD implements I_ApiCRUD
         return $posts;
     }
 
-    
+    public function getPostsByUser(int $id_user): array
+    {
+        $sql = "SELECT * FROM Post WHERE id_user = :id_user";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_user', $id_user, \PDO::PARAM_INT);
+        $stmt->execute();
+        $posts = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $posts[] = new Post(
+                $row['title'],
+                $row['text'],
+                $row['budget'],
+                $row['id_user'],
+                $row['id_city'],
+                $row['id_category'],
+                new DateTime($row['created_at']),
+                new DateTime($row['last_update']),
+                $row['id'],
+                $row['address']
+            );
+        }
+
+        return $posts;
+    }
+
     public function showPosts(): array
     {
         $sql = "SELECT * FROM post";
@@ -399,7 +423,7 @@ class DbManagerCRUD implements I_ApiCRUD
                 new DateTime($postData[0]['created_at']),
                 new DateTime($postData[0]['last_update']),
                 $postData[0]['id'],
-                $postData[0]['address']             
+                $postData[0]['address']
             );
         }
 

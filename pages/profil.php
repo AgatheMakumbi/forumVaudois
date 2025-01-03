@@ -27,6 +27,7 @@ $loggedUserID = $_SESSION["id"];
 $loggedUser = $db->getUserById($loggedUserID);
 //$loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
 
+$posts = $db->getPostsByUser($loggedUserID);
 ?>
 
 <!DOCTYPE html>
