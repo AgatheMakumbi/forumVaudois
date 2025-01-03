@@ -116,10 +116,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="category"><?= t('create_post_category'); ?></label>
                     <select name="category" id="category" required>
-                        <option value="2"><?= t('create_post_category'); ?> - Activités</option>
-                        <option value="1"><?= t('create_post_category'); ?> - Nourriture</option>
-                        <option value="4"><?= t('create_post_category'); ?> - Culture</option>
-                        <option value="3"><?= t('create_post_category'); ?> - Nature</option>
+                        <option value="2"><?= t('category_names')['activity']; ?></option>
+                        <option value="1"><?= t('category_names')['food']; ?></option>
+                        <option value="4"><?= t('category_names')['culture']; ?></option>
+                        <option value="3"><?= t('category_names')['nature']; ?></option>
                     </select>
 
                 </div>

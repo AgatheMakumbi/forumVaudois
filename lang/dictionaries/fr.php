@@ -8,6 +8,8 @@ return array(
     'nav_culture' => "Culture ​​🎥​",
     'nav_about' => "A propos",
     'nav_button_login' => "Créer un compte / Se connecter",
+    'nav_post_it' => 'Publier',
+
 
     //Footer
     'footer_title' => "Contact",
