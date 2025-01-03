@@ -33,6 +33,15 @@ return array(
     'news_no_posts' => 'No posts found for this category.',
     'news_add_response' => 'Add a response',
 
+    // Category name 
+    'category_names' => [
+        'food' => 'Food',
+        'activity' => 'Activities',
+        'nature' => 'Nature',
+        'culture' => 'Culture',
+        'all' => 'All categories'
+    ],
+
     //About 
     'about_intro_title' => "Introduction",
     'about_intro_content' => "Welcome to the Vaudois Forum, a platform dedicated to exchanges and discussions for the residents and visitors of the canton of Vaud. Our goal is to facilitate communication, promote local activities, and strengthen ties among community members. Whether you're looking for events, tips, or simply a space to share your ideas, the Vaudois Forum is here for you.",

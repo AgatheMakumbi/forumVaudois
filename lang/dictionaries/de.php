@@ -33,6 +33,15 @@ return array(
     'news_no_posts' => 'Keine Beiträge für diese Kategorie gefunden.',
     'news_add_response' => 'Antwort hinzufügen',
 
+    // Category name 
+    'category_names' => [
+        'food' => 'Essen',
+        'activity' => 'Aktivitäten',
+        'nature' => 'Natur',
+        'culture' => 'Kultur',
+        'all' => 'Alle Kategorien'
+    ],
+
     // About 
     'about_intro_title' => "Einführung",
     'about_intro_content' => "Willkommen im Waadtländer Forum, einer Plattform für Austausch und Diskussionen für Bewohner und Besucher des Kantons Waadt. Unser Ziel ist es, die Kommunikation zu fördern, lokale Aktivitäten bekannt zu machen und die Verbindungen innerhalb der Gemeinschaft zu stärken. Ob Sie nach Veranstaltungen, Angeboten oder einem Raum suchen, um Ihre Ideen zu teilen, das Waadtländer Forum ist für Sie da.",

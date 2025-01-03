@@ -33,6 +33,15 @@ return array(
     'news_no_posts' => 'Aucun post trouvé pour cette catégorie.',
     'news_add_response' => 'Ajouter une réponse',
 
+    // Category name 
+    'category_names' => [
+    'food' => 'Nourriture',
+    'activity' => 'Activités',
+    'nature' => 'Nature',
+    'culture' => 'Culture',
+    'all' => 'Toutes les catégories'
+    ],
+
     //About 
     'about_intro_title' => "Introduction",
     'about_intro_content' => "Bienvenue sur le Forum Vaudois, une plateforme dédiée aux échanges et aux discussions pour les habitants et les visiteurs du canton de Vaud. Notre objectif est de faciliter la communication, de promouvoir les activités locales, et de renforcer les liens entre les membres de la communauté. Que vous soyez à la recherche d'événements, de bons plans, ou simplement d'un espace pour partager vos idées, le Forum Vaudois est là pour vous.",
