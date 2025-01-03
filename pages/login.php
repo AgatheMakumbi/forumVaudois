@@ -8,6 +8,8 @@
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
+use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
+
 try {
     /**
      * Gestion de la langue :
