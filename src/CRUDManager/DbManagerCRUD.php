@@ -430,6 +430,15 @@ class DbManagerCRUD implements I_ApiCRUD
         return $post;
     }
 
+    public function getLastPostId(): int
+    {
+        $sql = "SELECT MAX(id) AS lastId FROM Post";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return (int)$result['lastId'];
+    }
+
     public function updatePost(Post $post): bool
     {
         $datas = [
@@ -438,15 +447,13 @@ class DbManagerCRUD implements I_ApiCRUD
             'text' => $post->getText(),
             'budget' => $post->getBudget(),
             'address' => $post->getAddress(),
-            'author' => $post->getAuthor(),
             'city' => $post->getCity(),
             'category' => $post->getCategory(),
             'last_update' => $post->getLastUpdate()->format('Y-m-d H:i:s'),
         ];
 
         $sql = "UPDATE post 
-                SET title = :title, text = :text, budget = :budget, address = :address,
-                    author = :author, city = :city, category = :category, last_update = :last_update
+                SET title = :title, text = :text, budget = :budget, address = :address, id_city = :city, id_category = :category, last_update = :last_update
                 WHERE id = :id";
 
         $stmt = $this->db->prepare($sql);
@@ -724,5 +731,40 @@ class DbManagerCRUD implements I_ApiCRUD
 
         // Retourne true si la suppression a réussi
         return $stmt->execute();
+    }
+
+    //MEDIA
+
+    public function createMedia(Media $media): bool
+    {
+        $datas = [
+            'id_post' => $media->getPostId(),
+            'file_path' => $media->getFilePath(),
+            'upload_date' => $media->getUploadDate()->format('Y-m-d H:i:s'),
+        ];
+
+        $sql = "INSERT INTO Media (id_post, file_path, upload_date)
+                VALUES (:id_post, :file_path, :upload_date)";
+
+        $this->db->prepare($sql)->execute($datas);
+        return $this->db->lastInsertId() !== null;
+    }
+
+    public function getMediasByPostId(int $id_post): array
+    {
+        $sql = "SELECT * FROM Media WHERE id_post = :id_post";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
+        $stmt->execute();
+        $Medias = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $Medias[] = new Media(
+                $row['file_path'],
+                new DateTime($row['upload_date']),
+                $row['id_post']
+            );
+        }
+
+        return $Medias;
     }
 }

@@ -16,6 +16,7 @@ class Media
     private $id;
     private $file_path;
     private $upload_date;
+    private $post;
 
     /**
      * Construit un nouveau media avec les paramètres spécifiés
@@ -24,10 +25,11 @@ class Media
      * @param \DateTime $upload_date Date de téléchargement
      * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
      */
-    public function __construct(string $file_path, DateTime $upload_date, int $id = 0,)
+    public function __construct(string $file_path, DateTime $upload_date, int $post, int $id = 0,)
     {
         $this->setFilePath($file_path);
         $this->upload_date = new DateTime(('now'));
+        $this->post = $post;
     }
 
     /**
@@ -59,5 +61,15 @@ class Media
     public function getFilePath(): string
     {
         return $this->file_path;
+    }
+
+    public function getPostId(): int
+    {
+        return $this->post;
+    }
+
+    public function getUploadDate(): DateTime
+    {
+        return $this->upload_date;
     }
 }

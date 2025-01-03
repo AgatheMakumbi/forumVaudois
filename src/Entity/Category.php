@@ -56,4 +56,21 @@ class Category
     {
         return $this->categoryName;
     }
+
+    public static function getCategoryById(int $id): Category
+    {
+        // Exemple de données statiques (remplacez par une requête à une base de données si nécessaire)
+        $categoryData = [
+            1 => "Food",
+            2 => "Activité",
+            3 => "Nature",
+            4 => "Culture"
+        ];
+
+        if (!isset($categoryData[$id])) {
+            throw new Exception("Category not found for ID: $id");
+        }
+
+        return new Category($categoryData[$id], $id);
+    }
 }

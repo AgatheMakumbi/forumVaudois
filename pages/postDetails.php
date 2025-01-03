@@ -5,6 +5,8 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Personne;
 use M521\ForumVaudois\Entity\Post;
+use M521\ForumVaudois\Entity\City;
+use M521\ForumVaudois\Entity\Category;
 use M521\ForumVaudois\Entity\Like;
 use M521\ForumVaudois\Entity\Comment;
 
@@ -25,6 +27,7 @@ $idPost = (int)$_GET['id_post']; // Récupérer et sécuriser l'identifiant
 try {
     $dbManager = new DbManagerCRUD();
     $post = $dbManager->getPostById($idPost); // Fonction à créer dans DbManagerCRUD
+    $medias = $dbManager->getMediasByPostId($idPost);
     $likes = $dbManager->getLikesById($idPost);
     $comments = $dbManager->getCommentsById($idPost);
 
@@ -55,8 +58,24 @@ if (!$post) {
     <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
     <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
     <p><strong>Auteur :</strong> <?= htmlspecialchars($post->getAuthor()) ?></p>
-    <p><strong>Ville :</strong> <?= htmlspecialchars($post->getCity()) ?></p>
-    <p><strong>Catégorie :</strong> <?= htmlspecialchars($post->getCategory()) ?></p>
+    <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
+    <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
+
+    <!-- Affichage des images -->
+    <h2>Images associées :</h2>
+    <?php if (!empty($medias)): ?>
+        <div>
+            <?php foreach ($medias as $media): ?>
+                <?php 
+                    // Récupération du chemin du fichier
+                    $filePath = htmlspecialchars($media->getFilePath()); 
+                ?>
+                <img src="../uploads/<?= $filePath ?>" alt="Image associée au post" style="max-width: 300px; max-height: 300px; margin: 10px;">
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p>Aucune image associée à ce post.</p>
+    <?php endif; ?>
 
     <!-- Affichage du nombre de likes -->
     <p><strong>Nombre de likes :</strong> <?= count($likes) ?></p>

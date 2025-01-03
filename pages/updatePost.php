@@ -11,27 +11,21 @@ error_reporting(E_ALL);
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    /**
+     * Variables pour le post :
+     * - Titre, texte, ville, budget, adresse, auteur et catégorie.
+     */
     $title = $_POST['title'];
     $text = $_POST['post-content'];
     $city = $_POST['city'];
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
-    $authorId = 1; // Exemple : récupérez-le depuis la session utilisateur
-    $category = 1; // Exemple : attribuez une catégorie par défaut
-    $city = 2;
-
-    // Gestion des fichiers
-    $imagePath = null;
-    if (!empty($_FILES['image']['name'])) {
-        $uploadDir = '../uploads/';
-        $imagePath = $uploadDir . basename($_FILES['image']['name']);
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-            die("Échec du téléchargement de l'image");
-        }
-    }
+    $authorId = 1; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
+    $category = $_POST['category'] ?? 1; // Catégorie par défaut
+    $city = $_POST['city'];
 
     try {
-        // Créer l'objet Post
+        // Création d'un nouvel objet Post
         $post = new Post(
             $title,
             $text,
@@ -39,19 +33,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $authorId,
             $city,
             $category,
-            new DateTime(),
-            new DateTime(),
-            0,
+            new DateTime(), // Date de création
+            new DateTime(), // Date de mise à jour
+            0,              // Nombre de vues par défaut
             $address
         );
-        // Insérer le post dans la base de données
+        
+        // Enregistrement du post dans la base de données
         $dbManager = new DbManagerCRUD();
         if ($dbManager->updatePost($post)) {
-            echo "Post créé avec succès !";
+            echo "Post modifié avec succès !";
         } else {
-            echo "Échec de la création du post.";
+            echo "Échec de la modification du post.";
         }
     } catch (Exception $e) {
+        // Gère les erreurs liées à la création du post
         echo "Erreur : " . $e->getMessage();
     }
 }
@@ -89,7 +85,7 @@ if (!$post) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
-    <title>Créer un post</title>
+    <title>Modifier un post</title>
 </head>
 <body>
 <?php include '../components/header.php' ?>
@@ -98,29 +94,29 @@ if (!$post) {
         <div class="post-image">
             <img src="../assets/images/photoVaud1.jpg" alt="Photo du lac" class="preview-image">
         </div>
-        <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
+        <form class="create-post-form" action="updatePost.php?id_post=<?php echo $idPost ?>" method="POST" enctype="multipart/form-data">
             <h2 class="form-title">Créer un post</h2>
 
             <div class="form-group">
                 <label for="category">Catégorie</label>
                 <select name="category" id="category" required>
-                    <option value="1" <?= $post->getCategory() == 1 ? 'selected' : '' ?>>Activités</option>
-                    <option value="2" <?= $post->getCategory() == 2 ? 'selected' : '' ?>>Nourriture</option>
-                    <option value="3" <?= $post->getCategory() == 3 ? 'selected' : '' ?>>Culture</option>
-                    <option value="4" <?= $post->getCategory() == 4 ? 'selected' : '' ?>>Nature</option>
+                    <option value="2" <?= $post->getCategory() == 2 ? 'selected' : '' ?>>Activités</option>
+                    <option value="1" <?= $post->getCategory() == 1 ? 'selected' : '' ?>>Nourriture</option>
+                    <option value="4" <?= $post->getCategory() == 4 ? 'selected' : '' ?>>Culture</option>
+                    <option value="3" <?= $post->getCategory() == 3 ? 'selected' : '' ?>>Nature</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="city">Ville</label>
                 <select name="city" id="city" required>
-                    <option value="Lausanne" <?= $post->getCity() == 'Lausanne' ? 'selected' : '' ?>>Lausanne</option>
-                    <option value="Yverdon-les-Bains" <?= $post->getCity() == 'Yverdon-les-Bains' ? 'selected' : '' ?>>Yverdon-les-Bains</option>
-                    <option value="Montreux" <?= $post->getCity() == 'Montreux' ? 'selected' : '' ?>>Montreux</option>
-                    <option value="Vevey" <?= $post->getCity() == 'Vevey' ? 'selected' : '' ?>>Vevey</option>
-                    <option value="Nyon" <?= $post->getCity() == 'Nyon' ? 'selected' : '' ?>>Nyon</option>
-                    <option value="Renens" <?= $post->getCity() == 'Renens' ? 'selected' : '' ?>>Renens</option>
-                    <option value="Morges" <?= $post->getCity() == 'Morges' ? 'selected' : '' ?>>Morges</option>
+                    <option value="1" <?= $post->getCity() == 1 ? 'selected' : '' ?>>Lausanne</option>
+                    <option value="3" <?= $post->getCity() == 3 ? 'selected' : '' ?>>Yverdon-les-Bains</option>
+                    <option value="2" <?= $post->getCity() == 2 ? 'selected' : '' ?>>Montreux</option>
+                    <option value="4" <?= $post->getCity() == 4 ? 'selected' : '' ?>>Vevey</option>
+                    <option value="5" <?= $post->getCity() == 5 ? 'selected' : '' ?>>Nyon</option>
+                    <option value="7" <?= $post->getCity() == 7 ? 'selected' : '' ?>>Renens</option>
+                    <option value="6" <?= $post->getCity() == 6 ? 'selected' : '' ?>>Morges</option>
                 </select>
             </div>
 
@@ -150,12 +146,7 @@ if (!$post) {
                 <textarea id="post-content" name="post-content" placeholder="Texte ..." required><?= htmlspecialchars($post->getText(), ENT_QUOTES) ?></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="image">Ajouter une image (facultatif)</label>
-                <input type="file" id="image" name="image" accept="image/*">
-            </div>
-
-            <button type="submit" class="submit-btn">Publier</button>
+            <button type="submit" class="submit-btn">Modifier</button>
         </form>
     </div>
 </main>

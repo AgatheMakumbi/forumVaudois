@@ -69,12 +69,12 @@ class City
         // Exemple de données statiques (remplacez par une requête à une base de données si nécessaire)
         $cityData = [
             1 => "Lausanne",
-            2 => "Nyon",
-            3 => "Montreux",
+            3 => "Yverdon-les-Bains",
+            2 => "Montreux",
             4 => "Vevey",
             5 => "Nyon",
-            6 => "Renens",
-            7 => "Morges"
+            7 => "Renens",
+            6 => "Morges"
         ];
 
         if (!isset($cityData[$id])) {

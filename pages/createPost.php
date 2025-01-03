@@ -9,6 +9,7 @@ require_once '../vendor/autoload.php';
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
+use M521\ForumVaudois\Entity\Media;
 
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
@@ -37,8 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * - Vérifie si un fichier image est envoyé et le déplace dans le dossier d'uploads.
      */
     $imagePath = null;
+    $imageName = null;
     if (!empty($_FILES['image']['name'])) {
         $uploadDir = '../uploads/';
+        $imageName = $_FILES['image']['name'];
         $imagePath = $uploadDir . basename($_FILES['image']['name']);
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
             die("Échec du téléchargement de l'image");
@@ -64,6 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dbManager = new DbManagerCRUD();
         if ($dbManager->createPost($post)) {
             echo "Post créé avec succès !";
+
+            if($imageName != null) {
+                $postId = $dbManager->getLastPostId();
+                $media = new Media(
+                    $imageName,
+                    new DateTime(),
+                    $postId
+                );
+                $dbManager->createMedia($media);
+            }
         } else {
             echo "Échec de la création du post.";
         }
@@ -101,10 +114,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="category">Catégorie</label>
                     <select name="category" id="category" required>
-                        <option value="1">Activités</option>
-                        <option value="2">Nourriture</option>
-                        <option value="3">Culture</option>
-                        <option value="4">Nature</option>
+                        <option value="2">Activités</option>
+                        <option value="1">Nourriture</option>
+                        <option value="4">Culture</option>
+                        <option value="3">Nature</option>
                     </select>
                 </div>
 
@@ -112,13 +125,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="city">Ville</label>
                     <select name="city" id="city" required>
-                        <option value="Lausanne">Lausanne</option>
-                        <option value="Yverdon-les-Bains">Yverdon-les-Bains</option>
-                        <option value="Montreux">Montreux</option>
-                        <option value="Vevey">Vevey</option>
-                        <option value="Nyon">Nyon</option>
-                        <option value="Renens">Renens</option>
-                        <option value="Morges">Morges</option>
+                        <option value="1">Lausanne</option>
+                        <option value="3">Yverdon-les-Bains</option>
+                        <option value="2">Montreux</option>
+                        <option value="4">Vevey</option>
+                        <option value="5">Nyon</option>
+                        <option value="7">Renens</option>
+                        <option value="6">Morges</option>
                     </select>
                 </div>
 
