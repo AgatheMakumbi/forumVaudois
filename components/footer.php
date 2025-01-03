@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Chargement des fichiers nécessaires
  */
@@ -43,7 +44,7 @@ try {
 /**
  * Traitement des données du formulaire si la méthode est POST
  */
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['footer_submit'])) {
     // Validation du champ "name"
     if (strlen(filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim'])) > 0) {
         $name = filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim']);
@@ -126,7 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="message"><?php echo $messages['footer_form_message']; ?></label>
                 <textarea id="message" name="message" placeholder="<?php echo $messages['footer_form_message']; ?>"></textarea>
 
-                <button type="submit"><?php echo $messages['footer_form_button']; ?></button>
+                <button type="submit" name="footer-submit"><?php echo $messages['footer_form_button']; ?></button>
+                <p><?php echo $status; ?></p>
             </form>
         </div>
     </div>
