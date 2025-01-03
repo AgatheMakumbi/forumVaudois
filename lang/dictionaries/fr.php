@@ -69,4 +69,22 @@ return array(
     'signup_text_alreadyAccount' => "Vous avez déjà un compte ?",
     'signup_link_login' => "Connectez-vous",
 
+    //CreatePost
+    'create_post_title' => 'Créer un post',
+    'create_post_form_title' => 'Créer un post',
+    'preview_image_alt' => 'Photo du lac',
+    'create_post_category' => 'Catégorie',
+    'create_post_city' => 'Ville',
+    'create_post_address' => 'Adresse (facultatif)',
+    'create_post_address_placeholder' => 'Adresse (facultatif)',
+    'create_post_budget' => 'Budget par personne',
+    'create_post_budget_placeholder' => 'Budget',
+    'create_post_title_label' => 'Titre de la publication',
+    'create_post_title_placeholder' => 'Titre de la publication',
+    'create_post_text' => 'Texte',
+    'create_post_text_placeholder' => 'Texte...',
+    'create_post_image' => 'Ajouter une image (facultatif)',
+    'create_post_submit' => 'Publier',
+
+
 );
