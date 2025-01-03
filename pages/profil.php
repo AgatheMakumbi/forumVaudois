@@ -41,45 +41,49 @@ $posts = $db->getPostsByUser($loggedUserID);
 </head>
 
 <body>
-    <?php include '../components/header.php'; ?>
-    <main class="profile-main">
-        <!-- Profil de l'utilisateur -->
-        <section class="profile-section">
-            <div class="profile-header">
-                <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
-                <div class="profile-info">
-                    <h1><?= htmlspecialchars($loggedUser->getUsername()) ?></h1>
-                    <p>Email : <?= htmlspecialchars($loggedUser->getEmail()) ?></p>
-                </div>
-            </div>
-        </section>
+    <div class="wrapper">
+        <?php include '../components/header.php'; ?>
 
-        <!-- Historique des posts -->
-        <section class="profile-posts">
-            <h2>Mes posts</h2>
-            <div class="posts-container">
-                <?php if (!empty($posts)) : ?>
-                    <?php foreach ($posts as $post) : ?>
-                        <div class="post-card">
-                            <div class="post-header">
-                                <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+        <main class="profile-main">
+            <!-- Profil de l'utilisateur -->
+            <section class="profile-section">
+                <div class="profile-header">
+                    <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
+                    <div class="profile-info">
+                        <h1><?= htmlspecialchars($loggedUser->getUsername()) ?></h1>
+                        <p>Email : <?= htmlspecialchars($loggedUser->getEmail()) ?></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Historique des posts -->
+            <section class="profile-posts">
+                <h2>Mes posts</h2>
+                <div class="posts-container">
+                    <?php if (!empty($posts)): ?>
+                        <?php foreach ($posts as $post): ?>
+                            <div class="post-card">
+                                <div class="post-header">
+                                    <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+                                </div>
+                                <p><?= htmlspecialchars($post->getText()) ?></p>
+                                <div class="post-footer">
+                                    <button class="btn-response">Ajouter une réponse</button>
+                                    <p class="post-location">
+                                        📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
+                                    </p>
+                                </div>
                             </div>
-                            <p><?= htmlspecialchars($post->getText()) ?></p>
-                            <div class="post-footer">
-                                <button class="btn-response">Ajouter une réponse</button>
-                                <p class="post-location">
-                                    📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
-                                </p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <p>Aucun post trouvé.</p>
-                <?php endif; ?>
-            </div>
-        </section>
-    </main>
-    <?php include '../components/footer.php'; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Aucun post trouvé.</p>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </main>
+
+        <?php include '../components/footer.php'; ?>
+    </div>
 </body>
 
 </html>

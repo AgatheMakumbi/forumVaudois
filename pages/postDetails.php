@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Détails d'un post
+ * Page de détail d'un post.
  * Cette page récupère et affiche les informations détaillées d'un post,
  * y compris les médias associés, les likes et les commentaires.
  */
@@ -12,66 +12,37 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\City;
 use M521\ForumVaudois\Entity\Category;
 
-// Activation de l'affichage des erreurs pour le débogage
+// Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Démarrage de la session utilisateur
+// Démarrer la session utilisateur
 session_start();
 
-// Vérification que l'identifiant du post est fourni dans l'URL
+// Vérifier si l'identifiant du post est fourni
 if (!isset($_GET['id_post']) || empty($_GET['id_post'])) {
     echo "Identifiant du post non fourni.";
     exit;
 }
 
-// Récupération sécurisée de l'identifiant du post
-$idPost = (int)$_GET['id_post'];
+$idPost = (int) $_GET['id_post']; // Sécuriser l'identifiant du post
 
 try {
-    /**
-     * Instance pour gérer la base de données.
-     *
-     * @var DbManagerCRUD $dbManager
-     */
+    // Initialiser la connexion à la base de données
     $dbManager = new DbManagerCRUD();
 
-    /**
-     * Récupère le post par son identifiant.
-     *
-     * @var Post|null $post
-     */
+    // Récupérer les données du post
     $post = $dbManager->getPostById($idPost);
-
-    /**
-     * Liste des médias associés au post.
-     *
-     * @var array $medias
-     */
     $medias = $dbManager->getMediasByPostId($idPost);
-
-    /**
-     * Liste des likes associés au post.
-     *
-     * @var array $likes
-     */
     $likes = $dbManager->getLikesById($idPost);
-
-    /**
-     * Liste des commentaires associés au post.
-     *
-     * @var array $comments
-     */
     $comments = $dbManager->getCommentsById($idPost);
-
 } catch (Exception $e) {
-    // Gestion des erreurs de récupération des données
-    echo "Erreur lors de la récupération du post : " . $e->getMessage();
+    echo "Erreur lors de la récupération des données : " . $e->getMessage();
     exit;
 }
 
-// Vérification que le post existe
+// Vérifier si le post existe
 if (!$post) {
     echo "Post introuvable.";
     exit;
@@ -80,7 +51,11 @@ if (!$post) {
 // Nombre total de likes
 $totalLikes = count($likes);
 
+// URL de la page précédente (fallback vers index.php si non disponible)
+$previousPage = $_SERVER['HTTP_REFERER'] ?? '../index.php';
+
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -96,8 +71,9 @@ $totalLikes = count($likes);
     <?php include '../components/header.php'; ?>
 
     <main class="main-content-post-detail">
-        <!-- Ligne de retour -->
-        <a href="../pages/news.php" class="return-link">← Retour à tous les posts</a>
+        <!-- Lien de retour -->
+        <a href="<?= htmlspecialchars($previousPage); ?>" class="return-link">&larr; Retour à la liste des posts</a>
+    
 
         <!-- Conteneur principal -->
         <div class="post-detail-container">
@@ -106,56 +82,73 @@ $totalLikes = count($likes);
                 <img src="../assets/images/user-avatar.png" alt="Avatar de l'auteur" class="post-avatar">
                 <h1 class="post-title"><?= htmlspecialchars($post->getTitle()) ?></h1>
             </div>
+            <br>
 
-            <!-- Description du post -->
+            <!-- Description et détails supplémentaires -->
             <p class="post-description"><?= nl2br(htmlspecialchars($post->getText())) ?></p>
-<br>
-            
+            <br>
+            <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
+            <br>
+            <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
+            <br>
+            <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
+            <br>
+            <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
+            <br>
+
             <!-- Médias associés -->
             <?php if (!empty($medias)): ?>
+                <h2>Images associées :</h2>
+                <br>
                 <div class="media-container">
                     <?php foreach ($medias as $media): ?>
                         <img src="../uploads/<?= htmlspecialchars($media->getFilePath()) ?>" alt="Image associée au post" class="post-media">
                     <?php endforeach; ?>
                 </div>
+                <br>
+            <?php else: ?>
+                <p>Aucune image associée à ce post.</p>
+                <br>
             <?php endif; ?>
-            <br>
-            <br>
-            <!-- Détails additionnels -->
-            <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
-            <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
-            <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
-            <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
-<br>
 
             <!-- Section des likes -->
+            <h2>Interactions</h2>
+            <br>
             
             <form method="post" action="likePost.php">
                 <input type="hidden" name="id_post" value="<?= $idPost ?>">
                 <button type="submit" class="like-button">👍 Liker</button>
             </form>
             <br>
-            <p><strong>Nombre de 👍 :</strong> <?= $totalLikes ?></p>
+            <p><strong>Nombre de likes :</strong> <?= $totalLikes ?></p>
+            <br>
 
             <!-- Section des commentaires -->
             <div class="comment-section">
                 <h2>Commentaires :</h2>
+                <br>
                 <?php if (!empty($comments)): ?>
                     <ul class="comment-list">
                         <?php foreach ($comments as $comment): ?>
                             <li class="comment-item">
                                 <p><strong>Auteur :</strong> <?= htmlspecialchars($comment->getAuthor()) ?></p>
+                                <br>
                                 <p><?= nl2br(htmlspecialchars($comment->getText())) ?></p>
+                                <br>
                             </li>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
                     <p>Aucun commentaire pour ce post.</p>
+                    <br>
                 <?php endif; ?>
 
                 <!-- Formulaire pour ajouter un commentaire -->
+                <h2>Ajouter un commentaire</h2>
+                <br>
                 <form method="post" action="addComment.php" class="add-comment-form">
                     <textarea name="comment" rows="4" placeholder="Ajoutez votre commentaire ici..." required></textarea>
+                    <br>
                     <button type="submit" class="submit-comment-button">Envoyer</button>
                 </form>
             </div>
