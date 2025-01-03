@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Script de création d'un post.
  * Ce fichier gère à la fois le traitement du formulaire de création de post et l'affichage du formulaire.
@@ -29,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = $_POST['city'];
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
-    $authorId = 1; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
-    $category = $_POST['category'] ?? 1; // Catégorie par défaut
+    $authorId = $_SESSION['id'];
+    $category = $_POST['category'] ?? 1; // Catégorie sélectionnée ou catégorie par défaut = 1
     $city = $_POST['city'];
 
     /**
@@ -68,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($dbManager->createPost($post)) {
             echo "Post créé avec succès !";
 
-            if($imageName != null) {
+            if ($imageName != null) {
                 $postId = $dbManager->getLastPostId();
                 $media = new Media(
                     $imageName,
@@ -97,7 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include '../components/header.php'; // Inclusion du header ?>
+    <?php include '../components/header.php'; // Inclusion du header 
+    ?>
 
     <main class="main-content-createPost">
         <div class="create-post-container">
@@ -175,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <!-- Footer -->
-     <?php include '../components/footer.php'; ?> 
+    <?php include '../components/footer.php'; ?>
 </body>
 
 </html>

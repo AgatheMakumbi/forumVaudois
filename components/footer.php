@@ -128,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['footer_submit'])) {
                 <textarea id="message" name="message" placeholder="<?php echo $messages['footer_form_message']; ?>"></textarea>
 
                 <button type="submit" name="footer-submit"><?php echo $messages['footer_form_button']; ?></button>
-                <p><?php echo $status; ?></p>
             </form>
         </div>
     </div>
