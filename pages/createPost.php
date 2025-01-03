@@ -6,6 +6,7 @@
  */
 
 require_once '../vendor/autoload.php';
+require_once '../lang/lang_func.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
@@ -89,13 +90,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo getLanguage(); ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
-    <title>Créer un post</title>
+    <title><?php echo t('create_post_title'); ?></title>
 </head>
 
 <body>
@@ -106,27 +107,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="create-post-container">
             <!-- Image pré-visualisation -->
             <div class="post-image">
-                <img src="../assets/images/photoVaud1.jpg" alt="Photo du lac" class="preview-image">
+                <img src="../assets/images/photoVaud1.jpg" alt="<?php echo t('preview_image_alt'); ?>" class="preview-image">
             </div>
 
             <!-- Formulaire de création de post -->
             <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
-                <h2 class="form-title">Créer un post</h2>
+                <h2 class="form-title"><?php echo t('create_post_form_title'); ?></h2>
 
                 <!-- Sélection de la catégorie -->
                 <div class="form-group">
-                    <label for="category">Catégorie</label>
+                    <label for="category"><?php echo t('create_post_category'); ?></label>
                     <select name="category" id="category" required>
-                        <option value="2">Activités</option>
-                        <option value="1">Nourriture</option>
-                        <option value="4">Culture</option>
-                        <option value="3">Nature</option>
+                        <option value="2"><?php echo t('nav_activities'); ?></option>
+                        <option value="1"><?php echo t('nav_food'); ?></option>
+                        <option value="4"><?php echo t('nav_culture'); ?></option>
+                        <option value="3"><?php echo t('nav_nature'); ?></option>
                     </select>
                 </div>
 
                 <!-- Sélection de la ville -->
                 <div class="form-group">
-                    <label for="city">Ville</label>
+                    <label for="city"><?php echo t('create_post_city'); ?></label>
                     <select name="city" id="city" required>
                         <option value="1">Lausanne</option>
                         <option value="3">Yverdon-les-Bains</option>
@@ -140,39 +141,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Adresse -->
                 <div class="form-group">
-                    <label for="addresse">Adresse (facultatif)</label>
-                    <input type="text" id="addresse" name="addresse" placeholder="Adresse (facultatif)">
+                    <label for="addresse"><?php echo t('create_post_address'); ?></label>
+                    <input type="text" id="addresse" name="addresse" placeholder="<?php echo t('create_post_address_placeholder'); ?>">
                 </div>
 
                 <!-- Budget -->
                 <div class="form-group">
-                    <label for="budget">Budget par personne</label>
+                    <label for="budget"><?php echo t('create_post_budget'); ?></label>
                     <div class="budget-input">
-                        <input type="number" id="budget" name="budget" placeholder="Budget" required>
+                        <input type="number" id="budget" name="budget" placeholder="<?php echo t('create_post_budget_placeholder'); ?>" required>
                         <span>CHF</span>
                     </div>
                 </div>
 
                 <!-- Titre de la publication -->
                 <div class="form-group">
-                    <label for="title">Titre de la publication</label>
-                    <input type="text" id="title" name="title" placeholder="Titre de la publication" required>
+                    <label for="title"><?php echo t('create_post_title_label'); ?></label>
+                    <input type="text" id="title" name="title" placeholder="<?php echo t('create_post_title_placeholder'); ?>" required>
                 </div>
 
                 <!-- Texte de la publication -->
                 <div class="form-group">
-                    <label for="post-content">Texte</label>
-                    <textarea id="post-content" name="post-content" placeholder="Texte ..." required></textarea>
+                    <label for="post-content"><?php echo t('create_post_text'); ?></label>
+                    <textarea id="post-content" name="post-content" placeholder="<?php echo t('create_post_text_placeholder'); ?>" required></textarea>
                 </div>
 
                 <!-- Téléchargement d'image -->
                 <div class="form-group">
-                    <label for="image">Ajouter une image (facultatif)</label>
+                    <label for="image"><?php echo t('create_post_image'); ?></label>
                     <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
                 <!-- Bouton de soumission -->
-                <button type="submit" class="submit-btn">Publier</button>
+                <button type="submit" class="submit-btn"><?php echo t('create_post_submit'); ?></button>
             </form>
         </div>
     </main>

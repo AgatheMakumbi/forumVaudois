@@ -26,15 +26,18 @@ $email = "";
 $message = "";
 $status = "";
 
-/**
- * Chargement des messages de traduction en fonction de la langue choisie
- */
+// Utiliser la même logique de langue que le header
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 try {
-    $lang = isset($_GET['lang']) ? $_GET['lang'] : 'fr'; // Langue par défaut : 'fr'
+    $lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['LANG']) ? $_SESSION['LANG'] : 'fr');
     $messages = loadLanguage($lang);
+    $_SESSION['LANG'] = $lang;
 } catch (Exception $e) {
-    $messages = loadLanguage('fr'); // En cas d'erreur, fallback en français
-    error_log($e->getMessage()); // Log de l'erreur
+    $messages = loadLanguage('fr');
+    error_log($e->getMessage());
 }
 
 /**
@@ -97,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="GET">
                     <label for="language">Changer la langue :</label>
                     <select name="lang" id="language" onchange="this.form.submit()">
-                        <option value="fr" <?php if ($lang == 'fr') echo 'selected'; ?>>Français</option>
-                        <option value="en" <?php if ($lang == 'en') echo 'selected'; ?>>English</option>
-                        <option value="de" <?php if ($lang == 'de') echo 'selected'; ?>>Deutsch</option>
-                        <option value="it" <?php if ($lang == 'it') echo 'selected'; ?>>Italiano</option>
+                        <option value="fr" <?php echo $lang == 'fr' ? 'selected' : ''; ?>>Français</option>
+                        <option value="en" <?php echo $lang == 'en' ? 'selected' : ''; ?>>English</option>
+                        <option value="de" <?php echo $lang == 'de' ? 'selected' : ''; ?>>Deutsch</option>
+                        <option value="it" <?php echo $lang == 'it' ? 'selected' : ''; ?>>Italiano</option>
                     </select>
                 </form>
             </div>
-            <br><br>
+            <br><br><br><br>
             <h3><?php echo $messages['footer_title']; ?></h3>
             <p><?php echo $messages['footer_address']; ?> : Av. des Sports 20, 1401 Yverdon-les-Bains</p>
             <p><?php echo $messages['footer_phone']; ?> : <a href="tel:+41245577600">024 557 76 00</a></p>
