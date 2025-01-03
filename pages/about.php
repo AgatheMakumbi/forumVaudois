@@ -75,27 +75,27 @@ try {
                 <div class="team-members">
                     <div class="member">
                         <div class="icon">AJ</div>
-                        <p><?php echo $messages['about_team_josh_name']; ?></p>
+                        <p class="name"><?php echo $messages['about_team_josh_name']; ?></p>
                         <p class="role"><?php echo $messages['about_team_josh_role']; ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">DM</div>
-                        <p><?php echo $messages['about_team_mic_name']; ?></p>
+                        <p class="name"><?php echo $messages['about_team_mic_name']; ?></p>
                         <p class="role"><?php echo $messages['about_team_mic_role']; ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">JM</div>
-                        <p><?php echo $messages['about_team_mat_name']; ?></p>
+                        <p class="name"><?php echo $messages['about_team_mat_name']; ?></p>
                         <p class="role"><?php echo $messages['about_team_mat_role']; ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">MA</div>
-                        <p><?php echo $messages['about_team_aga_name']; ?></p>
+                        <p class="name"><?php echo $messages['about_team_aga_name']; ?></p>
                         <p class="role"><?php echo $messages['about_team_aga_role']; ?></p>
                     </div>
                     <div class="member">
                         <div class="icon">MJ</div>
-                        <p><?php echo $messages['about_team_joa_name']; ?></p>
+                        <p class="name"><?php echo $messages['about_team_joa_name']; ?></p>
                         <p class="role"><?php echo $messages['about_team_joa_role']; ?></p>
                     </div>
                 </div>

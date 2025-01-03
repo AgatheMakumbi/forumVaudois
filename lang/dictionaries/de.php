@@ -8,6 +8,8 @@ return array(
     'nav_culture' => "Kultur ​​🎥​",
     'nav_about' => "Über uns",
     'nav_button_login' => "Konto erstellen / Anmelden",
+    'nav_post_it' => 'Posten',
+
 
     // Footer
     'footer_title' => "Kontakt",
@@ -18,6 +20,8 @@ return array(
     'footer_form_email' => "E-Mail",
     'footer_form_message' => "Nachricht",
     'footer_form_button' => "Senden",
+    'change_language' => "Sprache ändern:",
+
 
     // Homepage
     'home_title' => "Waadtländer Forum",
@@ -27,6 +31,18 @@ return array(
     'home_button_food' => "🍴 Rubrik Essen 🍴",
     'home_button_nature' => "🌿​ Rubrik Natur 🌿​",
     'home_button_culture' => "​​🎥​ Rubrik Kultur ​​🎥​",
+    'category_title' => 'Kategorie',
+    'news_no_posts' => 'Keine Beiträge für diese Kategorie gefunden.',
+    'news_add_response' => 'Antwort hinzufügen',
+
+    // Category name 
+    'category_names' => [
+        'food' => 'Essen',
+        'activity' => 'Aktivitäten',
+        'nature' => 'Natur',
+        'culture' => 'Kultur',
+        'all' => 'Alle Kategorien'
+    ],
 
     // About 
     'about_intro_title' => "Einführung",
@@ -70,19 +86,26 @@ return array(
     'signup_link_login' => "Anmelden",
 
     //CreatePost
-    'create_post_title' => 'Beitrag erstellen',
+    'create_post_title' => 'Erstelle einen Beitrag',
     'create_post_form_title' => 'Beitrag erstellen',
-    'preview_image_alt' => 'Seefoto',
+    'preview_image_alt' => 'Foto des Sees',
     'create_post_category' => 'Kategorie',
     'create_post_city' => 'Stadt',
     'create_post_address' => 'Adresse (optional)',
     'create_post_address_placeholder' => 'Adresse (optional)',
     'create_post_budget' => 'Budget pro Person',
     'create_post_budget_placeholder' => 'Budget',
-    'create_post_title_label' => 'Titel des Beitrags',
-    'create_post_title_placeholder' => 'Titel des Beitrags',
+    'create_post_title_label' => 'Beitragstitel',
+    'create_post_title_placeholder' => 'Beitragstitel',
     'create_post_text' => 'Text',
     'create_post_text_placeholder' => 'Text...',
     'create_post_image' => 'Bild hinzufügen (optional)',
     'create_post_submit' => 'Veröffentlichen',
+
+    // Profil
+    'profile_title' => 'Profil',
+    'profile_email' => 'E-Mail :',
+    'profile_my_posts' => 'Meine Beiträge',
+    'profile_no_posts' => 'Keine Beiträge gefunden.',
+    'profile_add_response' => 'Antwort hinzufügen',
 );

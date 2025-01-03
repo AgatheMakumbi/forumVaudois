@@ -116,22 +116,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Formulaire de création de post -->
             <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
-                <h2 class="form-title">Créer un post</h2>
+                <h2 class="form-title"><?= t('create_post_title'); ?></h2>
 
                 <!-- Sélection de la catégorie -->
                 <div class="form-group">
-                    <label for="category">Catégorie</label>
+                    <label for="category"><?= t('create_post_category'); ?></label>
                     <select name="category" id="category" required>
-                        <option value="2">Activités</option>
-                        <option value="1">Nourriture</option>
-                        <option value="3">Nature</option>
-                        <option value="4">Culture</option>
+                        <option value="2"><?= t('category_names')['activity']; ?></option>
+                        <option value="1"><?= t('category_names')['food']; ?></option>
+                        <option value="4"><?= t('category_names')['culture']; ?></option>
+                        <option value="3"><?= t('category_names')['nature']; ?></option>
                     </select>
+
                 </div>
 
                 <!-- Sélection de la ville -->
                 <div class="form-group">
-                    <label for="city">Ville</label>
+                    <label for="city"><?= t('create_post_city'); ?></label>
                     <select name="city" id="city" required>
                         <option value="1">Lausanne</option>
                         <option value="3">Yverdon-les-Bains</option>
@@ -145,39 +146,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Adresse -->
                 <div class="form-group">
-                    <label for="addresse">Adresse (facultatif)</label>
-                    <input type="text" id="addresse" name="addresse" placeholder="Adresse (facultatif)">
+                    <label for="addresse"><?= t('create_post_address'); ?></label>
+                    <input type="text" id="addresse" name="addresse" placeholder="<?= t('create_post_address_placeholder'); ?>">
                 </div>
 
                 <!-- Budget -->
                 <div class="form-group">
-                    <label for="budget">Budget par personne</label>
+                    <label for="budget"><?= t('create_post_budget'); ?></label>
                     <div class="budget-input">
-                        <input type="number" id="budget" name="budget" placeholder="Budget" required>
+                        <input type="number" id="budget" name="budget" placeholder="<?= t('create_post_budget_placeholder'); ?>" required>
                         <span>CHF</span>
                     </div>
                 </div>
 
                 <!-- Titre de la publication -->
                 <div class="form-group">
-                    <label for="title">Titre de la publication</label>
-                    <input type="text" id="title" name="title" placeholder="Titre de la publication" required>
+                    <label for="title"><?= t('create_post_title_label'); ?></label>
+                    <input type="text" id="title" name="title" placeholder="<?= t('create_post_title_placeholder'); ?>" required>
                 </div>
 
                 <!-- Texte de la publication -->
                 <div class="form-group">
-                    <label for="post-content">Texte</label>
-                    <textarea id="post-content" name="post-content" placeholder="Texte ..." required></textarea>
+                    <label for="post-content"><?= t('create_post_text'); ?></label>
+                    <textarea id="post-content" name="post-content" placeholder="<?= t('create_post_text_placeholder'); ?>" required></textarea>
                 </div>
 
                 <!-- Téléchargement d'image -->
                 <div class="form-group">
-                    <label for="image">Ajouter une image (facultatif)</label>
+                    <label for="image"><?= t('create_post_image'); ?></label>
                     <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
                 <!-- Bouton de soumission -->
-                <button type="submit" class="submit-btn">Publier</button>
+                <button type="submit" class="submit-btn"><?= t('create_post_submit'); ?></button>
             </form>
         </div>
     </main>

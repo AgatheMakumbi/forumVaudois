@@ -69,7 +69,7 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
         <?php include '../components/header.php'; ?>
 
         <main class="news-feed">
-            <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
+            <h1><?= t('category_title'); ?> : <?= ucfirst($messages['category_names'][$categoryName] ?? $categoryName); ?></h1>
             <div class="posts-container">
                 <?php if (!empty($filteredPosts)): ?>
                     <?php foreach ($filteredPosts as $post): ?>
@@ -90,11 +90,12 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
                                     <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                     <button type="submit" class="like-button">👍 Liker</button>
                                 </form>
+                                <button class="btn-response"><?= t('news_add_response'); ?></button>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>Aucun post trouvé pour cette catégorie.</p>
+                    <p><?= t('news_no_posts'); ?></p>
                 <?php endif; ?>
             </div>
             <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">

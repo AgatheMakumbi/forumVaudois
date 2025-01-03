@@ -8,6 +8,8 @@ return array(
     'nav_culture' => "Culture ​​🎥​",
     'nav_about' => "A propos",
     'nav_button_login' => "Créer un compte / Se connecter",
+    'nav_post_it' => 'Publier',
+
 
     //Footer
     'footer_title' => "Contact",
@@ -18,6 +20,8 @@ return array(
     'footer_form_email' => "Email",
     'footer_form_message' => "Message",
     'footer_form_button' => "Envoyer",
+    'change_language' => "Changer la langue :",
+
 
     //Homepage
     'home_title' => "Forum Vaudois",
@@ -27,6 +31,18 @@ return array(
     'home_button_food' => "🍴 Rubrique Restauration 🍴",
     'home_button_nature' => "🌿​ Rubrique Nature 🌿​",
     'home_button_culture' => "​​🎥​ Rubrique Culture ​​🎥​",
+    'category_title' => 'Catégorie',
+    'news_no_posts' => 'Aucun post trouvé pour cette catégorie.',
+    'news_add_response' => 'Ajouter une réponse',
+
+    // Category name 
+    'category_names' => [
+    'food' => 'Nourriture',
+    'activity' => 'Activités',
+    'nature' => 'Nature',
+    'culture' => 'Culture',
+    'all' => 'Toutes les catégories'
+    ],
 
     //About 
     'about_intro_title' => "Introduction",
@@ -86,5 +102,11 @@ return array(
     'create_post_image' => 'Ajouter une image (facultatif)',
     'create_post_submit' => 'Publier',
 
+    // Profil
+    'profile_title' => 'Profil',
+    'profile_email' => 'Email :',
+    'profile_my_posts' => 'Mes posts',
+    'profile_no_posts' => 'Aucun post trouvé.',
+    'profile_add_response' => 'Ajouter une réponse',
 
 );
