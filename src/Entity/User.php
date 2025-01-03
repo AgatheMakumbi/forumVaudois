@@ -49,14 +49,14 @@ class User
     /**
      * Statut d'accès de l'utilisateur
      * 
-     * @var bool
+     * @var int
      */
     private int $isBlocked;
 
     /**
      * Statut de vérification de l'utilisateur
      * 
-     * @var bool
+     * @var int
      */
     private int $isVerified;
 
@@ -87,8 +87,8 @@ class User
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setToken($token);
-        $this->setIsBlocked($isBlocked);
-        $this->setIsVerified($isVerified);
+        $this->setIsBlocked(0);
+        $this->setIsVerified(0);
     }
 
     /**
@@ -176,9 +176,9 @@ class User
      * 
      * @param bool $isVerified Le statut de vérification à attribuer à l'utilisateur
      */
-    public function setIsVerified(bool $isVerified)
+    public function setIsVerified(int $Verified)
     {
-        $this->isVerified = $isVerified;
+        $this->isVerified = $Verified;
     }
 
     /**
@@ -186,7 +186,7 @@ class User
      * 
      * @return bool True si l'utilisateur est vérifié, sinon False
      */
-    public function getIsVerified(): bool
+    public function getIsVerified(): int
     {
         return $this->isVerified;
     }
@@ -196,9 +196,9 @@ class User
      * 
      * @param bool $isBlocked Le statut d'accès à attribuer à l'utilisateur
      */
-    public function setIsBlocked(bool $isBlocked)
+    public function setIsBlocked(int $Blocked)
     {
-        $this->isBlocked = $isBlocked;
+        $this->isBlocked = $Blocked;
     }
 
     /**
@@ -206,7 +206,7 @@ class User
      * 
      * @return bool True si l'utilisateur est bloqué, sinon False
      */
-    public function getIsBlocked(): bool
+    public function getIsBlocked(): int
     {
         return $this->isBlocked;
     }

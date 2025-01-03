@@ -35,7 +35,7 @@ $db = new DbManagerCRUD();
     
     <div class="wrapper">
         <!-- Inclusion du header -->
-        <?php include './components/header.php'; PHPinfo()?>
+        <?php include './components/header.php';?>
 
         <main class="main-content">
             <section class="welcome-section">
