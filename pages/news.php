@@ -69,7 +69,7 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
         <?php include '../components/header.php'; ?>
 
         <main class="news-feed">
-            <h1>Catégorie : <?= ucfirst($categoryName); ?></h1>
+            <h1><?= t('category_title'); ?> : <?= ucfirst($categoryName); ?></h1>
             <div class="posts-container">
                 <?php if (!empty($filteredPosts)): ?>
                     <?php foreach ($filteredPosts as $post): ?>

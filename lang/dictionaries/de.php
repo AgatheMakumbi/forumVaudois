@@ -29,6 +29,7 @@ return array(
     'home_button_food' => "🍴 Rubrik Essen 🍴",
     'home_button_nature' => "🌿​ Rubrik Natur 🌿​",
     'home_button_culture' => "​​🎥​ Rubrik Kultur ​​🎥​",
+    'category_title' => 'Kategorie',
 
     // About 
     'about_intro_title' => "Einführung",

@@ -29,6 +29,7 @@ return array(
     'home_button_food' => "🍴 Food Section 🍴",
     'home_button_nature' => "🌿​ Nature Section 🌿​",
     'home_button_culture' => "​​🎥​ Culture Section ​​🎥​",
+    'category_title' => 'Category',
 
     //About 
     'about_intro_title' => "Introduction",

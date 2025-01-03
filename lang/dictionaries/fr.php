@@ -29,6 +29,7 @@ return array(
     'home_button_food' => "🍴 Rubrique Restauration 🍴",
     'home_button_nature' => "🌿​ Rubrique Nature 🌿​",
     'home_button_culture' => "​​🎥​ Rubrique Culture ​​🎥​",
+    'category_title' => 'Catégorie',
 
     //About 
     'about_intro_title' => "Introduction",
