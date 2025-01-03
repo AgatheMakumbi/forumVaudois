@@ -37,7 +37,7 @@ $posts = $db->getPostsByUser($loggedUserID);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
-    <title>Profil</title>
+    <title><?= t('profile_title'); ?></title>
 </head>
 
 <body>
@@ -46,40 +46,41 @@ $posts = $db->getPostsByUser($loggedUserID);
 
         <main class="profile-main">
             <!-- Profil de l'utilisateur -->
-            <section class="profile-section">
-                <div class="profile-header">
-                    <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
-                    <div class="profile-info">
-                        <h1><?= htmlspecialchars($loggedUser->getUsername()) ?></h1>
-                        <p>Email : <?= htmlspecialchars($loggedUser->getEmail()) ?></p>
+<section class="profile-section">
+    <div class="profile-header">
+        <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
+        <div class="profile-info">
+            <h1><?= htmlspecialchars($loggedUser->getUsername()) ?></h1>
+            <p><?= t('profile_email'); ?> <?= htmlspecialchars($loggedUser->getEmail()) ?></p>
+        </div>
+    </div>
+</section>
+
+<!-- Historique des posts -->
+<section class="profile-posts">
+    <h2><?= t('profile_my_posts'); ?></h2>
+    <div class="posts-container">
+        <?php if (!empty($posts)): ?>
+            <?php foreach ($posts as $post): ?>
+                <div class="post-card">
+                    <div class="post-header">
+                        <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+                    </div>
+                    <p><?= htmlspecialchars($post->getText()) ?></p>
+                    <div class="post-footer">
+                        <button class="btn-response"><?= t('profile_add_response'); ?></button>
+                        <p class="post-location">
+                            📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
+                        </p>
                     </div>
                 </div>
-            </section>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p><?= t('profile_no_posts'); ?></p>
+        <?php endif; ?>
+    </div>
+</section>
 
-            <!-- Historique des posts -->
-            <section class="profile-posts">
-                <h2>Mes posts</h2>
-                <div class="posts-container">
-                    <?php if (!empty($posts)): ?>
-                        <?php foreach ($posts as $post): ?>
-                            <div class="post-card">
-                                <div class="post-header">
-                                    <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
-                                </div>
-                                <p><?= htmlspecialchars($post->getText()) ?></p>
-                                <div class="post-footer">
-                                    <button class="btn-response">Ajouter une réponse</button>
-                                    <p class="post-location">
-                                        📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
-                                    </p>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>Aucun post trouvé.</p>
-                    <?php endif; ?>
-                </div>
-            </section>
         </main>
 
         <?php include '../components/footer.php'; ?>

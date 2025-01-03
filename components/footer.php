@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['footer_submit'])) {
             <!-- Sélecteur de langue -->
             <div class="language-selector">
                 <form method="GET">
-                    <label for="language">Changer la langue :</label>
+                    <label for="language"><?php echo $messages['change_language']; ?></label>
                     <select name="lang" id="language" onchange="this.form.submit()">
                         <option value="fr" <?php echo $lang == 'fr' ? 'selected' : ''; ?>>Français</option>
                         <option value="en" <?php echo $lang == 'en' ? 'selected' : ''; ?>>English</option>

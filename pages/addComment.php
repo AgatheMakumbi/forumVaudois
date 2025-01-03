@@ -4,21 +4,22 @@ require_once '../vendor/autoload.php';
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Comment;
 
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $commentText = $_POST['comment'] ?? null;
-    $id_post = $_POST['id_post'] ?? null;
-    $id_user = 1; // Exemple : vous pouvez récupérer l'utilisateur connecté via $_SESSION
+if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
+    // Redirige vers la page de connexion
+    header("Location: login.php");
+    exit; // Arrête l'exécution pour éviter de charger le reste de la page
+}
 
-    if (empty($commentText) || empty($id_post)) {
-        echo "Le commentaire ou l'identifiant du post est manquant.";
-        exit;
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $comment = $_POST['comment'];
+    $id_post = $_POST['id_post'];
+    $id_user = $_SESSION["id"];
 
     try {
         // Créez un objet Comment

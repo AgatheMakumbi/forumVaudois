@@ -8,6 +8,8 @@ return array(
     'nav_culture' => "Culture ​​🎥​",
     'nav_about' => "About",
     'nav_button_login' => "Create an account / Login",
+    'nav_post_it' => 'Post it!',
+
 
     //Footer
     'footer_title' => "Contact",
@@ -18,6 +20,8 @@ return array(
     'footer_form_email' => "Email",
     'footer_form_message' => "Message",
     'footer_form_button' => "Send",
+    'change_language' => "Change the language:",
+
 
     //Homepage
     'home_title' => "Vaudois Forum",
@@ -27,6 +31,18 @@ return array(
     'home_button_food' => "🍴 Food Section 🍴",
     'home_button_nature' => "🌿​ Nature Section 🌿​",
     'home_button_culture' => "​​🎥​ Culture Section ​​🎥​",
+    'category_title' => 'Category',
+    'news_no_posts' => 'No posts found for this category.',
+    'news_add_response' => 'Add a response',
+
+    // Category name 
+    'category_names' => [
+        'food' => 'Food',
+        'activity' => 'Activities',
+        'nature' => 'Nature',
+        'culture' => 'Culture',
+        'all' => 'All categories'
+    ],
 
     //About 
     'about_intro_title' => "Introduction",
@@ -85,4 +101,11 @@ return array(
     'create_post_text_placeholder' => 'Text...',
     'create_post_image' => 'Add an image (optional)',
     'create_post_submit' => 'Publish',
+
+    // Profil
+    'profile_title' => 'Profile',
+    'profile_email' => 'Email :',
+    'profile_my_posts' => 'My posts',
+    'profile_no_posts' => 'No posts found.',
+    'profile_add_response' => 'Add a response',
 );

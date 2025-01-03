@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,6 +99,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Section droite : Formulaire de connexion -->
             <div class="right-side">
+                <!-- Sélecteur de langue -->
+                <div class="language-selector">
+                    <form method="GET">
+                        <label for="language"><?php echo $messages['change_language']; ?></label>
+                        <select name="lang" id="language" onchange="this.form.submit()">
+                            <option value="fr" <?php echo $lang == 'fr' ? 'selected' : ''; ?>>Français</option>
+                            <option value="en" <?php echo $lang == 'en' ? 'selected' : ''; ?>>English</option>
+                            <option value="de" <?php echo $lang == 'de' ? 'selected' : ''; ?>>Deutsch</option>
+                            <option value="it" <?php echo $lang == 'it' ? 'selected' : ''; ?>>Italiano</option>
+                        </select>
+                    </form>
+                </div>
+
                 <form class="login-form signup-form" action="login.php" method="POST">
                     <h2 class="form-title">Login</h2>
 

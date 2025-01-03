@@ -38,6 +38,15 @@ $db = new DbManagerCRUD();
 
         <main class="main-content">
             <section class="welcome-section">
+                <h1><?php echo $messages['home_title']; ?></h1>
+                <p>
+                    <?php echo $messages['home_text']; ?>
+                    <br>
+                    <?php echo $messages['home_text_hashtag']; ?>
+                </p>
+            </section>
+        <main class="main-content">
+            <section class="welcome-section">
                 <br>
                 <br>
                 <h1><?php echo $messages['home_title']; ?></h1>
@@ -49,6 +58,13 @@ $db = new DbManagerCRUD();
                 <br>
             </section>
 
+            <section class="thread-section">
+                <a href="activite.php" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
+                <a href="food.php" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
+                <a href="nature.php" class="thread-btn"><?php echo $messages['home_button_nature']; ?></a>
+                <a href="culture.php" class="thread-btn"><?php echo $messages['home_button_culture']; ?></a>
+            </section>
+        </main>
             <section class="thread-section">
                 <a href="/ForumVaudois/pages/news.php?category=activity" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
                 <a href="/ForumVaudois/pages/news.php?category=food" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
