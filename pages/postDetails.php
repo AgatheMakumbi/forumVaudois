@@ -77,6 +77,9 @@ if (!$post) {
     exit;
 }
 
+// Nombre total de likes
+$totalLikes = count($likes);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -106,13 +109,8 @@ if (!$post) {
 
             <!-- Description du post -->
             <p class="post-description"><?= nl2br(htmlspecialchars($post->getText())) ?></p>
-
-            <!-- Détails additionnels -->
-            <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
-            <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
-            <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
-            <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
-
+<br>
+            
             <!-- Médias associés -->
             <?php if (!empty($medias)): ?>
                 <div class="media-container">
@@ -121,12 +119,23 @@ if (!$post) {
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
+            <br>
+            <br>
+            <!-- Détails additionnels -->
+            <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
+            <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
+            <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
+            <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
+<br>
 
-            <!-- Bouton pour liker -->
+            <!-- Section des likes -->
+            
             <form method="post" action="likePost.php">
                 <input type="hidden" name="id_post" value="<?= $idPost ?>">
                 <button type="submit" class="like-button">👍 Liker</button>
             </form>
+            <br>
+            <p><strong>Nombre de 👍 :</strong> <?= $totalLikes ?></p>
 
             <!-- Section des commentaires -->
             <div class="comment-section">
