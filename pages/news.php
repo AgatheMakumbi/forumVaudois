@@ -86,7 +86,10 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
                                 📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?>
                             </p>
                             <div class="post-footer">
-                                <button class="btn-response">Ajouter une réponse</button>
+                                <form method="post" action="likePost.php">
+                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                    <button type="submit" class="like-button">👍 Liker</button>
+                                </form>
                             </div>
                         </div>
                     <?php endforeach; ?>
