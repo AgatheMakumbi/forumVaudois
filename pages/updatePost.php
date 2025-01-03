@@ -5,10 +5,20 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
 
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
+
 session_start();
+
+$dbManager = new DbManagerCRUD();
+$_SESSION['id'] = 1;
+
+if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
+    // Redirige vers la page de connexion
+    header("Location: login.php");
+    exit; // Arrête l'exécution pour éviter de charger le reste de la page
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /**
@@ -20,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = $_POST['city'];
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
-    $authorId = 1; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
+    $authorId = $_SESSION['id']; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
     $category = $_POST['category'] ?? 1; // Catégorie par défaut
     $city = $_POST['city'];
 
@@ -40,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         
         // Enregistrement du post dans la base de données
-        $dbManager = new DbManagerCRUD();
         if ($dbManager->updatePost($post)) {
             echo "Post modifié avec succès !";
         } else {
@@ -62,8 +71,15 @@ $idPost = (int)$_GET['id_post']; // Récupérer et sécuriser l'identifiant
 
 // Initialiser la connexion à la base de données et la classe DbManagerCRUD
 try {
-    $dbManager = new DbManagerCRUD();
-    $post = $dbManager->getPostById($idPost); // Fonction à créer dans DbManagerCRUD
+    $post = $dbManager->getPostById($idPost);
+    $author = $post->getAuthor();
+    
+    if($author !== $_SESSION['id']) {
+        // Redirige vers la page de connexion
+        header("Location: news.php");
+        exit; // Arrête l'exécution pour éviter de charger le reste de la page
+    }
+
     $likes = $dbManager->getLikesById($idPost);
     $comments = $dbManager->getCommentsById($idPost);
 

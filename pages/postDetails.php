@@ -10,9 +10,10 @@ use M521\ForumVaudois\Entity\Category;
 use M521\ForumVaudois\Entity\Like;
 use M521\ForumVaudois\Entity\Comment;
 
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
+
 session_start();
 
 // Vérifier si un identifiant est fourni dans l'URL
@@ -30,10 +31,24 @@ try {
     $medias = $dbManager->getMediasByPostId($idPost);
     $likes = $dbManager->getLikesById($idPost);
     $comments = $dbManager->getCommentsById($idPost);
+    $author_user = $dbManager->getUserById($post->getAuthor())->getUsername();
 
 } catch (Exception $e) {
     echo "Erreur lors de la récupération du post : " . $e->getMessage();
     exit;
+}
+
+$userLiked = false;
+
+if(isset($_SESSION["id"])) {
+    if (!empty($likes)) {
+        foreach ($likes as $like) {
+            if ($like->getAuthor() === $_SESSION['id']) {
+                $userLiked = true;
+                break;
+            }
+        }
+    }
 }
 
 // Vérifier si le post existe
@@ -57,7 +72,7 @@ if (!$post) {
     <p><strong>Texte :</strong> <?= nl2br(htmlspecialchars($post->getText())) ?></p>
     <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
     <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
-    <p><strong>Auteur :</strong> <?= htmlspecialchars($post->getAuthor()) ?></p>
+    <p><strong>Auteur :</strong> <?= htmlspecialchars($author_user) ?></p>
     <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
     <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
 
@@ -83,7 +98,7 @@ if (!$post) {
     <!-- Bouton pour liker -->
     <form method="post" action="likePost.php">
         <input type="hidden" name="id_post" value="<?= $idPost ?>">
-        <button type="submit">👍 Liker</button>
+        <button type="submit" <?= $userLiked ? 'disabled' : '' ?>>👍 Liker</button>
     </form>
 
     <!-- Affichage des commentaires -->
@@ -92,7 +107,7 @@ if (!$post) {
         <ul>
             <?php foreach ($comments as $comment): ?>
                 <li>
-                    <p><strong>Auteur :</strong> <?= htmlspecialchars($comment->getAuthor()) ?></p>
+                    <p><strong>Auteur :</strong> <?= htmlspecialchars($dbManager->getUserById($comment->getAuthor())->getUsername()) ?></p>
                     <p><strong>Commentaire :</strong> <?= nl2br(htmlspecialchars($comment->getText())) ?></p>
                     <p><strong>Publié le :</strong> <?= htmlspecialchars($comment->getCreatedAt()->format('d/m/Y H:i:s')) ?></p>
                     <hr>

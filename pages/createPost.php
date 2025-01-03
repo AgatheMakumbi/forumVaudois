@@ -12,12 +12,18 @@ use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\Media;
 
 // Activer l'affichage des erreurs pour le débogage
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 
 // Démarre une session utilisateur
 session_start();
+
+if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
+    // Redirige vers la page de connexion
+    header("Location: login.php");
+    exit; // Arrête l'exécution pour éviter de charger le reste de la page
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /**
@@ -29,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = $_POST['city'];
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
-    $authorId = 1; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
+    $authorId = $_SESSION["id"]; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
     $category = $_POST['category'] ?? 1; // Catégorie par défaut
     $city = $_POST['city'];
 
