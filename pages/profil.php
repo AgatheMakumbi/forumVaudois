@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
 
+use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
@@ -19,7 +20,12 @@ try {
 require_once '../vendor/autoload.php';
 session_start();
 // Simuler l'utilisateur connecté
-$loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
+// Initialisation
+$db = new DbManagerCRUD();
+
+$loggedUserID = $_SESSION["id"];
+$loggedUser = $db->getUserById($loggedUserID);
+//$loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
 
 ?>
 
