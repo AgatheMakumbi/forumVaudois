@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Script de création d'un post.
  * Ce fichier gère à la fois le traitement du formulaire de création de post et l'affichage du formulaire.
@@ -26,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * - Titre, texte, ville, budget, adresse, auteur et catégorie.
      */
     $title = $_POST['title'];
+    echo $title;
     $text = $_POST['post-content'];
     $city = $_POST['city'];
     $budget = $_POST['budget'];
@@ -69,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($dbManager->createPost($post)) {
             echo "Post créé avec succès !";
 
-            if($imageName != null) {
+            if ($imageName != null) {
                 $postId = $dbManager->getLastPostId();
                 $media = new Media(
                     $imageName,
@@ -98,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include '../components/header.php'; // Inclusion du header ?>
+    <?php include '../components/header.php'; // Inclusion du header 
+    ?>
 
     <main class="main-content-createPost">
         <div class="create-post-container">
