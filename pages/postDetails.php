@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Fichier de détail du post.
- * Ce fichier récupère les informations détaillées d'un post, 
+ * Détails d'un post
+ * Cette page récupère et affiche les informations détaillées d'un post,
  * y compris les médias associés, les likes et les commentaires.
  */
 
@@ -31,29 +31,40 @@ $idPost = (int)$_GET['id_post'];
 
 try {
     /**
-     * @var DbManagerCRUD $dbManager Instance pour gérer la base de données
+     * Instance pour gérer la base de données.
+     *
+     * @var DbManagerCRUD $dbManager
      */
     $dbManager = new DbManagerCRUD();
 
     /**
-     * @var Post|null $post Récupère le post par son identifiant
+     * Récupère le post par son identifiant.
+     *
+     * @var Post|null $post
      */
     $post = $dbManager->getPostById($idPost);
 
     /**
-     * @var array $medias Liste des médias associés au post
+     * Liste des médias associés au post.
+     *
+     * @var array $medias
      */
     $medias = $dbManager->getMediasByPostId($idPost);
 
     /**
-     * @var array $likes Liste des likes associés au post
+     * Liste des likes associés au post.
+     *
+     * @var array $likes
      */
     $likes = $dbManager->getLikesById($idPost);
 
     /**
-     * @var array $comments Liste des commentaires associés au post
+     * Liste des commentaires associés au post.
+     *
+     * @var array $comments
      */
     $comments = $dbManager->getCommentsById($idPost);
+
 } catch (Exception $e) {
     // Gestion des erreurs de récupération des données
     echo "Erreur lors de la récupération du post : " . $e->getMessage();
@@ -79,66 +90,71 @@ if (!$post) {
 
 <body>
     <!-- Inclusion du header -->
-    <?php include __DIR__ . '/../components/header.php'; ?>
+    <?php include '../components/header.php'; ?>
 
     <main class="main-content-post-detail">
-    <!-- Ligne de retour -->
-    <a href="../index.php" class="return-link">
-        ← Retour
-    </a>
+        <!-- Ligne de retour -->
+        <a href="../pages/news.php" class="return-link">← Retour à tous les posts</a>
 
-    <!-- Conteneur principal -->
-    <div class="post-detail-container">
-        <!-- En-tête du post -->
-        <div class="post-header">
-            <h1 class="post-title"><?= htmlspecialchars($post->getTitle()) ?></h1>
-        </div>
+        <!-- Conteneur principal -->
+        <div class="post-detail-container">
+            <!-- En-tête du post -->
+            <div class="post-header">
+                <img src="../assets/images/user-avatar.png" alt="Avatar de l'auteur" class="post-avatar">
+                <h1 class="post-title"><?= htmlspecialchars($post->getTitle()) ?></h1>
+            </div>
 
-        <!-- Description du post -->
-        <p class="post-description"><?= nl2br(htmlspecialchars($post->getText())) ?></p>
+            <!-- Description du post -->
+            <p class="post-description"><?= nl2br(htmlspecialchars($post->getText())) ?></p>
 
-        <!-- Détails additionnels -->
-        <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
-        <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
-        <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
-        <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
+            <!-- Détails additionnels -->
+            <p><strong>Budget :</strong> <?= htmlspecialchars($post->getBudget()) ?> €</p>
+            <p><strong>Adresse :</strong> <?= htmlspecialchars($post->getAddress()) ?></p>
+            <p><strong>Ville :</strong> <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?></p>
+            <p><strong>Catégorie :</strong> <?= htmlspecialchars(Category::getCategoryById($post->getCategory())->getCategoryName()) ?></p>
 
-        <!-- Médias associés -->
-        <div class="media-container">
-            <?php foreach ($medias as $media): ?>
-                <img src="../uploads/<?= htmlspecialchars($media->getFilePath()) ?>" alt="Image du post" class="post-media">
-            <?php endforeach; ?>
-        </div>
+            <!-- Médias associés -->
+            <?php if (!empty($medias)): ?>
+                <div class="media-container">
+                    <?php foreach ($medias as $media): ?>
+                        <img src="../uploads/<?= htmlspecialchars($media->getFilePath()) ?>" alt="Image associée au post" class="post-media">
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
-        <!-- Bouton pour liker -->
-        <form method="post" action="likePost.php">
-            <input type="hidden" name="id_post" value="<?= $idPost ?>">
-            <button type="submit" class="like-button">👍 Liker</button>
-        </form>
-
-        <!-- Section des commentaires -->
-        <div class="comment-section">
-            <h2>Commentaires :</h2>
-            <ul class="comment-list">
-                <?php foreach ($comments as $comment): ?>
-                    <li class="comment-item">
-                        <p><strong>Auteur :</strong> <?= htmlspecialchars($comment->getAuthor()) ?></p>
-                        <p><?= nl2br(htmlspecialchars($comment->getText())) ?></p>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-            <!-- Formulaire pour ajouter un commentaire -->
-            <form method="post" action="addComment.php" class="add-comment-form">
-                <textarea name="comment" rows="4" placeholder="Ajoutez votre commentaire ici..." required></textarea>
-                <button type="submit" class="submit-comment-button">Envoyer</button>
+            <!-- Bouton pour liker -->
+            <form method="post" action="likePost.php">
+                <input type="hidden" name="id_post" value="<?= $idPost ?>">
+                <button type="submit" class="like-button">👍 Liker</button>
             </form>
+
+            <!-- Section des commentaires -->
+            <div class="comment-section">
+                <h2>Commentaires :</h2>
+                <?php if (!empty($comments)): ?>
+                    <ul class="comment-list">
+                        <?php foreach ($comments as $comment): ?>
+                            <li class="comment-item">
+                                <p><strong>Auteur :</strong> <?= htmlspecialchars($comment->getAuthor()) ?></p>
+                                <p><?= nl2br(htmlspecialchars($comment->getText())) ?></p>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p>Aucun commentaire pour ce post.</p>
+                <?php endif; ?>
+
+                <!-- Formulaire pour ajouter un commentaire -->
+                <form method="post" action="addComment.php" class="add-comment-form">
+                    <textarea name="comment" rows="4" placeholder="Ajoutez votre commentaire ici..." required></textarea>
+                    <button type="submit" class="submit-comment-button">Envoyer</button>
+                </form>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
 
     <!-- Inclusion du footer -->
-    <?php include '../components/footer.php' ?>
+    <?php include '../components/footer.php'; ?>
 </body>
 
 </html>
