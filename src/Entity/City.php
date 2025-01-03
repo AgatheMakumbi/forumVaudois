@@ -31,6 +31,7 @@ class City
      * Construit une nouvelle ville avec les paramètres spécifiés
      * 
      * @param string $cityName Le nom de la ville
+     * @param int $id L'identifiant unique de la ville (0 par défaut, sera généré par la DB)
      * @throws Exception Exception si un des paramètres n'est pas valide
      */
     public function __construct(string $cityName, int $id = 0)

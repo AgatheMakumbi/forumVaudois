@@ -115,19 +115,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="form-group">
                         <label for="username">Nom d'utilisateur</label>
-                        <input type="text" id="username" name="username" maxlength="20" required value="<?php echo htmlspecialchars($username); ?>">
+                        <input type="text" id="username" name="username" maxlength="20" required
+                            value="<?php echo htmlspecialchars($username); ?>">
                         <p style="color:red;"><?php echo $erreurs['username']; ?></p>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" maxlength="50" required value="<?php echo htmlspecialchars($email); ?>">
+                        <input type="email" id="email" name="email" maxlength="50" required
+                            value="<?php echo htmlspecialchars($email); ?>">
                         <p style="color:red;"><?php echo $erreurs['email']; ?></p>
                     </div>
 
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" minlength="8" maxlength="20" required value="<?php echo htmlspecialchars($password); ?>">
+                        <input type="password" id="password" name="password" minlength="8" maxlength="20" required
+                            value="<?php echo htmlspecialchars($password); ?>">
                         <p style="color:red;"><?php echo $erreurs['password']; ?></p>
                     </div>
 

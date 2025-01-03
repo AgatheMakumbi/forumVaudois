@@ -68,4 +68,21 @@ return array(
     'signup_form_button' => "Registrieren",
     'signup_text_alreadyAccount' => "Sie haben bereits ein Konto?",
     'signup_link_login' => "Anmelden",
+
+    //CreatePost
+    'create_post_title' => 'Beitrag erstellen',
+    'create_post_form_title' => 'Beitrag erstellen',
+    'preview_image_alt' => 'Seefoto',
+    'create_post_category' => 'Kategorie',
+    'create_post_city' => 'Stadt',
+    'create_post_address' => 'Adresse (optional)',
+    'create_post_address_placeholder' => 'Adresse (optional)',
+    'create_post_budget' => 'Budget pro Person',
+    'create_post_budget_placeholder' => 'Budget',
+    'create_post_title_label' => 'Titel des Beitrags',
+    'create_post_title_placeholder' => 'Titel des Beitrags',
+    'create_post_text' => 'Text',
+    'create_post_text_placeholder' => 'Text...',
+    'create_post_image' => 'Bild hinzufügen (optional)',
+    'create_post_submit' => 'Veröffentlichen',
 );

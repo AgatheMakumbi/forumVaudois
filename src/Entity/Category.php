@@ -31,7 +31,8 @@ class Category
     /**
      * Construit une nouvelle catégorie avec les paramètres spécifiés
      * 
-     * @param string $categoryName Le nom de la catégorie (1 à 20 caractères)
+     * @param string $categoryName Le nom de la catégorie
+     * @param int $id L'identifiant unique de la ville (0 par défaut, sera généré par la DB)
      * @throws Exception Exception si un des paramètres n'est pas valide
      */
     public function __construct(string $categoryName, int $id = 0)

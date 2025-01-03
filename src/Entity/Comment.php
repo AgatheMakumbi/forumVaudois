@@ -58,14 +58,15 @@ class Comment
      * @param string $text Le texte du commentaire
      * @param int $author L'identifiant de l'utilisateur auteur du commentaire
      * @param int $post L'identifiant du post auquel le commentaire est associé
-     * @param int $id L'identifiant du commentaire (par défaut 0)
+     * @param int $id L'identifiant unique du commentaire (par défaut 0, sera généré par la DB)
+     * @param DateTime $created_at La date de création du commentaire (par défaut la date actuelle)
      * @throws Exception Exception si un des paramètres n'est pas valide
      */
-    public function __construct(string $text, int $author, int $post, int $id = 0)
+    public function __construct(string $text, int $author, int $post, int $id = 0, DateTime $created_at = new DateTime('now'))
     {
         $this->id = $id;
         $this->setText($text);
-        $this->created_at = new DateTime(('now'));
+        $this->created_at = $created_at;
         $this->author = $author;
         $this->post = $post;
     }

@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h2 class="form-title">Login</h2>
 
                     <!-- Affichage des messages d'erreur -->
-                    <?php if (!empty($erreurs['email']) || !empty($erreurs['password'])) : ?>
+                    <?php if (!empty($erreurs['email']) || !empty($erreurs['password'])): ?>
                         <p class="error-message"><?= htmlspecialchars($erreurs['email']) ?></p>
                     <?php endif; ?>
 
