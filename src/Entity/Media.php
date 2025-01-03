@@ -51,9 +51,8 @@ class Media
      */
     public function setFilePath(string $filePath)
     {
-        $options = "/^.{5,10}$/";
-        if (!preg_match($options, $filePath)) {
-            throw new Exception('Le chemin doit contenir entre 5 et 10 caractères.');
+        if (strlen($filePath) <= 0) {
+            throw new Exception('Le chemin ne peut pas être vide.');
         }
         $this->file_path = htmlspecialchars($filePath);
     }
