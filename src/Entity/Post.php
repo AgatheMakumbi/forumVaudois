@@ -106,7 +106,7 @@ class Post
      * @param int $category L'identifiant de la catégorie associée au post
      * @param \DateTime $created_at La date de création du post
      * @param \DateTime $last_update La date de dernière mise à jour du post
-     * @param int $id L'identifiant du post
+     * @param int $id L'identifiant du post (0 par défaut, sera généré par la DB)
      * @param string $address L'adresse (optionnel)
      * @throws Exception Expection si un des paramètres n'est pas valide
      */
@@ -120,7 +120,7 @@ class Post
         $this->author = $author;
         $this->setCity($city);
         $this->setCategory($category);
-        $this->created_at = new DateTime('now');
+        $this->created_at = $created_at;
         $this->last_update = $last_update;
     }
 

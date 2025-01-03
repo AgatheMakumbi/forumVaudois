@@ -1,16 +1,25 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../lang/lang_func.php';
+
+/**
+ * Chargement des fichiers nécessaires
+ */
+require_once __DIR__ . '/../vendor/autoload.php'; // Charge les dépendances via Composer
+require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de gestion des langues
 
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
 
-// ============================
-// TRAITEMENT DU FORMULAIRE
-// ============================
-
-// Initialisation des variables
+/**
+ * Initialisation des variables pour le traitement du formulaire
+ * 
+ * @var bool $validForm Indique si le formulaire est valide
+ * @var array $errors Contient les messages d'erreurs par champ
+ * @var string $name Nom saisi par l'utilisateur
+ * @var string $email Adresse email saisie par l'utilisateur
+ * @var string $message Message saisi par l'utilisateur
+ * @var string $status Message de confirmation ou d'erreur pour l'envoi d'email
+ */
 $validForm = true;
 $errors = ['name' => "", 'email' => "", 'message' => ""];
 $name = "";
@@ -32,20 +41,27 @@ try {
     error_log($e->getMessage());
 }
 
-// Récupération des entrées utilisateur et validation
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+/**
+ * Traitement des données du formulaire si la méthode est POST
+ */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['footer_submit'])) {
+    // Validation du champ "name"
     if (strlen(filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim'])) > 0) {
         $name = filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim']);
     } else {
         $errors['name'] = "Veuillez saisir votre nom.";
         $validForm = false;
     }
+
+    // Validation du champ "email"
     if (filter_var(filter_input(INPUT_POST, 'email', FILTER_CALLBACK, ['options' => 'trim']), FILTER_VALIDATE_EMAIL)) {
         $email = filter_input(INPUT_POST, 'email', FILTER_CALLBACK, ['options' => 'trim']);
     } else {
         $errors['email'] = "Veuillez saisir une adresse email valide.";
         $validForm = false;
     }
+
+    // Validation du champ "message"
     if (strlen(filter_input(INPUT_POST, 'message', FILTER_CALLBACK, ['options' => 'trim'])) > 0) {
         $message = filter_input(INPUT_POST, 'message', FILTER_CALLBACK, ['options' => 'trim']);
     } else {
@@ -53,23 +69,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $validForm = false;
     }
 
-    // Envoi du mail
-    if ($validForm == true) {
-        $transport = Transport::fromDsn('smtp://localhost:1025');
+    /**
+     * Envoi de l'email si le formulaire est valide
+     */
+    if ($validForm) {
+        $transport = Transport::fromDsn('smtp://localhost:1025'); // Configuration SMTP
         $mailer = new Mailer($transport);
         $emailToSend = (new Email())
-            ->from($email)
-            ->to('contact@forumvaudois.ch')
-            ->subject('Formulaire de contact')
-            ->text($message)
-            ->html("<p>De : {$name}</p> <p>{$message}</p>");
+            ->from($email) // Adresse email de l'expéditeur
+            ->to('contact@forumvaudois.ch') // Adresse email de destination
+            ->subject('Formulaire de contact') // Sujet de l'email
+            ->text($message) // Contenu texte brut
+            ->html("<p>De : {$name}</p> <p>{$message}</p>"); // Contenu HTML
 
         try {
-            $mailer->send($emailToSend);
+            $mailer->send($emailToSend); // Envoi de l'email
             $status = "Un mail a été envoyé ! <a href='http://localhost:8025'>voir le mail</a>";
         } catch (Exception $e) {
             $status = "Un problème lors de l'envoi du mail est survenu";
-            error_log($e->getMessage());
+            error_log($e->getMessage()); // Log de l'erreur
         }
     }
 }
@@ -78,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <footer>
     <div class="footer-content">
         <div class="company">
+            <!-- Sélecteur de langue -->
             <div class="language-selector">
                 <form method="GET">
                     <label for="language"><?php echo $messages['change_language']; ?></label>
@@ -108,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="message"><?php echo $messages['footer_form_message']; ?></label>
                 <textarea id="message" name="message" placeholder="<?php echo $messages['footer_form_message']; ?>"></textarea>
 
-                <button type="submit"><?php echo $messages['footer_form_button']; ?></button>
+                <button type="submit" name="footer-submit"><?php echo $messages['footer_form_button']; ?></button>
             </form>
         </div>
     </div>

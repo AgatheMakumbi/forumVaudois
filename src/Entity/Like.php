@@ -40,8 +40,9 @@ class Like
     /**
      * Construit un nouveau like avec les paramètres spécifiés : 
      *  
-     * @param int $author L'identifiant de l'utilisateur auteur du like
+     * @param int $author L'identifiant de l'utilisateur auteur du like 
      * @param int $post L'identifiant du post auquel le like est associé
+     * @param int $id L'identifiant unique du like (0 par défaut, sera généré par la DB)
      * @throws Exception Expection si un des paramètres n'est pas valide
      */
     public function __construct(int $author, int $post, int $id = 0)
