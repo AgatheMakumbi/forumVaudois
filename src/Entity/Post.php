@@ -142,9 +142,8 @@ class Post
      */
     public function setTitle(string $title): void
     {
-        $options = "/^.{5,50}$/";
-        if (!preg_match($options, $title)) {
-            throw new Exception('Le titre doit contenir entre 5 et 50 caractères.');
+        if (mb_strlen($title) < 1 || mb_strlen($title) > 50) {
+            throw new Exception('Le titre doit contenir entre 1 et 50 caractères.');
         }
         $this->title = htmlspecialchars($title);
     }
@@ -215,8 +214,7 @@ class Post
      */
     public function setAddress(string $address)
     {
-        $options = "/^.{0,300}$/";
-        if (!preg_match($options, $address)) {
+        if (mb_strlen($address) < 0 || mb_strlen($address) > 300) {
             throw new Exception('L\'adresse doit contenir entre 0 et 300 caractères.');
         }
         $this->address = htmlspecialchars($address);
