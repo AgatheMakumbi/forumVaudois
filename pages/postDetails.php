@@ -71,8 +71,9 @@ $previousPage = $_SERVER['HTTP_REFERER'] ?? '../index.php';
     <?php include '../components/header.php'; ?>
 
     <main class="main-content-post-detail">
-        <!-- Lien de retour -->
-        <a href="<?= htmlspecialchars($previousPage); ?>" class="return-link">&larr; Retour à la liste des posts</a>
+       <!-- Bouton de retour -->
+<a href="../pages/news.php" class="return-link">← Retour à tous les posts</a>
+
     
 
         <!-- Conteneur principal -->
@@ -144,13 +145,18 @@ $previousPage = $_SERVER['HTTP_REFERER'] ?? '../index.php';
                 <?php endif; ?>
 
                 <!-- Formulaire pour ajouter un commentaire -->
-                <h2>Ajouter un commentaire</h2>
-                <br>
-                <form method="post" action="addComment.php" class="add-comment-form">
-                    <textarea name="comment" rows="4" placeholder="Ajoutez votre commentaire ici..." required></textarea>
-                    <br>
-                    <button type="submit" class="submit-comment-button">Envoyer</button>
-                </form>
+                <!-- Formulaire pour ajouter un commentaire -->
+<h2>Ajouter un commentaire</h2>
+<br>
+<form method="post" action="addComment.php" class="add-comment-form">
+    <!-- Champ hidden pour transmettre l'identifiant du post -->
+    <input type="hidden" name="id_post" value="<?= $idPost ?>">
+    
+    <textarea name="comment" rows="4" placeholder="Ajoutez votre commentaire ici..." required></textarea>
+    <br>
+    <button type="submit" class="submit-comment-button">Envoyer</button>
+</form>
+
             </div>
         </div>
     </main>
