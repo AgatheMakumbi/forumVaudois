@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Formulaire de création de post -->
             <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
-                <h2 class="form-title">Créer un post</h2>
+                <h2 class="form-title"><?= t('create_post_title'); ?></h2>
 
                 <!-- Sélection de la catégorie -->
                 <div class="form-group">
