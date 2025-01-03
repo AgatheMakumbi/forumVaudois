@@ -25,7 +25,6 @@ $db = new DbManagerCRUD();
 
 $loggedUserID = $_SESSION["id"];
 $loggedUser = $db->getUserById($loggedUserID);
-//$loggedUser = new User("JohnDoe", "johndoe@example.com", "hashed_password", "sample_token", 1);
 
 $posts = $db->getPostsByUser($loggedUserID);
 ?>
@@ -46,45 +45,45 @@ $posts = $db->getPostsByUser($loggedUserID);
 
         <main class="profile-main">
             <!-- Profil de l'utilisateur -->
-<section class="profile-section">
-    <div class="profile-header">
-        <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
-        <div class="profile-info">
-            <h1><?= htmlspecialchars($loggedUser->getUsername()) ?></h1>
-            <p><?= t('profile_email'); ?> <?= htmlspecialchars($loggedUser->getEmail()) ?></p>
-        </div>
-    </div>
-</section>
+            <section class="profile-section">
+                <div class="profile-header">
+                    <img src="../assets/images/user-avatar.png" alt="Avatar de l'utilisateur" class="profile-avatar">
+                    <div class="profile-info">
+                        <h1><?= htmlspecialchars($loggedUser->getUsername()) ?></h1>
+                        <p><?= t('profile_email'); ?> <?= htmlspecialchars($loggedUser->getEmail()) ?></p>
+                    </div>
+                </div>
+            </section>
 
-<!-- Historique des posts -->
-<section class="profile-posts">
-    <h2><?= t('profile_my_posts'); ?></h2>
-    <div class="posts-container">
-        <?php if (!empty($posts)): ?>
-            <?php foreach ($posts as $post): ?>
-                <div class="post-card">
-    <div class="post-header">
-        <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
-        <a href="updatePost.php?id_post=<?= htmlspecialchars($post->getId()) ?>" class="edit-icon" title="Modifier la publication">
-    <img src="../assets/images/update.png" alt="Modifier" style="width: 30px; height: 30px;">
-</a>
+            <!-- Historique des posts -->
+            <section class="profile-posts">
+                <h2><?= t('profile_my_posts'); ?></h2>
+                <div class="posts-container">
+                    <?php if (!empty($posts)): ?>
+                        <?php foreach ($posts as $post): ?>
+                            <div class="post-card">
+                                <div class="post-header">
+                                    <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
+                                    <a href="updatePost.php?id_post=<?= htmlspecialchars($post->getId()) ?>" class="edit-icon" title="Modifier la publication">
+                                        <img src="../assets/images/update.png" alt="Modifier" style="width: 30px; height: 30px;">
+                                    </a>
 
-    </div>
-    <p><?= htmlspecialchars($post->getText()) ?></p>
-    <div class="post-footer">
-        <button class="btn-response"><?= t('profile_add_response'); ?></button>
-        <p class="post-location">
-            📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
-        </p>
-    </div>
-</div>
+                                </div>
+                                <p><?= htmlspecialchars($post->getText()) ?></p>
+                                <div class="post-footer">
+                                    <button class="btn-response"><?= t('profile_add_response'); ?></button>
+                                    <p class="post-location">
+                                        📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
+                                    </p>
+                                </div>
+                            </div>
 
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p><?= t('profile_no_posts'); ?></p>
-        <?php endif; ?>
-    </div>
-</section>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p><?= t('profile_no_posts'); ?></p>
+                    <?php endif; ?>
+                </div>
+            </section>
 
         </main>
 
