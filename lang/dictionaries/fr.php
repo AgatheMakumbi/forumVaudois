@@ -89,5 +89,11 @@ return array(
     'create_post_image' => 'Ajouter une image (facultatif)',
     'create_post_submit' => 'Publier',
 
+    // Profil
+    'profile_title' => 'Profil',
+    'profile_email' => 'Email :',
+    'profile_my_posts' => 'Mes posts',
+    'profile_no_posts' => 'Aucun post trouvé.',
+    'profile_add_response' => 'Ajouter une réponse',
 
 );

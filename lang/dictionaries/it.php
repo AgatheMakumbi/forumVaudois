@@ -88,4 +88,11 @@ return array(
     'create_post_text_placeholder' => 'Testo...',
     'create_post_image' => 'Aggiungi un\'immagine (opzionale)',
     'create_post_submit' => 'Pubblica',
+
+    // Profil
+    'profile_title' => 'Profilo',
+    'profile_email' => 'Email :',
+    'profile_my_posts' => 'I miei post',
+    'profile_no_posts' => 'Nessun post trovato.',
+    'profile_add_response' => 'Aggiungi una risposta',
 );
