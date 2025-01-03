@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insérer le post dans la base de données
         $dbManager = new DbManagerCRUD();
         if ($dbManager->createComment($comment)) {
-            header("Location: postDetails.php?id_post=".$id_post);
+            header("Location: postDetails.php?id_post=" . $id_post);
             exit;
             //echo "Commentaire ajouté avec succès !";
         } else {
-            header("Location: postDetails.php?id_post=".$id_post);
+            header("Location: postDetails.php?id_post=" . $id_post);
             exit;
             //echo "Échec de l'ajout du commentaire.";
         }

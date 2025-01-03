@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fichier principal pour la page "À propos".
  * Initialise la session, gère la traduction, et affiche le contenu de la page.
@@ -45,65 +46,68 @@ try {
 </head>
 
 <body>
-    <?php 
-    // Inclusion du header
-    include '../components/header.php'; 
-    ?>
+    <div class="wrapper">
+        <?php
+        // Inclusion du header
+        include '../components/header.php';
+        ?>
 
-    <main class="main-content-about">
-        <!-- Section d'introduction -->
-        <section class="introduction">
-            <div class="content">
-                <h2><?php echo $messages['about_intro_title']; ?></h2>
-                <p><?php echo $messages['about_intro_content']; ?></p>
-            </div>
-            <div class="objectives">
-                <h2><?php echo $messages['about_mission_title']; ?></h2>
-                <ul>
-                    <li><?php echo $messages['about_mission_content1']; ?></li>
-                    <li><?php echo $messages['about_mission_content2']; ?></li>
-                    <li><?php echo $messages['about_mission_content3']; ?></li>
-                </ul>
-            </div>
-        </section>
+        <main class="main-content-about">
+            <!-- Section d'introduction -->
+            <section class="introduction">
+                <div class="content">
+                    <h2><?php echo $messages['about_intro_title']; ?></h2>
+                    <p><?php echo $messages['about_intro_content']; ?></p>
+                </div>
+                <div class="objectives">
+                    <h2><?php echo $messages['about_mission_title']; ?></h2>
+                    <ul>
+                        <li><?php echo $messages['about_mission_content1']; ?></li>
+                        <li><?php echo $messages['about_mission_content2']; ?></li>
+                        <li><?php echo $messages['about_mission_content3']; ?></li>
+                    </ul>
+                </div>
+            </section>
 
-        <!-- Section de l'équipe -->
-        <section class="team">
-            <h2><?php echo $messages['about_team_title']; ?></h2>
-            <div class="team-members">
-                <div class="member">
-                    <div class="icon">AJ</div>
-                    <p><?php echo $messages['about_team_josh_name']; ?></p>
-                    <p class="role"><?php echo $messages['about_team_josh_role']; ?></p>
+            <!-- Section de l'équipe -->
+            <section class="team">
+                <h2><?php echo $messages['about_team_title']; ?></h2>
+                <div class="team-members">
+                    <div class="member">
+                        <div class="icon">AJ</div>
+                        <p><?php echo $messages['about_team_josh_name']; ?></p>
+                        <p class="role"><?php echo $messages['about_team_josh_role']; ?></p>
+                    </div>
+                    <div class="member">
+                        <div class="icon">DM</div>
+                        <p><?php echo $messages['about_team_mic_name']; ?></p>
+                        <p class="role"><?php echo $messages['about_team_mic_role']; ?></p>
+                    </div>
+                    <div class="member">
+                        <div class="icon">JM</div>
+                        <p><?php echo $messages['about_team_mat_name']; ?></p>
+                        <p class="role"><?php echo $messages['about_team_mat_role']; ?></p>
+                    </div>
+                    <div class="member">
+                        <div class="icon">MA</div>
+                        <p><?php echo $messages['about_team_aga_name']; ?></p>
+                        <p class="role"><?php echo $messages['about_team_aga_role']; ?></p>
+                    </div>
+                    <div class="member">
+                        <div class="icon">MJ</div>
+                        <p><?php echo $messages['about_team_joa_name']; ?></p>
+                        <p class="role"><?php echo $messages['about_team_joa_role']; ?></p>
+                    </div>
                 </div>
-                <div class="member">
-                    <div class="icon">DM</div>
-                    <p><?php echo $messages['about_team_mic_name']; ?></p>
-                    <p class="role"><?php echo $messages['about_team_mic_role']; ?></p>
-                </div>
-                <div class="member">
-                    <div class="icon">JM</div>
-                    <p><?php echo $messages['about_team_mat_name']; ?></p>
-                    <p class="role"><?php echo $messages['about_team_mat_role']; ?></p>
-                </div>
-                <div class="member">
-                    <div class="icon">MA</div>
-                    <p><?php echo $messages['about_team_aga_name']; ?></p>
-                    <p class="role"><?php echo $messages['about_team_aga_role']; ?></p>
-                </div>
-                <div class="member">
-                    <div class="icon">MJ</div>
-                    <p><?php echo $messages['about_team_joa_name']; ?></p>
-                    <p class="role"><?php echo $messages['about_team_joa_role']; ?></p>
-                </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
 
-    <?php 
-    // Inclusion du footer
-    include '../components/footer.php'; 
-    ?>
+        <?php
+        // Inclusion du footer
+        include '../components/footer.php';
+        ?>
+    </div>
 </body>
+
 
 </html>

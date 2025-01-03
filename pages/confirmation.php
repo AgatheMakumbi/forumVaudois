@@ -67,7 +67,7 @@ if (!$UserToken) {
 <body>
     <!-- Lien retour vers la page d'accueil -->
     <a href="../index.php" class="header-back">Retour à l'accueil</a>
-    
+
     <main class="main-content-confirmation">
         <div class="confirmation-container">
             <!-- Section gauche contenant le logo et le slogan -->
@@ -79,8 +79,9 @@ if (!$UserToken) {
             <!-- Section droite affichant le message de confirmation -->
             <div class="right-side">
                 <div class="confirmation-message">
-                    <h2><?= htmlspecialchars($confirmationMessage) ?></h2> <!-- Message sécurisé contre les injections -->
-                    
+                    <h2><?= htmlspecialchars($confirmationMessage) ?></h2>
+                    <!-- Message sécurisé contre les injections -->
+
                     <?php if ($canConnect): ?>
                         <!-- Si l'utilisateur peut se connecter -->
                         <p class="subtitle">Découvrez notre plateforme et rejoignez notre communauté.</p>
