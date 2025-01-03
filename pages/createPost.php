@@ -116,8 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <select name="category" id="category" required>
                         <option value="2">Activités</option>
                         <option value="1">Nourriture</option>
-                        <option value="3">Nature</option>
                         <option value="4">Culture</option>
+                        <option value="3">Nature</option>
                     </select>
                 </div>
 

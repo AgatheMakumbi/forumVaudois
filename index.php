@@ -26,9 +26,6 @@ $db = new DbManagerCRUD();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/ForumVaudois/assets/css/style.css?v=<?= time(); ?>">
-
-
-
     <title>Forum Vaudois - Accueil</title>
 </head>
 
@@ -37,26 +34,23 @@ $db = new DbManagerCRUD();
         <!-- Inclusion du header -->
         <?php include './components/header.php'; ?>
 
-    <main class="main-content">
-        <section class="welcome-section">
-            <br>
-            <br>
-            <h1><?php echo $messages['home_title']; ?></h1>
-            <br>
-            <p>
-                <?php echo $messages['home_text']; ?>
-                <br><?php echo $messages['home_text_hashtag']; ?></br>
-            </p>
-            <br>
-        </section>
+        <main class="main-content">
+            <section class="welcome-section">
+                <h1><?php echo $messages['home_title']; ?></h1>
+                <p>
+                    <?php echo $messages['home_text']; ?>
+                    <br>
+                    <?php echo $messages['home_text_hashtag']; ?>
+                </p>
+            </section>
 
-        <section class="thread-section">
-            <a href="activite.php" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
-            <a href="food.php" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
-            <a href="nature.php" class="thread-btn"><?php echo $messages['home_button_nature']; ?></a>
-            <a href="culture.php" class="thread-btn"><?php echo $messages['home_button_culture']; ?></a>
-        </section>
-    </main>
+            <section class="thread-section">
+                <a href="activite.php" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
+                <a href="food.php" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
+                <a href="nature.php" class="thread-btn"><?php echo $messages['home_button_nature']; ?></a>
+                <a href="culture.php" class="thread-btn"><?php echo $messages['home_button_culture']; ?></a>
+            </section>
+        </main>
 
         <!-- Inclusion du footer -->
         <?php include './components/footer.php' ?>
