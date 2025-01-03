@@ -30,6 +30,8 @@ return array(
     'home_button_nature' => "🌿​ Sezione Natura 🌿​",
     'home_button_culture' => "​​🎥​ Sezione Cultura ​​🎥​",
     'category_title' => 'Categoria',
+    'news_no_posts' => 'Nessun post trovato per questa categoria.',
+    'news_add_response' => 'Aggiungi una risposta',
 
     // About 
     'about_intro_title' => "Introduzione",

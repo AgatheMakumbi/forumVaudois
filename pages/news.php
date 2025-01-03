@@ -86,12 +86,12 @@ $filteredPosts = $categoryName === 'all' ? $posts : array_filter($posts, functio
                                 📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()); ?>
                             </p>
                             <div class="post-footer">
-                                <button class="btn-response">Ajouter une réponse</button>
+                                <button class="btn-response"><?= t('news_add_response'); ?></button>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>Aucun post trouvé pour cette catégorie.</p>
+                    <p><?= t('news_no_posts'); ?></p>
                 <?php endif; ?>
             </div>
             <link rel="stylesheet" href="./assets/css/style.css?v=<?= time(); ?>">
