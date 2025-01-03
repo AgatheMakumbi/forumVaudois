@@ -28,7 +28,6 @@ $db = new DbManagerCRUD();
     <link rel="stylesheet" href="/ForumVaudois/assets/css/style.css?v=<?= time(); ?>">
 
 
-
     <title>Forum Vaudois - Accueil</title>
 </head>
 
