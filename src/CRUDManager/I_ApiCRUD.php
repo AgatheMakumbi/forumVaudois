@@ -13,14 +13,10 @@ use M521\ForumVaudois\Entity\Like;
 
 interface I_ApiCRUD
 {
-    // methodes du prof
-
-    //public function ajoutePersonne(Personne $personne): int;
-    public function rendPersonnes(string $nom): array;
+/*  public function rendPersonnes(string $nom): array;
     public function modifiePersonne(int $id, Personne $personne): bool;
-    public function supprimePersonne(int $id): bool;
-    //public function supprimeTable():bool;
-    //public function existePersonne(string $noTel, string $email): bool;
+    public function supprimePersonne(int $id): bool; */
+    
 
     //methodes DB_MANAGER
     public function generateToken(): string;
@@ -33,9 +29,6 @@ interface I_ApiCRUD
     public function existsUsername(string $username): bool;
     public function existsEmail(string $email): bool;
     public function existsToken(string $token): bool;
-    /*public function blockUser(int $id, $isBlocked): bool;
-    public function getUser(int $id): User;
-    public function getUserByUsername(string $username): User;*/
     public function getUserByToken(string $token): int;
     public function getUserById(int $id): ?User;
     public function loginUser(string $email, string $password): int;
@@ -69,7 +62,5 @@ interface I_ApiCRUD
     public function updateCity(City $city): bool;
     public function deleteCity(int $id): bool;
 
-    //methodes media - Agathe
-    /* public function uploadMedia(Media $media): bool;
-    public function deleteMedia(int $id): bool; */
+    
 }
