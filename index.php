@@ -32,9 +32,10 @@ $db = new DbManagerCRUD();
 </head>
 
 <body>
+    
     <div class="wrapper">
         <!-- Inclusion du header -->
-        <?php include './components/header.php'; ?>
+        <?php include './components/header.php'; PHPinfo()?>
 
         <main class="main-content">
             <section class="welcome-section">

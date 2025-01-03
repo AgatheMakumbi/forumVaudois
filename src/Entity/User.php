@@ -51,14 +51,14 @@ class User
      * 
      * @var bool
      */
-    private bool $isBlocked;
+    private int $isBlocked;
 
     /**
      * Statut de vérification de l'utilisateur
      * 
      * @var bool
      */
-    private bool $isVerified;
+    private int $isVerified;
 
     /**
      * Token de l'utilisateur
@@ -79,7 +79,7 @@ class User
      * @param bool $isVerified Le statut qui indique si l'utilisateur est vérifié (par défaut : false)
      * @throws Exception Exception si un des paramètres n'est pas valide
      */
-    public function __construct(string $username, string $email, string $password, string $token, int $id = 0, bool $isBlocked = false, bool $isVerified = false)
+    public function __construct(string $username, string $email, string $password, string $token, int $id = 0, int $isBlocked = 0, int $isVerified = 0)
     {
         //$this->setId($id);
         $this->id = $id;

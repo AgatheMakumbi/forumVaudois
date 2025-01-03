@@ -24,7 +24,7 @@ class DbManagerCRUD implements I_ApiCRUD
     {
 
         //$config = parse_ini_file('/Applications/MAMP/htdocs/ForumVaudois/config/db.ini');
-        $config = parse_ini_file(__DIR__ . '/../../config/db.ini');
+        $config = parse_ini_file(__DIR__ . '/../../config/test.ini');
         // Détermine la base path dynamiquement pour le fichier db.ini
         $basePath = dirname(__DIR__, 2); // Remonte de 2 niveaux pour atteindre la racine
         $dsn = str_replace('%BASE_PATH%', $basePath, $config['dsn']);
@@ -39,19 +39,7 @@ class DbManagerCRUD implements I_ApiCRUD
         }
     }
 
-    /* Methode crée pour un test*/
-    // public function showCategories(): string
-    // {
-    //     $query = "SELECT * FROM Category";
-    //     $stmt = $this->db->prepare($query);
-    //     $stmt->execute();
-    //     $categories = $stmt->fetchAll();
-    //     $result = "";
-    //     foreach ($categories as $categorie) {
-    //         $result .= $categorie['category_name'] . "\n";
-    //     }
-    //     return $result;
-    // }
+    
 
     /*public function ajoutePersonne(Personne $personne): int {
         $datas = [
@@ -72,7 +60,7 @@ class DbManagerCRUD implements I_ApiCRUD
         
     }*/
 
-    public function modifiePersonne(int $id, Personne $personne): bool
+/*  public function modifiePersonne(int $id, Personne $personne): bool
     {
         $datas = [
             'id' => $id,
@@ -124,7 +112,7 @@ class DbManagerCRUD implements I_ApiCRUD
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return true;
-    }
+    } */
 
 
 
@@ -279,8 +267,8 @@ class DbManagerCRUD implements I_ApiCRUD
 
             // Vérifier si l'utilisateur est vérifié
 
-            $lol = $userData['isVerified'] == 0;
-            var_dump($lol);
+            /* $lol = $userData['isVerified'] == 0;
+            var_dump($lol); */
             if ($userData['isVerified'] == 0) {
                 error_log("Tentative de connexion par un utilisateur non vérifié: " . $email);
                 return 0;
