@@ -10,45 +10,105 @@ use M521\ForumVaudois\Entity\Category;
 
 /**
  * Represente un post ayant :
- * - un id: int
- * - un titre: string
- * - un contenu texte : string
- * - un budget : int
- * - (optionnel) une addresse: string
- * - un auteur : User
- * - une ville : City
- * - une catégorie : Category
- * - une date de créaiton : DateTime
- * - une date de dernière modification : DateTime
+ * - un identifiant unique
+ * - un titre
+ * - un texte
+ * - un budget
+ * - une addresse (optionnel)
+ * - un auteur (identifiant de l'utilisateur)
+ * - une ville (identifiant de la ville)
+ * - une catégorie (identifiant de la catégorie)
+ * - une date de création
+ * - une date de dernière modification
  */
 
 class Post
 {
+    /**
+     * Identifiant unique du post
+     * 
+     * @var int
+     */
     private int $id;
+
+    /**
+     * Titre du post
+     * 
+     * @var string
+     */
     private string $title;
+
+    /**
+     * Texte du post
+     * 
+     * @var string
+     */
     private string $text;
+
+    /**
+     * Budget
+     * 
+     * @var int
+     */
     private int $budget;
+
+    /**
+     * Adresse (optionnel)
+     * 
+     * @var string
+     */
     private string $address;
+
+    /**
+     * Identifiant de l'utilisateur associé au post
+     * 
+     * @var int
+     */
     private int $author;
+
+    /**
+     * Identifiant de la ville associée au post
+     * 
+     * @var int
+     */
     private int $city;
+
+    /**
+     * Identifiant de la catégorie associée au post
+     * 
+     * @var int
+     */
     private int $category;
+
+    /**
+     * Date de création du post
+     * 
+     * @var \DateTime
+     */
     private DateTime $created_at;
+
+    /**
+     * Date de dernière modification du post
+     * 
+     * @var \DateTime
+     */
     private DateTime $last_update;
 
 
     /**
      * Construit une nouvelle personne avec les paramètres spécifiés
-     * @param int $id Identifiant du post
-     * @param string $title titre du post
-     * @param string $text contenu textuel du post
-     * @param int $budget 
-     * @param string $address adresse
-     * @param int $author id de l'auteur du post
-     * @param int $city id de la ville
-     * @param int $category id de la catégorie du post
-     * @param \DateTime $created_at date de creation du post
-     * @param \DateTime $last_update date de derniere mise a jour
-     * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
+     * 
+     * @param string $title Le titre du post
+     * @param string $text Le texte du post
+     * @param int $budget Le budget
+     * @param int $author L'identifiant de l'utilisateur auteur du post
+     * @param int $city L'identifiant de la ville associée au post
+     * @param int $category L'identifiant de la catégorie associée au post
+     * @param \DateTime $created_at La date de création du post
+     * @param \DateTime $last_update La date de dernière mise à jour du post
+     * @param int $id L'identifiant du post
+     * @param string $address L'adresse (optionnel)
+     * @throws Exception Expection si un des paramètres n'est pas valide
      */
     public function __construct(string $title, string $text, int $budget, int $author, int $city, int $category, DateTime $created_at, DateTime $last_update, int $id = 0, string $address = "")
     {
@@ -64,127 +124,179 @@ class Post
         $this->last_update = $last_update;
     }
 
-    // Rend l'id du post 
-    //@return (int) id
+    /**
+     * Rend l'identifiant unique du post
+     * 
+     * @return int L'identifiant unique du post
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    //Définit le titre 
-    //@param (string) title
+    /**
+     * Définit le titre du post
+     * 
+     * @param string $title Le titre à attribuer au post
+     * @throws Exception Exception si un des paramètres n'est pas valide
+     */
     public function setTitle(string $title): void
     {
         $options = "/^.{5,50}$/";
         if (!preg_match($options, $title)) {
-            throw new Exception('Title must be between 5 and 50 characters.');
+            throw new Exception('Le titre doit contenir entre 5 et 50 caractères.');
         }
         $this->title = htmlspecialchars($title);
     }
 
-    //Rend le titre 
-    //@return (string) title 
+    /**
+     * Rend le titre du post
+     * 
+     * @return string Le titre du post
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    //Définit le contenu texte
-    //@param (string) text 
+    /**
+     * Définit le texte du post
+     * 
+     * @param string $text Le texte à attribuer au post
+     * @throws Exception Exception si un des paramètres n'est pas valide
+     */
     public function setText(string $text): void
     {
         if (strlen($text) <= 0) {
-            throw new Exception('Text must be at least 1 character');
+            throw new Exception('Le texte doit contenir au moins 1 caractère.');
         }
         $this->text = htmlspecialchars($text);
     }
 
-    //Rend le contenu texte
-    //@return (string) text
+    /**
+     * Rend le texte du post
+     * 
+     * @return string Le texte du post
+     */
     public function getText(): string
     {
         return $this->text;
     }
 
-    //Définit le budget 
-    //@param (int) budget
+    /**
+     * Définit le budget 
+     * 
+     * @param int $budget Le budget 
+     * @throws Exception Exception si un des paramètres n'est pas valide
+     */
     public function setBudget(int $budget)
     {
         if ($budget < 0 || $budget > 999000) {
-            throw new Exception('Budget must be a whole number between 0 and 999000');
+            throw new Exception('Le budget doit être un nombre entier entre 0 et 999000.');
         }
         $this->budget = $budget;
     }
 
-    //Rend le budget 
-    //@return (int) budget
+    /**
+     * Rend le budget
+     * 
+     * @return int Le budget
+     */
     public function getBudget(): int
     {
         return $this->budget;
     }
 
-    //Définit l'adresse
-    //@param (string) address
+    /**
+     * Définit l'adresse
+     * 
+     * @param string $address L'adresse à attribuer au post
+     * @throws Exception Exception si un des paramètres n'est pas valide
+     */
     public function setAddress(string $address)
     {
         $options = "/^.{0,300}$/";
         if (!preg_match($options, $address)) {
-            throw new Exception('Address must be between 0 and 300 characters.');
+            throw new Exception('L\'adresse doit contenir entre 0 et 300 caractères.');
         }
         $this->address = htmlspecialchars($address);
     }
 
-    //Rend l'adresse
-    //@return (string) address
+    /**
+     * Rend l'adresse
+     * 
+     * @return string L'adresse ou "Aucune adresse donnée" si vide
+     */
     public function getAddress(): string
     {
-        return ($this->address != "") ? $this->address : "No address given";
+        return ($this->address != "") ? $this->address : "Aucune adresse donnée";
     }
 
-    //Rend l'id de l'auteur
-    //@return (int) author
+    /**
+     * Rend l'identifiant de l'utilisateur associé au post
+     * 
+     * @return int L'dentifiant de l'utilisateur associé au post
+     */
     public function getAuthor(): int
     {
         return $this->author;
     }
 
-    //Définit l'id de la ville
-    //@param (int) city
+    /**
+     * Définit l'identifiant de la ville associée au post
+     * 
+     * @param int $city L'identifiant de la ville associée au post
+     */
     public function setCity(int $city): void
     {
         $this->city = $city;
     }
 
-    //Rend l'id de la ville
-    //@return (int) city
+    /**
+     * Rend l'identifiant de la ville associée au post
+     * 
+     * @return int L'identifiant de la ville associée au post
+     */
     public function getCity(): int
     {
         return $this->city;
     }
 
-    //Définit l'id de la catégorie
-    //@param (id) category
+    /**
+     * Définit l'identifiant de la catégorie associée au post
+     * 
+     * @param int $category L'identifiant de la catégorie associée au post
+     */
     public function setCategory(int $category): void
     {
         $this->category = $category;
     }
 
-    //Rend l'id de la catégorie
-    //@return (id) category
+    /**
+     * Rend l'identifiant de la catégorie associée au post
+     * 
+     * @return int L'identifiant de la catégorie associée au post
+     */
     public function getCategory(): int
     {
         return $this->category;
     }
 
-    //Rend la date de création
-    //@return (DateTime) createdAt
+    /**
+     * Rend la date de création du post
+     * 
+     * @return DateTime La date de création du post
+     */
     public function getCreatedAt(): DateTime
     {
         return $this->created_at;
     }
 
-    //Rend la date de dernière modification
-    //@return (DateTime) lastUpdate
+    /**
+     * Rend la date de dernière modification du post
+     * 
+     * @return DateTime La date de dernière modification du post
+     */
     public function getLastUpdate(): DateTime
     {
         return $this->last_update;

@@ -4,37 +4,80 @@ namespace M521\ForumVaudois\Entity;
 
 use \Exception;
 
+/**
+ * Represente une personne ayant :
+ * - un identifiant unique
+ * - un pseudo
+ * - un email
+ * - un mot de passe hashé
+ * - (une date de création)
+ * - un statut d'accès (bloqué ou non)
+ * - un statut de vérification (utilisateur vérifié ou non)
+ * - un token
+ */
+
 class User
 {
     /**
-     * Represente une personne ayant :
-     * - un id 
-     * - un username
-     * - un email
-     * - un mot de passe
-     * - (une date de création)
-     * - un champs isBlocked
-     * - un champs isVerified
-     * - un token
+     * Identifiant unique de l'utilisateur
+     * 
+     * @var int
      */
-
     private int $id;
+
+    /**
+     * Pseudo de l'utilisateur
+     * 
+     * @var string
+     */
     private string $username;
+
+    /**
+     * Email de l'utilisateur
+     * 
+     * @var string
+     */
     private string $email;
+
+    /**
+     * Mot de passe hashé de l'utilisateur
+     * 
+     * @var string
+     */
     private string $password;
+
+    /**
+     * Statut d'accès de l'utilisateur
+     * 
+     * @var bool
+     */
     private bool $isBlocked;
+
+    /**
+     * Statut de vérification de l'utilisateur
+     * 
+     * @var bool
+     */
     private bool $isVerified;
+
+    /**
+     * Token de l'utilisateur
+     * 
+     * @var string
+     */
     private string $token;
 
     /**
-     * Construit un nouveau user avec les paramètres spécifiés
-     * @param string $username Username
-     * @param string $email Email
-     * @param string $password Mot de passe
-     * @param int $id Identifiant de la personne (0 sauf si spécifié, puisqu'il sera ainsi généré par la DB)
-     * @param bool $isBlocked Si la personne est bloquée
-     * @param bool $isVerified Si la personne est vérifiée
-     * @throws Exception Lance une expection si un des paramètres n'est pas spécifié
+     * Construit un nouvel utilisateur avec les paramètres spécifiés :
+     * 
+     * @param string $username Le pseudo de l'utilisateur
+     * @param string $email L'email de l'utilisateur
+     * @param string $password Le mot de passe de l'utilisateur
+     * @param string $token Le token de l'utilisateur
+     * @param int $id L'identifiant de l'utilisateur (0 par défaut, sera généré par la DB)
+     * @param bool $isBlocked Le statut qui indique si l'utilisateur est bloqué (par défaut : false)
+     * @param bool $isVerified Le statut qui indique si l'utilisateur est vérifié (par défaut : false)
+     * @throws Exception Exception si un des paramètres n'est pas valide
      */
     public function __construct(string $username, string $email, string $password, string $token, int $id = 0, bool $isBlocked = false, bool $isVerified = false)
     {
@@ -48,10 +91,10 @@ class User
         $this->setIsVerified($isVerified);
     }
 
-
     /**
-     * Rend l'id
-     * @return int $id
+     * Rend l'identifiant unique de l'utilisateur
+     * 
+     * @return int L'identifiant unique de l'utilisateur
      */
     public function getId(): int
     {
@@ -59,22 +102,24 @@ class User
     }
 
     /**
-     * Définit le username
-     * @return User  (pour le chainage)
+     * Définit le pseudo de l'utilisateur
+     * 
+     * @param string $username Le pseudo à attribuer à l'utilisateur
+     * @throws Exception Exception si un des paramètres n'est pas valide
      */
-    public function setUsername(string $username): self
+    public function setUsername(string $username)
     {
         $options = "/^.{1,20}$/";
         if (!preg_match($options, $username)) {
-            throw new Exception('Username must be between 5 and 10 characters.');
+            throw new Exception('Le pseudo doit être compris entre 1 et 20 caractères.');
         }
         $this->username = htmlspecialchars($username);
-        return $this;
     }
 
     /**
-     * Rend le username
-     * @return string $username
+     * Rend le pseudo de l'utilisateur
+     * 
+     * @return string Le pseudo de l'utilisateur
      */
     public function getUsername(): string
     {
@@ -82,43 +127,45 @@ class User
     }
 
     /**
-     * Définit l'email
-     * @return User  (pour le chainage)
+     * Définit l'email de l'utilisateur
+     * 
+     * @param string $email L'email à attribuer à l'utilisateur
+     * @throws Exception Exception si un des paramètres n'est pas valide
      */
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
-        //var_dump($email);
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = $email;
         } else {
             throw new Exception('L\'adresse email n\'est pas valide.');
         }
-        $this->email = $email;
-
-        return $this;
     }
 
+    /**
+     * Rend l'email de l'utilisateur
+     * 
+     * @return string L'email de l'utilisateur
+     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
-     * Définit le mot de passe
-     * @return User  (pour le chainage)
+     * Définit le mot de passe de l'utilisateur
+     * 
+     * @param string $password Le mot de passe hashé à attribuer l'utilisateur
      */
-    public function setPassword(string $password): self
+    public function setPassword(string $password)
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
-
-        // if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/", $password)) {
-        //     $this->password = password_hash($password, PASSWORD_DEFAULT);
-        // } else {
-        //     throw new Exception('Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre, et une longueur de 8 à 20 caractères.');
-        // }
-        return $this;
     }
 
+    /**
+     * Rend le mot de passe de l'utilisateur
+     * 
+     * @return string Le mot de passe de l'utilisateur
+     */
     public function getPassword(): string
     {
         return $this->password;
@@ -126,14 +173,19 @@ class User
 
     /**
      * Définit si l'utilisateur est vérifié
-     * @return User  (pour le chainage)
+     * 
+     * @param bool $isVerified Le statut de vérification à attribuer à l'utilisateur
      */
-    public function setIsVerified(bool $isVerified): self
+    public function setIsVerified(bool $isVerified)
     {
         $this->isVerified = $isVerified;
-        return $this;
     }
 
+    /**
+     * Rend le statut de vérification de l'utilisateur
+     * 
+     * @return bool True si l'utilisateur est vérifié, sinon False
+     */
     public function getIsVerified(): bool
     {
         return $this->isVerified;
@@ -141,46 +193,57 @@ class User
 
     /**
      * Définit si l'utilisateur est bloqué
-     * @return User  (pour le chainage)
+     * 
+     * @param bool $isBlocked Le statut d'accès à attribuer à l'utilisateur
      */
-    public function setIsBlocked(bool $isBlocked): self
+    public function setIsBlocked(bool $isBlocked)
     {
         $this->isBlocked = $isBlocked;
-        return $this;
     }
 
+    /**
+     * Rend le statut d'accès de l'utilisateur
+     * 
+     * @return bool True si l'utilisateur est bloqué, sinon False
+     */
     public function getIsBlocked(): bool
     {
         return $this->isBlocked;
     }
 
     /**
-     * Définit le token
-     * @return User  (pour le chainage)
+     * Définit le token de l'utilisateur
+     * 
+     * @param string $token Le token à attribuer à l'utilisateur
+     * @throws Exception Exception si un des paramètres n'est pas valide
      */
-
-    public function setToken(string $token): self
+    public function setToken(string $token)
     {
         if (!empty($token) && preg_match("/^[a-zA-Z0-9_-]+$/", $token)) {
             $this->token = $token;
         } else {
             throw new Exception('Le token doit être une chaîne alphanumérique non vide (caractères - et _ autorisés).');
         }
-        return $this;
     }
 
+    /**
+     * Rend le token de l'utilisateur
+     * 
+     * @return string Le token de l'utilisateur
+     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-
     /**
      * Affiche une description de l'utilisateur
+     * 
+     * @return string Une représentation sous forme de chaîne de l'utilisateur
      */
     public function __toString(): string
     {
-        return "Utilisateur : [ID: {$this->id}, Username: {$this->username}, Email: {$this->email}, Bloqué: "
+        return "Utilisateur : [ID: {$this->id}, Pseudo: {$this->username}, Email: {$this->email}, Bloqué: "
             . ($this->isBlocked ? 'Oui' : 'Non')
             . ", Vérifié: "
             . ($this->isVerified ? 'Oui' : 'Non') . "]";
