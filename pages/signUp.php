@@ -68,10 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Création du compte utilisateur
             if ($dbManager->createUser($newUser)) {
-                $confirmationLink = "http://localhost/ForumVaudois/pages/confirmation.php?token=" . urlencode($UserToken);
+                $confirmationLink = "https://forumvaudois.makumbi.ch/pages/confirmation.php?token=" . urlencode($UserToken);
 
                 // Préparation et envoi de l'email de confirmation
-                $transport = Transport::fromDsn('smtp://localhost:1025');
+                //$transport = Transport::fromDsn('smtp://localhost:1025');
+                $transport = Transport::fromDsn('smtp://agathe@makumbi.ch:VOTRE_MOT_DE_PASSE@smtp.kreativmedia.ch:465');
                 $mailer = new Mailer($transport);
                 $confirmationEmail = (new Email())
                     ->from('inscription@forumvaudois.ch')
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ->html("<p>Veuillez confirmer votre email en cliquant sur le lien suivant :</p><a href='{$confirmationLink}'>Confirmer mon inscription</a>");
 
                 $mailer->send($confirmationEmail);
-                $validationMessage = "<a href='http://localhost:8025'><p style='color: green;'>Inscription réussie ! Un mail de confirmation a été envoyé.</p></a>";
+                $validationMessage = "<p style='color: green;'>Inscription réussie ! Un mail de confirmation a été envoyé.</p>";
             } else {
                 $validationMessage = "<p style='color: red;'>Une erreur est survenue. Veuillez réessayer.</p>";
             }
