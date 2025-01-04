@@ -113,7 +113,7 @@ class User
         if (!preg_match($options, $username)) {
             throw new Exception('Le pseudo doit être compris entre 1 et 20 caractères.');
         }
-        $this->username = htmlspecialchars($username);
+        $this->username = $username;
     }
 
     /**

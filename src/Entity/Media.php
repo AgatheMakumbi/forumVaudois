@@ -56,7 +56,7 @@ class Media
         if (strlen($filePath) <= 0) {
             throw new Exception('Le chemin ne peut pas être vide.');
         }
-        $this->file_path = htmlspecialchars($filePath);
+        $this->file_path = $filePath;
     }
 
     /**

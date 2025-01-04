@@ -62,7 +62,7 @@ class City
         if (!preg_match($options, $cityName)) {
             throw new Exception('Le nom de la ville doit contenir entre 1 et 50 caractères.');
         }
-        $this->cityName = htmlspecialchars($cityName);
+        $this->cityName = $cityName;
     }
 
     /**

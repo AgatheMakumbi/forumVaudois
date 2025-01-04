@@ -145,7 +145,7 @@ class Post
         if (mb_strlen($title) < 1 || mb_strlen($title) > 50) {
             throw new Exception('Le titre doit contenir entre 1 et 50 caractères.');
         }
-        $this->title = htmlspecialchars($title);
+        $this->title = $title;
     }
 
     /**
@@ -169,7 +169,7 @@ class Post
         if (strlen($text) <= 0) {
             throw new Exception('Le texte doit contenir au moins 1 caractère.');
         }
-        $this->text = htmlspecialchars($text);
+        $this->text = $text;
     }
 
     /**
@@ -217,7 +217,7 @@ class Post
         if (mb_strlen($address) < 0 || mb_strlen($address) > 300) {
             throw new Exception('L\'adresse doit contenir entre 0 et 300 caractères.');
         }
-        $this->address = htmlspecialchars($address);
+        $this->address = $address;
     }
 
     /**

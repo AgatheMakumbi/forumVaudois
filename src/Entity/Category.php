@@ -63,7 +63,7 @@ class Category
         if (!preg_match($options, $categoryName)) {
             throw new Exception('Le nom de la catégorie doit contenir entre 1 et 20 caractères.');
         }
-        $this->categoryName = htmlspecialchars($categoryName);
+        $this->categoryName = $categoryName;
     }
 
     /**

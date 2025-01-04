@@ -93,7 +93,7 @@ class Comment
         if (!preg_match($options, $text)) {
             throw new Exception('Le commentaire doit contenir entre 1 et 1000 caractères.');
         }
-        $this->text = htmlspecialchars($text);
+        $this->text = $text;
     }
 
     /**
