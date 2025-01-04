@@ -741,6 +741,29 @@ section {
     font-size: 0.9rem;
     color: #666;
 }
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto; /* Ajoute un espacement autour du formulaire */
+    text-align: center;
+}
+
+.filter-form label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.filter-form select {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+}
+
 
 /* ==========================
    STYLES POUR PROFIL.PHP
@@ -758,7 +781,7 @@ section {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: #d0edcc;
+    background-color: #15A64F;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -770,17 +793,17 @@ section {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 2px solid #28a745;
+    border: 2px solid #D0EDDC;
 }
 
 .profile-info h1 {
     font-size: 1.8rem;
-    color: #107d3f;
+    color: black;
 }
 
 .profile-info p {
     font-size: 1rem;
-    color: #555;
+    color: white
 }
 
 .profile-posts {
@@ -790,7 +813,7 @@ section {
 
 .profile-posts h2 {
     text-align: center;
-    color: #28a745;
+    color: #15A64F;
     font-size: 2rem;
     margin-bottom: 2rem;
 }
@@ -807,13 +830,28 @@ section {
 
 .post-header h2 {
     font-size: 1.5rem;
-    color: #333;
+    color: black; /* Garde le texte en noir */
     margin: 0 0 0.5rem;
+    text-decoration: underline; /* Ajoute un soulignement */
 }
+.post-header h2 a {
+    color: black; /* Forcer la couleur noire */
+    text-decoration: underline; /* Ajouter le soulignement */
+}
+
+.post-header h2 a:visited {
+    color: black; /* Garder noir même après avoir cliqué */
+}
+
+.post-header h2 a:hover {
+    color: #107d3f; /* Une couleur différente au survol, par exemple vert foncé */
+    text-decoration: none; /* Retirer le soulignement au survol (optionnel) */
+}
+
 
 .post-card p {
     font-size: 1rem;
-    color: #555;
+    color: black;
     margin-bottom: 1rem;
     line-height: 1.6;
 }
@@ -822,20 +860,6 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.btn-response {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-response:hover {
-    background-color: #218838;
 }
 
 .post-location {

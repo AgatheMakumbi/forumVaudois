@@ -109,4 +109,7 @@ return array(
     'profile_no_posts' => 'Aucun post trouvé.',
     'profile_add_response' => 'Ajouter une réponse',
 
+    // News.php
+    'filter_by_city' => 'Filtrer par ville',
+    'all_cities' => 'Toutes les villes',
 );

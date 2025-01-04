@@ -108,4 +108,8 @@ return array(
     'profile_my_posts' => 'I miei post',
     'profile_no_posts' => 'Nessun post trovato.',
     'profile_add_response' => 'Aggiungi una risposta',
+
+    // News
+    'filter_by_city' => 'Filtra per città',
+    'all_cities' => 'Tutte le città',
 );

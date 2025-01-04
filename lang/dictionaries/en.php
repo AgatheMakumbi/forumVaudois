@@ -108,4 +108,8 @@ return array(
     'profile_my_posts' => 'My posts',
     'profile_no_posts' => 'No posts found.',
     'profile_add_response' => 'Add a response',
+
+    // News.php 
+    'filter_by_city' => 'Filter by city',
+    'all_cities' => 'All cities',
 );
