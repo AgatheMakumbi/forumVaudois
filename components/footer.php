@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form-identifier'] === 'cont
     <div class="footer-content">
         <div class="company">
             <!-- Sélecteur de langue -->
-            <div class="language-selector">
+            <div class="footer-language-selector">
                 <form method="GET">
                     <label for="language"><?php echo $messages['change_language']; ?></label>
                     <select name="lang" id="language" onchange="this.form.submit()">
