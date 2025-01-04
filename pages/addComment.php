@@ -17,7 +17,7 @@ if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $comment = $_POST['comment'];
+    $commentText = $_POST['comment'];
     $id_post = $_POST['id_post'];
     $id_user = $_SESSION["id"];
 
@@ -37,4 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Erreur : " . $e->getMessage();
     }
 }
-?>
