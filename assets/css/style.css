@@ -993,7 +993,7 @@ section {
 
 .post-media {
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -1020,29 +1020,32 @@ section {
     margin-top: 2rem;
 }
 
+/* Style pour le champ de texte */
 .add-comment-form textarea {
     width: 100%;
+    max-width: 600px ; /* Limite la largeur du champ */
+    height: 150px; /* Augmente la hauteur du champ */
     padding: 0.8rem;
-    border-radius: 5px;
+    border-radius: 8px; /* Coins arrondis */
     border: 1px solid #ccc;
-    resize: vertical;
+    resize: none; /* Désactive le redimensionnement manuel */
+    font-size: 1rem;
     margin-bottom: 1rem;
+    background-color: #f9f9f9; /* Couleur de fond légère */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.submit-comment-button {
-    background-color: #28a745;
-    color: #fff;
+/* Style pour le bouton d'envoi */
+.add-comment-form button {
+    background-color:#d0edcc; /* Couleur bleue */
+    color: white;
     padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.submit-comment-button:hover {
-    background-color: #218838;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .like-button {
@@ -1060,6 +1063,16 @@ section {
 .like-button:hover {
     background-color: #107d3f;
 }
+
+.media-container img {
+    width: 100%;
+    max-width: 600px; /* Ajustez cette valeur pour la taille maximale souhaitée */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem; /* Ajoute un espace entre les images */
+}
+
 
 /* ==========================
    FOOTER
