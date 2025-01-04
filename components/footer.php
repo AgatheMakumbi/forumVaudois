@@ -44,7 +44,7 @@ try {
 /**
  * Traitement des données du formulaire si la méthode est POST
  */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['footer_submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['form-identifier'] === 'contact-form') {
     // Validation du champ "name"
     if (strlen(filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim'])) > 0) {
         $name = filter_input(INPUT_POST, 'name', FILTER_CALLBACK, ['options' => 'trim']);
@@ -118,16 +118,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['footer_submit'])) {
 
         <div class="contact-form" id="contact-form">
             <form action="#contact-form" method="POST">
+                <!--Champ caché qui sert à vérifier le formulaire-->
+                <input type="hidden" name="form-identifier" value="contact-form">
+
                 <label for="name"><?php echo $messages['footer_form_name']; ?></label>
-                <input type="text" id="name" name="name" placeholder="<?php echo $messages['footer_form_name']; ?>">
+                <p style="color: red"><?php echo $errors['name']; ?></p>
+                <input type="text" id="name" name="name" placeholder="<?php echo $messages['footer_form_name']; ?>" required>
 
                 <label for="email"><?php echo $messages['footer_form_email']; ?></label>
-                <input type="text" id="email" name="email" placeholder="<?php echo $messages['footer_form_email']; ?>">
+                <p style="color: red"><?php echo $errors['email']; ?></p>
+                <input type="email" id="email" name="email" placeholder="<?php echo $messages['footer_form_email']; ?>" required>
 
                 <label for="message"><?php echo $messages['footer_form_message']; ?></label>
-                <textarea id="message" name="message" placeholder="<?php echo $messages['footer_form_message']; ?>"></textarea>
+                <p style="color: red"><?php echo $errors['message']; ?></p>
+                <textarea id="message" name="message" placeholder="<?php echo $messages['footer_form_message']; ?>" required></textarea>
 
-                <button type="submit" name="footer-submit"><?php echo $messages['footer_form_button']; ?></button>
+                <button type="submit"><?php echo $messages['footer_form_button']; ?></button>
             </form>
         </div>
     </div>
