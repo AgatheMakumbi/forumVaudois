@@ -1,49 +1,29 @@
 <?php
 
-/**
- * Script de création d'un post.
- * Ce fichier gère à la fois le traitement du formulaire de création de post et l'affichage du formulaire.
- */
-
 require_once '../vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
-use M521\ForumVaudois\Entity\User;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\Media;
 
-// Activer l'affichage des erreurs pour le débogage
-/*ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);*/
-
-// Démarre une session utilisateur
 session_start();
 
 if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
-    // Redirige vers la page de connexion
     header("Location: login.php");
-    exit; // Arrête l'exécution pour éviter de charger le reste de la page
+    exit;
 }
 
+$successMessage = ""; // Variable pour afficher un message conditionnel
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    /**
-     * Variables pour le post :
-     * - Titre, texte, ville, budget, adresse, auteur et catégorie.
-     */
     $title = $_POST['title'];
     $text = $_POST['post-content'];
     $city = $_POST['city'];
     $budget = $_POST['budget'];
     $address = $_POST['addresse'] ?? "";
-    $authorId = $_SESSION["id"]; // ID de l'auteur (exemple, à récupérer de la session utilisateur)
-    $category = $_POST['category'] ?? 1; // Catégorie par défaut
-    $city = $_POST['city'];
+    $authorId = $_SESSION["id"];
+    $category = $_POST['category'] ?? 1;
 
-    /**
-     * Gestion des fichiers uploadés :
-     * - Vérifie si un fichier image est envoyé et le déplace dans le dossier d'uploads.
-     */
     $imagePath = null;
     $imageName = null;
     if (!empty($_FILES['image']['name'])) {
@@ -56,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        // Création d'un nouvel objet Post
         $post = new Post(
             $title,
             $text,
@@ -64,17 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $authorId,
             $city,
             $category,
-            new DateTime(), // Date de création
-            new DateTime(), // Date de mise à jour
-            0,              // Nombre de vues par défaut
+            new DateTime(),
+            new DateTime(),
+            0,
             $address
         );
 
-        // Enregistrement du post dans la base de données
         $dbManager = new DbManagerCRUD();
         if ($dbManager->createPost($post)) {
-            echo "Post créé avec succès !";
-
             if ($imageName != null) {
                 $postId = $dbManager->getLastPostId();
                 $media = new Media(
@@ -84,12 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
                 $dbManager->createMedia($media);
             }
+
+            $successMessage = "Post créé avec succès ! Vous allez être redirigé.";
+            header("refresh:3;url=../index.php"); // Redirection après 3 secondes
         } else {
-            echo "Échec de la création du post.";
+            $successMessage = "Échec de la création du post.";
         }
     } catch (Exception $e) {
-        // Gère les erreurs liées à la création du post
-        echo "Erreur : " . $e->getMessage();
+        $successMessage = "Erreur : " . $e->getMessage();
     }
 }
 ?>
@@ -104,21 +82,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include '../components/header.php'; // Inclusion du header 
-    ?>
+    <?php include '../components/header.php'; ?>
+
+    <!-- Message conditionnel -->
+    <?php if (!empty($successMessage)): ?>
+        <div class="success-message">
+            <p><?= htmlspecialchars($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
 
     <main class="main-content-createPost">
         <div class="create-post-container">
-            <!-- Image pré-visualisation -->
             <div class="post-image">
                 <img src="../assets/images/photoVaud1.jpg" alt="Photo du lac" class="preview-image">
             </div>
 
-            <!-- Formulaire de création de post -->
             <form class="create-post-form" action="createPost.php" method="POST" enctype="multipart/form-data">
                 <h2 class="form-title"><?= t('create_post_title'); ?></h2>
 
-                <!-- Sélection de la catégorie -->
+                <!-- Catégorie -->
                 <div class="form-group">
                     <label for="category"><?= t('create_post_category'); ?></label>
                     <select name="category" id="category" required>
@@ -127,10 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="4"><?= t('category_names')['culture']; ?></option>
                         <option value="3"><?= t('category_names')['nature']; ?></option>
                     </select>
-
                 </div>
 
-                <!-- Sélection de la ville -->
+                <!-- Ville -->
                 <div class="form-group">
                     <label for="city"><?= t('create_post_city'); ?></label>
                     <select name="city" id="city" required>
@@ -144,13 +125,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </div>
 
-                <!-- Adresse -->
                 <div class="form-group">
                     <label for="addresse"><?= t('create_post_address'); ?></label>
                     <input type="text" id="addresse" name="addresse" placeholder="<?= t('create_post_address_placeholder'); ?>">
                 </div>
 
-                <!-- Budget -->
                 <div class="form-group">
                     <label for="budget"><?= t('create_post_budget'); ?></label>
                     <div class="budget-input">
@@ -159,31 +138,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-                <!-- Titre de la publication -->
                 <div class="form-group">
                     <label for="title"><?= t('create_post_title_label'); ?></label>
                     <input type="text" id="title" name="title" placeholder="<?= t('create_post_title_placeholder'); ?>" required>
                 </div>
 
-                <!-- Texte de la publication -->
                 <div class="form-group">
                     <label for="post-content"><?= t('create_post_text'); ?></label>
                     <textarea id="post-content" name="post-content" placeholder="<?= t('create_post_text_placeholder'); ?>" required></textarea>
                 </div>
 
-                <!-- Téléchargement d'image -->
                 <div class="form-group">
                     <label for="image"><?= t('create_post_image'); ?></label>
                     <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
-                <!-- Bouton de soumission -->
                 <button type="submit" class="submit-btn"><?= t('create_post_submit'); ?></button>
             </form>
         </div>
     </main>
 
-    <!-- Footer -->
     <?php include '../components/footer.php'; ?>
 </body>
 
