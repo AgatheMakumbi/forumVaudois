@@ -17,7 +17,7 @@ session_destroy(); // Détruire la session utilisateur
  * Redirige l'utilisateur vers la page d'accueil du site.
  * La fonction `header()` envoie un en-tête HTTP au navigateur pour effectuer une redirection.
  */
-header('Location: /ForumVaudois/'); // Redirige vers la page d'accueil
+header('Location: /'); // Redirige vers la page d'accueil
 
 // Terminer l'exécution du script pour éviter toute exécution supplémentaire après la redirection
 exit;

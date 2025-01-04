@@ -1,4 +1,4 @@
-<?php
+<?php session_start() ;
 require_once 'vendor/autoload.php';
 require_once __DIR__ . '/lang/lang_func.php'; // Inclusion corrigée du fichier
 
@@ -25,7 +25,8 @@ $db = new DbManagerCRUD();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/ForumVaudois/assets/css/style.css?v=<?= time(); ?>">
+    <link rel="stylesheet" href="
+/assets/css/style.css?v=<?= time(); ?>">
 
 
     <title>Forum Vaudois - Accueil</title>
@@ -47,10 +48,10 @@ $db = new DbManagerCRUD();
                 </p>
             </section>
             <section class="thread-section">
-                <a href="/ForumVaudois/pages/news.php?category=activity" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
-                <a href="/ForumVaudois/pages/news.php?category=food" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
-                <a href="/ForumVaudois/pages/news.php?category=nature" class="thread-btn"><?php echo $messages['home_button_nature']; ?></a>
-                <a href="/ForumVaudois/pages/news.php?category=culture" class="thread-btn"><?php echo $messages['home_button_culture']; ?></a>
+                <a href="/pages/news.php?category=activity" class="thread-btn"><?php echo $messages['home_button_activities']; ?></a>
+                <a href="/pages/news.php?category=food" class="thread-btn"><?php echo $messages['home_button_food']; ?></a>
+                <a href="/pages/news.php?category=nature" class="thread-btn"><?php echo $messages['home_button_nature']; ?></a>
+                <a href="/pages/news.php?category=culture" class="thread-btn"><?php echo $messages['home_button_culture']; ?></a>
             </section>
         </main>
 
