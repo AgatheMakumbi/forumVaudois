@@ -62,13 +62,17 @@ $posts = $db->getPostsByUser($loggedUserID);
                     <?php if (!empty($posts)): ?>
                         <?php foreach ($posts as $post): ?>
                             <div class="post-card">
-                                <div class="post-header">
-                                    <h2><?= htmlspecialchars($post->getTitle()) ?></h2>
-                                    <a href="updatePost.php?id_post=<?= htmlspecialchars($post->getId()) ?>" class="edit-icon" title="Modifier la publication">
-                                        <img src="../assets/images/update.png" alt="Modifier" style="width: 30px; height: 30px;">
-                                    </a>
+                            <div class="post-header">
+    <h2>
+        <a href="postDetails.php?id_post=<?= htmlspecialchars($post->getId()) ?>" class="post-title-link">
+            <?= htmlspecialchars($post->getTitle()) ?>
+        </a>
+    </h2>
+    <a href="updatePost.php?id_post=<?= htmlspecialchars($post->getId()) ?>" class="edit-icon" title="Modifier la publication">
+        <img src="../assets/images/update.png" alt="Modifier" style="width: 30px; height: 30px;">
+    </a>
+</div>
 
-                                </div>
                                 <p><?= htmlspecialchars($post->getText()) ?></p>
                                 <div class="post-footer">
                                     <button class="btn-response"><?= t('profile_add_response'); ?></button>
