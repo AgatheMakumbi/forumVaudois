@@ -1,9 +1,11 @@
 <?php
+
 /**
  * Ce script est pour afficher une liste de posts en fonction de la catégorie sélectionnée
  * et offre également un filtre par ville.
  */
 
+// Inclut les dépendances nécessaires 
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
@@ -12,21 +14,38 @@ use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\City;
 
 try {
-    // Récupère la langue depuis la requête GET ou utilise la langue par défaut (français)
+    /**
+     * Récupère la langue depuis la requête GET ou utilise la langue par défaut (français)
+     * 
+     * @var string $lang La langue sélectionnée (ou la langue par défaut)
+     * @var array $messages Tableau contenant les traductions pour la langue sélectionnée
+     */
     $lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['LANG']) ? $_SESSION['LANG'] : 'fr');
     $messages = loadLanguage($lang); // Charge les traductions
     $_SESSION['LANG'] = $lang; // Stocke la langue dans la session
 } catch (Exception $e) {
+    /**
+     * En cas d'erreur lors du chargement des traductions, charge la langue par défaut (fr).
+     * 
+     * @var array $messages Tableau contenant les traductions en français
+     */
     $messages = loadLanguage('fr'); // Charge par défaut le français en cas d'erreur
     error_log($e->getMessage()); // Log l'erreur pour débogage
 }
 
-// Récupération des paramètres GET pour la catégorie et la ville
+/**
+ * Récupération des paramètres GET pour la catégorie et la ville
+ * 
+ * @var string $categoryName Le nom de la catégorie sélectionnée
+ * @var int $cityId L'ID de la ville sélectionnée (0 pour toutes les villes)
+ */
 $categoryName = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : 'all';
 $cityId = isset($_GET['city']) ? (int)$_GET['city'] : 0; // 0 pour afficher tous les posts
 
 // Tableau des catégories disponibles
-$categories = [
+/**
+ * @var array $categories Tableau associatif des catégories disponibles et leurs ID
+ */ $categories = [
     'food' => 1,
     'activity' => 2,
     'nature' => 3,
@@ -36,17 +55,28 @@ $categories = [
 
 // Vérification de la catégorie
 if (!array_key_exists($categoryName, $categories)) {
+    /**
+     * Si la catégorie est invalide ou non spécifiée, le script s'arrête et affiche un message d'erreur.
+     * 
+     * @return void
+     */
     die("Catégorie invalide ou non spécifiée.");
 }
 
 try {
+    /**
+     * @var DbManagerCRUD $dbManager Instance de la classe DbManagerCRUD pour gérer les interactions avec la base de données
+     * @var array $posts Tableau destiné à contenir les posts récupérés de la base de données
+     */
     $dbManager = new DbManagerCRUD();
     $posts = [];
 
     // Récupération des posts en fonction de la catégorie
     if ($categoryName == "all") {
+        // Si la catégorie est "all" récupère tous les posts
         $posts = $dbManager->showPosts();
     } else {
+        // Pour toutes les autres catégories, récupère les posts correspondants
         $posts = $dbManager->getPostsByCategory($categories[$categoryName]);
     }
 
@@ -57,11 +87,16 @@ try {
         });
     }
 } catch (Exception $e) {
+    // En cas d'erreur lors de la récupération des posts 
     echo "Erreur lors de la récupération des posts : " . $e->getMessage();
     exit;
 }
 
-// Récupération de toutes les villes à partir des données statiques dans City::getCityById()
+/**
+ * Récupération de toutes les villes à partir des données statiques dans City::getCityById()
+ * 
+ * @var array $allCities Tableau des objets City contenant les informations sur les villes
+ */
 $allCities = [];
 foreach ([1, 3, 2, 4, 5, 7, 6] as $id) {
     try {
@@ -93,17 +128,17 @@ foreach ([1, 3, 2, 4, 5, 7, 6] as $id) {
 
             <!-- Formulaire de filtre par ville -->
             <form method="get" action="news.php" class="filter-form">
-    <input type="hidden" name="category" value="<?= htmlspecialchars($categoryName); ?>">
-    <label for="city-filter"><?= t('filter_by_city'); ?></label>
-    <select name="city" id="city-filter" onchange="this.form.submit()">
-        <option value="0" <?= $cityId === 0 ? 'selected' : ''; ?>><?= t('all_cities'); ?></option>
-        <?php foreach ($allCities as $city): ?>
-            <option value="<?= $city->getId(); ?>" <?= $cityId === $city->getId() ? 'selected' : ''; ?>>
-                <?= htmlspecialchars($city->getCityName()); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</form>
+                <input type="hidden" name="category" value="<?= htmlspecialchars($categoryName); ?>">
+                <label for="city-filter"><?= t('filter_by_city'); ?></label>
+                <select name="city" id="city-filter" onchange="this.form.submit()">
+                    <option value="0" <?= $cityId === 0 ? 'selected' : ''; ?>><?= t('all_cities'); ?></option>
+                    <?php foreach ($allCities as $city): ?>
+                        <option value="<?= $city->getId(); ?>" <?= $cityId === $city->getId() ? 'selected' : ''; ?>>
+                            <?= htmlspecialchars($city->getCityName()); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </form>
 
 
             <div class="posts-container">
@@ -139,4 +174,5 @@ foreach ([1, 3, 2, 4, 5, 7, 6] as $id) {
         <?php include '../components/footer.php'; ?>
     </div>
 </body>
+
 </html>

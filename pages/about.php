@@ -1,16 +1,17 @@
 <?php
 
 /**
- * Fichier principal pour la page "À propos".
+ * Script de la page "À propos"
  * Initialise la session, gère la traduction, et affiche le contenu de la page.
  */
+
+// Inclut les dépendances nécessaires
+require_once __DIR__ . '/../lang/lang_func.php';
 
 // Démarre la session
 session_start();
 
-// Charge les fonctions de traduction
-require_once __DIR__ . '/../lang/lang_func.php';
-
+// Gère la traduction 
 try {
     /**
      * Récupère la langue depuis la requête GET, la session, ou utilise 'fr' par défaut.
@@ -34,6 +35,7 @@ try {
     error_log($e->getMessage());
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 

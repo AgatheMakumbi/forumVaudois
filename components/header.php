@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Fichier header avec gestion de la langue et affichage du menu.
+ * Script du header avec gestion de la langue et affichage du menu
  * 
  * Ce fichier gère la langue de l'interface utilisateur et affiche 
  * le menu de navigation en fonction de l'état de connexion de l'utilisateur.
  */
 
+// Inclusion des dépendances nécessaires
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
 // Vérifie si une session est déjà active avant de la démarrer

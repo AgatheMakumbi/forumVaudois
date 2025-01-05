@@ -81,7 +81,6 @@ class User
      */
     public function __construct(string $username, string $email, string $password, string $token, int $id = 0, bool $isBlocked = false, bool $isVerified = false)
     {
-        //$this->setId($id);
         $this->id = $id;
         $this->setUsername($username);
         $this->setEmail($email);
@@ -154,7 +153,7 @@ class User
     /**
      * Définit le mot de passe de l'utilisateur
      * 
-     * @param string $password Le mot de passe hashé à attribuer l'utilisateur
+     * @param string $password Le mot de passe à hasher puis à attribuer l'utilisateur
      */
     public function setPassword(string $password)
     {

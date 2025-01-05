@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Script contenant les fonctions pour gérer la traduction
+ */
+
 if (!function_exists('t')) {
     /**
      * Affiche le texte qui correspond à la clé donnée, dans la langue sélectionnée.
      * 
      * @param string $key La clé correspondant au texte à afficher
      * @return string La valeur associée à la clé si elle existe, sinon la clé entre crochets
-     * @throws Exception
+     * @throws Exception Si le dictionnaire est introuvable 
      */
     function t($key)
     {
@@ -128,6 +132,8 @@ if (!function_exists('getSupportedLanguages')) {
 if (!function_exists('loadLanguage')) {
     /**
      * Charge le dictionnaire de la langue spécifiée
+     * Cette fonction est utilisée dans les pages du site afin de charger dès le début
+     * le dictionnaire correspondant à la langue définie. 
      * 
      * @param string $lang Le code de la langue à charger
      * @return array Le tableau associatif contenant les traductions de la langue spéicifée

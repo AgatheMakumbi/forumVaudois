@@ -1,10 +1,13 @@
 <?php
+
 /**
- * Fichier de gestion du profil utilisateur.
+ * Script de gestion du profil utilisateur.
  * Cette page affiche les informations du profil utilisateur ainsi que la liste des posts créés par l'utilisateur.
  */
 
+// Inclut les dépendances nécessaires 
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
+require_once '../vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\User;
@@ -21,11 +24,11 @@ try {
     $_SESSION['LANG'] = $lang; // Stocke la langue dans la session
 } catch (Exception $e) {
     // En cas d'erreur, charge la langue par défaut (français)
-    $messages = loadLanguage('fr'); 
+    $messages = loadLanguage('fr');
     error_log($e->getMessage()); // Log l'erreur pour débogage
 }
 
-require_once '../vendor/autoload.php';
+// Démarrer la session 
 session_start();
 
 // Initialisation de la connexion avec la base de données

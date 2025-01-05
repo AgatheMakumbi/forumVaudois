@@ -1,21 +1,43 @@
 <?php
 
+// Inclut les dépendances nécessaires
 require_once '../vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\Post;
 use M521\ForumVaudois\Entity\Media;
 
+//Démarre la session 
 session_start();
 
+// Vérifie la session utilisateur 
 if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
+    /**
+     * Redirige l'utilisateur vers la page de connexion si l'utilisateur n'est pas connecté
+     * 
+     * @return void
+     */
     header("Location: login.php");
-    exit;
+    exit; // Arrête l'exécution du script
 }
 
-$successMessage = ""; // Variable pour afficher un message conditionnel
+// Traitement de la création d'un post via la méthode POST
+
+/**
+ * @var string $successMessage Message de succès ou non
+ */
+$successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    /**
+     * @var string $title Le titre du post
+     * @var string $text Le texte du post
+     * @var int $city L'identifiant de la ville du post
+     * @var int $budget Le budget défini dans le post
+     * @var string $address L'adresse définie dans le post
+     * @var int $authorId L'identifiant de l'utilisateur auteur du post
+     * @var int $category L'identifiant de la catégorie du post 
+     */
     $title = $_POST['title'];
     $text = $_POST['post-content'];
     $city = $_POST['city'];
@@ -24,6 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $authorId = $_SESSION["id"];
     $category = $_POST['category'] ?? 1;
 
+    /**
+     * Gestion des images liées au post 
+     * @var string $imagePath Le chemin du fichier image
+     * @var string $imageName Le nom du fichier image 
+     * @var string $uploadDir Le dossier dans lequel les images doivent être enregistrées
+     */
     $imagePath = null;
     $imageName = null;
     if (!empty($_FILES['image']['name'])) {
@@ -36,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
+        // Création d'un objet Post avec les information récupérées
         $post = new Post(
             $title,
             $text,
@@ -49,7 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $address
         );
 
+        /** 
+         * @var DbManagerCRUD $dbManager Instance du gestionnaire de base de données
+         */
         $dbManager = new DbManagerCRUD();
+
+        // Enregistrement du post dans la base de données 
         if ($dbManager->createPost($post)) {
             if ($imageName != null) {
                 $postId = $dbManager->getLastPostId();
@@ -64,9 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $successMessage = "Post créé avec succès ! Vous allez être redirigé.";
             header("refresh:3;url=../index.php"); // Redirection après 3 secondes
         } else {
+            // Si l'ajout du commentaire a échoué 
             $successMessage = "Échec de la création du post.";
         }
     } catch (Exception $e) {
+        // Capture les erreurs
         $successMessage = "Erreur : " . $e->getMessage();
     }
 }

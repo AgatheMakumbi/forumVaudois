@@ -1,49 +1,68 @@
 <?php
+
 /**
  * Page de détail d'un post.
  * Cette page récupère et affiche les informations détaillées d'un post,
  * y compris les médias associés, les likes et les commentaires.
  */
 
+// Inclut les dépendances nécessaires 
 require_once '../vendor/autoload.php';
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 use M521\ForumVaudois\Entity\City;
 use M521\ForumVaudois\Entity\Category;
 
-// Démarrer la session utilisateur
+// Démarre la session
 session_start();
 
-// Vérifier si l'identifiant du post est fourni
+// Vérifier si l'identifiant du post est fourni, sinon stopper l'opération
 if (empty($_GET['id_post'])) {
     echo "Identifiant du post non fourni.";
     exit;
 }
 
+/**
+ * @var int $idPost Identifiant du post récupéré via la requête GET
+ */
 $idPost = (int)$_GET['id_post']; // Sécuriser l'identifiant du post
 
 try {
+    /**
+     * @var DbManagerCRUD $dbManager Instance de la classe DbManagerCRUD pour gérer les interactions avec la base de données
+     * @var Post $post Objet représentant le post récupéré depuis la base de données
+     * @var array $medias Liste des médias associés au post
+     * @var array $likes Liste des likes associés au post
+     * @var array $comments Liste des commentaires associés au post
+     * @var string $authorUser Nom d'utilisateur de l'auteur du post
+     */
     // Initialiser la connexion à la base de données
     $dbManager = new DbManagerCRUD();
 
-    // Récupérer les données du post
+    // Vérifier l'existence du post, sinon stopper l'opération
     $post = $dbManager->getPostById($idPost);
     if (!$post) {
         echo "Post introuvable.";
         exit;
     }
 
+    // Récupérer les médias, likes et commentaires associés au post
     $medias = $dbManager->getMediasByPostId($idPost);
     $likes = $dbManager->getLikesById($idPost);
     $comments = $dbManager->getCommentsById($idPost);
     $authorUser = $dbManager->getUserById($post->getAuthor())->getUsername();
 } catch (Exception $e) {
+    // En cas d'erreur lors de la récupération des données
     echo "Erreur lors de la récupération des données : " . htmlspecialchars($e->getMessage());
     exit;
 }
 
+/**
+ * @var bool $userLiked Indique si l'utilisateur a déjà cliqué sur Liker
+ */
 $userLiked = false;
 if (!empty($_SESSION["id"])) {
+    // Vérifie s'il existe déjà un like de cet utilisateur sur ce post
     foreach ($likes as $like) {
         if ($like->getAuthor() === $_SESSION['id']) {
             $userLiked = true;
@@ -52,7 +71,14 @@ if (!empty($_SESSION["id"])) {
     }
 }
 
+/**
+ * @var int $totalLikes Nombre total de likes pour ce post
+ */
 $totalLikes = count($likes);
+
+/**
+ * @var string $previousPage URL de la page précédente ou de la page d'accueil si non disponible
+ */
 $previousPage = $_SERVER['HTTP_REFERER'] ?? '../index.php';
 ?>
 

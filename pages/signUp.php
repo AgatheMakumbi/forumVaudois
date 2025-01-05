@@ -1,14 +1,12 @@
 <?php
+
 /**
  * Script d'inscription pour les nouveaux utilisateurs.
  * Ce script gère la validation des données utilisateur, la création d'un compte,
  * et l'envoi d'un email de confirmation.
  */
 
-session_start();
-$_SESSION["isConnected"] = false;
-
-// Inclusion des dépendances nécessaires
+// Inclut les dépendances nécessaires
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
@@ -18,8 +16,19 @@ use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
 
-// Fonction pour récupérer les traductions
-function t($key, $default = '') {
+//Démarre la session 
+session_start();
+$_SESSION["isConnected"] = false;
+
+/**
+ * Fonction pour récupérer les traductions
+ * 
+ * @param string $key La clé de la traduction à récupérer
+ * @param string $default La valeur par défaut à retourner si la traduction n'existe pas
+ * @return string La traduction ou la valeur par défaut
+ */
+function t($key, $default = '')
+{
     global $messages;
     return isset($messages[$key]) ? $messages[$key] : $default;
 }
@@ -45,6 +54,11 @@ $email = '';
 // ============================
 // TRAITEMENT DU FORMULAIRE
 // ============================
+
+/**
+ * Traite le formulaire d'inscription.
+ * Valide les données utilisateur et procède à la création du compte si valide.
+ */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);

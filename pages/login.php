@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Page de connexion utilisateur.
  * Cette page permet aux utilisateurs de se connecter en utilisant leurs identifiants.
  * Elle gère le traitement des formulaires et l'affichage dynamique des messages multilingues.
  */
 
-// Inclusion des fichiers nécessaires
+// Inclut les dépendances nécessaires 
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
@@ -13,7 +14,7 @@ use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 
 /**
  * Gestion de la langue : 
- * - Récupère la langue depuis la requête GET, la session ou utilise 'fr' par défaut.
+ * Récupère la langue depuis la requête GET, la session ou utilise 'fr' par défaut.
  * 
  * @var string $lang Langue sélectionnée.
  * @var array $messages Messages traduits pour la langue sélectionnée.
@@ -32,7 +33,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Démarrage de la session utilisateur
+// Démarre la session
 session_start();
 
 /**
@@ -113,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="login-container">
             <!-- Section gauche : Logo et slogan -->
             <div class="left-side">
-             <img src="../assets/images/logo1.png" alt="Forum Vaudois Logo" class="logo">
-               <h1 class="slogan"><?= t('login_left_title'); ?></h1>
+                <img src="../assets/images/logo1.png" alt="Forum Vaudois Logo" class="logo">
+                <h1 class="slogan"><?= t('login_left_title'); ?></h1>
             </div>
 
 
@@ -132,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </select>
                     </form>
                 </div>
-<br>
+                <br>
                 <!-- Formulaire de connexion -->
                 <form class="login-form" action="login.php" method="POST">
                     <h2 class="form-title"><?= t('login_form_title'); ?></h2>
