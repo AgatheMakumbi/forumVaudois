@@ -58,6 +58,7 @@ try {
 }
 
 /**
+ * Vérifier si l'utilisateur a déjà liké ce post, si oui désactiver le bouton
  * @var bool $userLiked Indique si l'utilisateur a déjà cliqué sur Liker
  */
 $userLiked = false;

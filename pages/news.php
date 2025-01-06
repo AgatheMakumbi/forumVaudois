@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Script pour afficher une liste de posts en fonction de la catégorie sélectionnée
  * et offre également un filtre par ville.
@@ -125,12 +126,28 @@ foreach ($cityIdsUsedInPosts as $id) {
                             <p class="post-content"><?= htmlspecialchars($post->getText()); ?></p> <!-- Contenu du post -->
                             <p class="post-budget">Budget : CHF <?= htmlspecialchars($post->getBudget()); ?></p> <!-- Budget -->
                             <p class="post-location">
-                                    📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
-                                </p>
+                                📍 <?= htmlspecialchars(City::getCityById($post->getCity())->getCityName()) ?>
+                            </p>
                             <div class="post-footer">
                                 <form method="post" action="likePost.php"> <!-- Bouton de like -->
                                     <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
-                                    <button type="submit" class="like-button">👍 Liker</button>
+                                    <?php
+                                    /**
+                                     * Vérifier si l'utilisateur a déjà liké ce post, si oui désactiver le bouton
+                                     * @var bool $userLiked Indique si l'utilisateur a déjà cliqué sur Liker
+                                     */
+                                    $userLiked = false;
+                                    $likes = $dbManager->getLikesById($post->getId());
+                                    if (!empty($_SESSION["id"])) {
+                                        // Vérifie s'il existe déjà un like de cet utilisateur sur ce post
+                                        foreach ($likes as $like) {
+                                            if ($like->getAuthor() === $_SESSION['id']) {
+                                                $userLiked = true;
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                    <button type="submit" class="like-button" <?= $userLiked ? 'disabled' : '' ?>>👍 Liker</button>
                                 </form>
                             </div>
                         </div>
