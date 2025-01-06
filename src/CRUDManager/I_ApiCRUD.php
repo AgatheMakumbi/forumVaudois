@@ -2,7 +2,6 @@
 
 namespace M521\ForumVaudois\CRUDManager;
 
-use M521\ForumVaudois\Entity\Personne;
 use M521\ForumVaudois\Entity\Category;
 use M521\ForumVaudois\Entity\City;
 use M521\ForumVaudois\Entity\Comment;
@@ -13,10 +12,7 @@ use M521\ForumVaudois\Entity\Like;
 
 interface I_ApiCRUD
 {
-/*  public function rendPersonnes(string $nom): array;
-    public function modifiePersonne(int $id, Personne $personne): bool;
-    public function supprimePersonne(int $id): bool; */
-    
+
 
     //methodes DB_MANAGER
     public function generateToken(): string;
