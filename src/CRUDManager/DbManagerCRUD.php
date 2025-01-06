@@ -3,7 +3,6 @@
 namespace M521\ForumVaudois\CRUDManager;
 
 use M521\ForumVaudois\CRUDManager\I_ApiCRUD;
-use M521\ForumVaudois\Entity\Personne;
 use M521\ForumVaudois\Entity\Category;
 use M521\ForumVaudois\Entity\City;
 use M521\ForumVaudois\Entity\Comment;
@@ -39,6 +38,7 @@ class DbManagerCRUD implements I_ApiCRUD
         }
     }
 
+<<<<<<< HEAD
     
 
     /*public function ajoutePersonne(Personne $personne): int {
@@ -116,6 +116,8 @@ class DbManagerCRUD implements I_ApiCRUD
 
 
 
+=======
+>>>>>>> 3953627e396d1c2c4d41acd245d844a9cba0edfc
     // ================================================================
     //                       METHODES POUR LES USERS
     // ================================================================
