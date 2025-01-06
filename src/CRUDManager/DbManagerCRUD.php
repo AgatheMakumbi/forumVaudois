@@ -3,7 +3,6 @@
 namespace M521\ForumVaudois\CRUDManager;
 
 use M521\ForumVaudois\CRUDManager\I_ApiCRUD;
-use M521\ForumVaudois\Entity\Personne;
 use M521\ForumVaudois\Entity\Category;
 use M521\ForumVaudois\Entity\City;
 use M521\ForumVaudois\Entity\Comment;
