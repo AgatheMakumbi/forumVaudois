@@ -85,11 +85,11 @@ if (!$UserToken) {
                     <?php if ($canConnect): ?>
                         <!-- Si l'utilisateur peut se connecter -->
                         <p class="subtitle">Découvrez notre plateforme et rejoignez notre communauté.</p>
-                        <a href="/ForumVaudois/pages/login.php" class="submit-btn">Se connecter</a>
+                        <a href="/pages/login.php" class="submit-btn">Se connecter</a>
                     <?php else: ?>
                         <!-- Si la confirmation a échoué -->
                         <p class="subtitle">Vous rencontrez des difficultés ?</p>
-                        <a href="/ForumVaudois/pages/signUp.php" class="submit-btn">Réessayer l'inscription</a>
+                        <a href="/pages/signUp.php" class="submit-btn">Réessayer l'inscription</a>
                     <?php endif; ?>
                 </div>
             </div>

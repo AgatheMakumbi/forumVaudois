@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="create-post-container">
             <!-- Image pré-visualisation -->
             <div class="post-image">
-                <img src="../assets/images/photoVaud1.jpg" alt="Photo du lac" class="preview-image">
+                <img src="../assets/images/PhotoVaud1.jpg" alt="Photo du lac" class="preview-image">
             </div>
 
             <!-- Formulaire de création de post -->

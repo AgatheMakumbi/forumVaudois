@@ -87,7 +87,7 @@ $previousPage = $_SERVER['HTTP_REFERER'] ?? '../index.php';
                 <br>
                 <div class="media-container">
                     <?php foreach ($medias as $media): ?>
-                        <img src="../uploads/<?= htmlspecialchars($media->getFilePath()) ?>" alt="Image associée au post"><br><br>
+                        <img src="/uploads/<?= htmlspecialchars($media->getFilePath()) ?>" alt="Image associée au post"><br><br>
                     <?php endforeach; ?>
                 </div>
             <?php else: ?>

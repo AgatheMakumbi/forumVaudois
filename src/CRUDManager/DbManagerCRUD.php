@@ -129,7 +129,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'isBlocked' => $user->getIsBlocked(),
             'isVerified' => $user->getIsVerified(),
         ];
-        $sql = "INSERT INTO user (username, email, password, token, isVerified, isBlocked) VALUES "
+        $sql = "INSERT INTO User (username, email, password, token, isVerified, isBlocked) VALUES "
             . "(:username,:email, :password, :token, :isVerified, :isBlocked)";
         $this->db->prepare($sql)->execute($datas);
         $result = $this->db->lastInsertId() !== null;
@@ -138,7 +138,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function existsUsername(string $username): bool
     {
-        $sql = "SELECT COUNT(*) FROM user WHERE username = :username";
+        $sql = "SELECT COUNT(*) FROM User WHERE username = :username";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('username', $username, \PDO::PARAM_STR);
         $stmt->execute();
@@ -147,7 +147,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function existsEmail(string $email): bool
     {
-        $sql = "SELECT COUNT(*) FROM user WHERE email = :email";
+        $sql = "SELECT COUNT(*) FROM User WHERE email = :email";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('email', $email, \PDO::PARAM_STR);
         $stmt->execute();
@@ -169,7 +169,7 @@ class DbManagerCRUD implements I_ApiCRUD
         // Si l'utilisateur n'est pas encore vérifié, on le vérifie
         $isVerified = !$user->getIsVerified();
 
-        $sql = "UPDATE user SET isVerified = :isVerified WHERE id = :id";
+        $sql = "UPDATE User SET isVerified = :isVerified WHERE id = :id";
         $stmt = $this->db->prepare($sql);
 
         // on lie les valeurs de la bd aux valeurs de l'objet User
@@ -191,7 +191,7 @@ class DbManagerCRUD implements I_ApiCRUD
     }
     public function existsToken(string $token): bool
     {
-        $sql = "SELECT COUNT(*) FROM user WHERE token = :token";
+        $sql = "SELECT COUNT(*) FROM User WHERE token = :token";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('token', $token, \PDO::PARAM_STR);
         $stmt->execute();
@@ -200,7 +200,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function getUserByToken(string $token): int
     {
-        $sql = "SELECT * FROM user WHERE token = :token";
+        $sql = "SELECT * FROM User WHERE token = :token";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('token', $token, \PDO::PARAM_STR);
         $stmt->execute();
@@ -215,7 +215,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function getUserById(int $id): ?User
     {
-        $sql = "SELECT * FROM user WHERE id = :id";
+        $sql = "SELECT * FROM User WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam('id', $id, \PDO::PARAM_STR);
         $stmt->execute();
@@ -241,7 +241,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
         try {
             // Préparer la déclaration SQL pour éviter l'injection SQL
-            $sql = "SELECT * FROM user WHERE email = :email";
+            $sql = "SELECT * FROM User WHERE email = :email";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
             $stmt->execute();
@@ -306,7 +306,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'last_update' => $post->getLastUpdate()->format('Y-m-d H:i:s'),
         ];
 
-        $sql = "INSERT INTO post (title, text, budget, address, id_user, id_city, id_category, created_at, last_update)
+        $sql = "INSERT INTO Post (title, text, budget, address, id_user, id_city, id_category, created_at, last_update)
                 VALUES (:title, :text, :budget, :address, :author, :city, :category, :created_at, :last_update)";
 
         $this->db->prepare($sql)->execute($datas);
@@ -365,7 +365,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function showPosts(): array
     {
-        $sql = "SELECT * FROM post";
+        $sql = "SELECT * FROM Post";
         $stmt = $this->db->query($sql);
 
         $posts = [];
@@ -440,7 +440,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'last_update' => $post->getLastUpdate()->format('Y-m-d H:i:s'),
         ];
 
-        $sql = "UPDATE post 
+        $sql = "UPDATE Post 
                 SET title = :title, text = :text, budget = :budget, address = :address, id_city = :city, id_category = :category, last_update = :last_update
                 WHERE id = :id";
 
@@ -450,7 +450,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function deletePost(int $id): bool
     {
-        $sql = "DELETE FROM post WHERE id = :id";
+        $sql = "DELETE FROM Post WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
@@ -465,7 +465,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
         ];
 
-        $sql = "INSERT INTO comment (text, id_user, id_post, created_at) 
+        $sql = "INSERT INTO Comment (text, id_user, id_post, created_at) 
                 VALUES (:text, :author, :post, :created_at)";
 
         $stmt = $this->db->prepare($sql);
@@ -492,7 +492,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function showComments(): array
     {
-        $sql = "SELECT * FROM comment";
+        $sql = "SELECT * FROM Comment";
         $stmt = $this->db->query($sql);
 
         $comments = [];
@@ -518,7 +518,7 @@ class DbManagerCRUD implements I_ApiCRUD
             'created_at' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
         ];
 
-        $sql = "UPDATE comment 
+        $sql = "UPDATE Comment 
                 SET text = :text, author = :author, post = :post, created_at = :created_at 
                 WHERE id = :id";
 
@@ -528,7 +528,7 @@ class DbManagerCRUD implements I_ApiCRUD
 
     public function deleteComment(int $id): bool
     {
-        $sql = "DELETE FROM comment WHERE id = :id";
+        $sql = "DELETE FROM Comment WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
@@ -543,7 +543,7 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour insérer un like dans la base de données
-        $sql = "INSERT INTO like (id_user, id_post) VALUES (:author, :post)";
+        $sql = "INSERT INTO `Like` (id_user, id_post) VALUES (:author, :post)";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -551,27 +551,27 @@ class DbManagerCRUD implements I_ApiCRUD
         return $stmt->execute($datas);
     }
 
-    public function getLikesById(int $id_post): array
-    {
-        $sql = "SELECT * FROM Like WHERE id_post = :id_post";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
-        $stmt->execute();
-        $likes = [];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $likes[] = new Like(
-                $row['id_user'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
-                $row['id_post']
-            );
-        }
+		public function getLikesById(int $id_post): array
+		{
+			$sql = "SELECT * FROM `Like` WHERE id_post = :id_post";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam('id_post', $id_post, \PDO::PARAM_INT);
+			$stmt->execute();
+			$likes = [];
+			while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+				$likes[] = new Like(
+					$row['id_user'],  // Assurez-vous que l'id de l'auteur est valide (ou récupérez l'objet User selon vos besoins)
+					$row['id_post']
+				);
+			}
 
-        return $likes;
-    }
+			return $likes;
+		}
 
     public function deleteLike(int $id): bool
     {
         // Requête SQL pour supprimer un like par son ID
-        $sql = "DELETE FROM likes WHERE id = :id";
+        $sql = "DELETE FROM `Like` WHERE id = :id";
 
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);
@@ -595,7 +595,7 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour insérer une ville dans la base de données
-        $sql = "INSERT INTO cities (cityName) VALUES (:cityName)";
+        $sql = "INSERT INTO City (cityName) VALUES (:cityName)";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -607,7 +607,7 @@ class DbManagerCRUD implements I_ApiCRUD
     public function showCities(): array
     {
         // Requête SQL pour récupérer toutes les villes
-        $sql = "SELECT * FROM cities";
+        $sql = "SELECT * FROM City";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -628,7 +628,7 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour mettre à jour le nom de la ville
-        $sql = "UPDATE cities SET cityName = :cityName WHERE id = :id";
+        $sql = "UPDATE City SET cityName = :cityName WHERE id = :id";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -640,7 +640,7 @@ class DbManagerCRUD implements I_ApiCRUD
     public function deleteCity(int $id): bool
     {
         // Requête SQL pour supprimer une ville par son ID
-        $sql = "DELETE FROM cities WHERE id = :id";
+        $sql = "DELETE FROM City WHERE id = :id";
 
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);
@@ -664,7 +664,7 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour insérer une catégorie dans la base de données
-        $sql = "INSERT INTO category (categoryName) VALUES (:categoryName)";
+        $sql = "INSERT INTO Category (categoryName) VALUES (:categoryName)";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -676,7 +676,7 @@ class DbManagerCRUD implements I_ApiCRUD
     public function showCategories(): array
     {
         // Requête SQL pour récupérer toutes les villes
-        $sql = "SELECT * FROM category";
+        $sql = "SELECT * FROM Category";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -697,7 +697,7 @@ class DbManagerCRUD implements I_ApiCRUD
         ];
 
         // Requête SQL pour mettre à jour le nom de la catégorie
-        $sql = "UPDATE category SET categoryName = :categoryName WHERE id = :id";
+        $sql = "UPDATE Category SET categoryName = :categoryName WHERE id = :id";
 
         // Préparation et exécution de la requête
         $stmt = $this->db->prepare($sql);
@@ -709,7 +709,7 @@ class DbManagerCRUD implements I_ApiCRUD
     public function deleteCategory(int $id): bool
     {
         // Requête SQL pour supprimer une catégorie par son ID
-        $sql = "DELETE FROM category WHERE id = :id";
+        $sql = "DELETE FROM Category WHERE id = :id";
 
         // Préparation de la requête
         $stmt = $this->db->prepare($sql);

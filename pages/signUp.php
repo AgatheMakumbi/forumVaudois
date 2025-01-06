@@ -72,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Préparation et envoi de l'email de confirmation
                 //$transport = Transport::fromDsn('smtp://localhost:1025');
-                $transport = Transport::fromDsn('smtp://agathe@makumbi.ch:VOTRE_MOT_DE_PASSE@smtp.kreativmedia.ch:465');
+                $transport = Transport::fromDsn('smtp://agathe@makumbi.ch:KINSHASA4everbaby!@ariel.kreativmedia.ch:465');
                 $mailer = new Mailer($transport);
                 $confirmationEmail = (new Email())
-                    ->from('inscription@forumvaudois.ch')
+                    ->from('agathe@makumbi.ch')
                     ->to($email)
                     ->subject('Confirmation de votre inscription au Forum Vaudois')
                     ->html("<p>Veuillez confirmer votre email en cliquant sur le lien suivant :</p><a href='{$confirmationLink}'>Confirmer mon inscription</a>");
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1 class="slogan">Rejoignez le forum de la région !</h1>
             </div>
             <div class="right-side">
-                <form class="signup-form" action="signup.php" method="POST">
+                <form class="signup-form" action="signUp.php" method="POST">
                     <h2 class="form-title">Créer un compte</h2>
 
                     <div class="form-group">

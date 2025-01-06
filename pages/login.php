@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Redirection si l'utilisateur est déjà connecté
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
-        header('Location: /ForumVaudois/pages/news.php');
+        header('Location: /pages/news.php');
         exit();
     } else {
         // Vérification des champs requis
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Succès : création de la session utilisateur
                 $_SESSION["isConnected"] = true;
                 $_SESSION["id"] = $userId;
-                header('Location: /ForumVaudois/pages/news.php');
+                header('Location: /pages/news.php');
                 exit();
             } else {
                 // Erreur : informations de connexion incorrectes

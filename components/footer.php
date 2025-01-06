@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 
 /**
  * Chargement des fichiers nécessaires
