@@ -26,7 +26,7 @@ $dbManager = new DbManagerCRUD();
  * Si non, redirige vers la page de profil
  */
 if (!isset($_GET['id_post']) || empty($_GET['id_post'])) {
-    header("Location: profil.php"); // Redirige vers le profil
+    header("Location: /ForumVaudois/pages/profil.php"); // Redirige vers le profil
     exit;
 }
 
@@ -40,7 +40,7 @@ $idPost = (int)$_GET['id_post'];
  * Vérifie si l'utilisateur est connecté, sinon le redirige vers la page de connexion.
  */
 if (!isset($_SESSION["id"]) || empty($_SESSION["id"])) {
-    header("Location: login.php"); // Redirige vers la page de connexion
+    header("Location: /ForumVaudois/pages/login.php"); // Redirige vers la page de connexion
     exit;
 }
 
@@ -55,7 +55,7 @@ try {
      * sinon redirige vers la page de profil.
      */
     if (!$post || $post->getAuthor() !== $_SESSION['id']) {
-        header("Location: profil.php"); // Redirige si l'utilisateur n'est pas l'auteur du post
+        header("Location: /ForumVaudois/pages/profil.php"); // Redirige si l'utilisateur n'est pas l'auteur du post
         exit;
     }
 
@@ -82,7 +82,7 @@ try {
 
             // Enregistrement des modifications dans la base de données
             if ($dbManager->updatePost($post)) {
-                header("Location: profil.php"); // Redirige vers le profil après la mise à jour
+                header("Location: /ForumVaudois/pages/profil.php"); // Redirige vers le profil après la mise à jour
                 exit;
             } else {
                 // En cas d'erreur lors de la modification dans la base de données
@@ -168,6 +168,7 @@ try {
                 </div>
 
                 <button type="submit" class="submit-btn">Modifier</button>
+                
             </form>
         </div>
     </main>

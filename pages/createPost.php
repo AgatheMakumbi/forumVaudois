@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $successMessage = "Post créé avec succès ! Vous allez être redirigé.";
-            header("refresh:3;url=../index.php"); // Redirection après 3 secondes
+            header("refresh:3;url=/ForumVaudois/pages/profil.php"); // Redirection après 3 secondes
         } else {
             // Si l'ajout du commentaire a échoué 
             $successMessage = "Échec de la création du post.";
