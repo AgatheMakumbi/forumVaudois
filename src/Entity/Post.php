@@ -227,7 +227,7 @@ class Post
      */
     public function getAddress(): string
     {
-        return ($this->address != "") ? $this->address : "Aucune adresse donnée";
+        return ($this->address != "") ? $this->address : "Pas spécifiée";
     }
 
     /**

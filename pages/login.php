@@ -1,147 +1,169 @@
 <?php
+
 /**
  * Page de connexion utilisateur.
- * Cette page gère à la fois le traitement du formulaire de connexion et l'affichage du formulaire.
+ * Cette page permet aux utilisateurs de se connecter en utilisant leurs identifiants.
+ * Elle gère le traitement des formulaires et l'affichage dynamique des messages multilingues.
  */
 
-// Inclusion des fichiers nécessaires
+// Inclut les dépendances nécessaires 
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../lang/lang_func.php'; // Charge les fonctions de traduction
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD;
 
+/**
+ * Gestion de la langue : 
+ * Récupère la langue depuis la requête GET, la session ou utilise 'fr' par défaut.
+ * 
+ * @var string $lang Langue sélectionnée.
+ * @var array $messages Messages traduits pour la langue sélectionnée.
+ */
 try {
-    /**
-     * Gestion de la langue :
-     * - Récupère la langue depuis la requête GET, la session, ou utilise 'fr' par défaut.
-     */
     $lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['LANG']) ? $_SESSION['LANG'] : 'fr');
     $messages = loadLanguage($lang); // Charge les traductions
     $_SESSION['LANG'] = $lang; // Stocke la langue dans la session
 } catch (Exception $e) {
-    $messages = loadLanguage('fr'); // Charge par défaut le français en cas d'erreur
-    error_log($e->getMessage()); // Log l'erreur pour débogage
+    $messages = loadLanguage('fr'); // Par défaut, charge le français
+    error_log($e->getMessage()); // Log l'erreur pour le débogage
 }
 
-// Activation de l'affichage des erreurs (pour le développement uniquement)
+// Activation des erreurs (pour le développement uniquement)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Démarre une session utilisateur
+// Démarre la session
 session_start();
 
-// Initialisation des variables
-$db = new DbManagerCRUD(); // Instance de gestion de la base de données
-$erreurs = ['email' => '', 'password' => '']; // Tableau des erreurs
-$email = ''; // Adresse email
-$password = ''; // Mot de passe
+/**
+ * Initialisation des variables :
+ * - @var DbManagerCRUD $db Instance pour gérer les données.
+ * - @var array $erreurs Tableau pour stocker les messages d'erreur liés au formulaire.
+ * - @var string $email Email soumis par l'utilisateur.
+ * - @var string $password Mot de passe soumis par l'utilisateur.
+ */
+$db = new DbManagerCRUD();
+$erreurs = ['email' => '', 'password' => ''];
+$email = '';
+$password = '';
 
-// Traitement du formulaire de connexion
+// Traitement du formulaire soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /**
-     * Récupération et validation des données utilisateur :
-     * - Email : validation du format.
-     * - Mot de passe : désinfection des caractères spéciaux.
+     * Récupération et validation des données du formulaire :
+     * - Email : Validation pour vérifier que le format est correct.
+     * - Mot de passe : Désinfection des caractères spéciaux.
      */
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    // Redirection si l'utilisateur est déjà connecté
+    // Vérifie si l'utilisateur est déjà connecté
     if (isset($_SESSION["isConnected"]) && $_SESSION["isConnected"]) {
         header('Location: /pages/news.php');
         exit();
-    } else {
-        // Vérification des champs requis
-        if (empty($email) || empty($password)) {
-            $erreurs['email'] = 'Veuillez renseigner votre adresse e-mail';
-            $erreurs['password'] = 'Veuillez renseigner votre mot de passe';
-        } else {
-            // Tentative de connexion
-            $userId = $db->loginUser($email, $password);
+    }
 
-            if ($userId) {
-                // Succès : création de la session utilisateur
-                $_SESSION["isConnected"] = true;
-                $_SESSION["id"] = $userId;
-                header('Location: /pages/news.php');
-                exit();
-            } else {
-                // Erreur : informations de connexion incorrectes
-                $erreurs['email'] = 'Adresse e-mail ou mot de passe incorrect';
-            }
+    // Vérification des champs obligatoires
+    if (empty($email)) {
+        $erreurs['email'] = $messages['login_error_email'];
+    }
+    if (empty($password)) {
+        $erreurs['password'] = $messages['login_error_password'];
+    }
+
+    // Si aucun champ n'est vide, tentative de connexion
+    if (empty($erreurs['email']) && empty($erreurs['password'])) {
+        /**
+         * Vérification des identifiants de l'utilisateur :
+         * - Utilise la méthode `loginUser` pour valider les informations.
+         * 
+         * @var int|false $userId Identifiant utilisateur si la connexion réussit, sinon `false`.
+         */
+        $userId = $db->loginUser($email, $password);
+
+        if ($userId) {
+            // Succès : Création des variables de session
+            $_SESSION["isConnected"] = true;
+            $_SESSION["id"] = $userId;
+            header('Location: /pages/news.php');
+            exit();
+        } else {
+            // Erreur : Identifiants incorrects
+            $erreurs['email'] = $messages['login_error_credentials'];
         }
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= htmlspecialchars($lang); ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/style.css?v=<?= time(); ?>">
-    <title>Login</title>
+    <title><?= t('login_title'); ?></title>
 </head>
 
 <body>
     <!-- Lien de retour à la page d'accueil -->
-    <a href="../index.php" class="header-back">Retour à l'accueil</a>
+    <a href="../index.php" class="header-back"><?= t('login_back_home'); ?></a>
 
     <main class="main-content-login">
         <div class="login-container">
             <!-- Section gauche : Logo et slogan -->
             <div class="left-side">
                 <img src="../assets/images/logo1.png" alt="Forum Vaudois Logo" class="logo">
-                <h1 class="slogan">Le forum de la région</h1>
+                <h1 class="slogan"><?= t('login_left_title'); ?></h1>
             </div>
+
 
             <!-- Section droite : Formulaire de connexion -->
             <div class="right-side">
                 <!-- Sélecteur de langue -->
                 <div class="language-selector">
                     <form method="GET">
-                        <label for="language"><?php echo $messages['change_language']; ?></label>
+                        <label for="language"><?= t('change_language'); ?></label>
                         <select name="lang" id="language" onchange="this.form.submit()">
-                            <option value="fr" <?php echo $lang == 'fr' ? 'selected' : ''; ?>>Français</option>
-                            <option value="en" <?php echo $lang == 'en' ? 'selected' : ''; ?>>English</option>
-                            <option value="de" <?php echo $lang == 'de' ? 'selected' : ''; ?>>Deutsch</option>
-                            <option value="it" <?php echo $lang == 'it' ? 'selected' : ''; ?>>Italiano</option>
+                            <option value="fr" <?= $lang == 'fr' ? 'selected' : ''; ?>>Français</option>
+                            <option value="en" <?= $lang == 'en' ? 'selected' : ''; ?>>English</option>
+                            <option value="de" <?= $lang == 'de' ? 'selected' : ''; ?>>Deutsch</option>
+                            <option value="it" <?= $lang == 'it' ? 'selected' : ''; ?>>Italiano</option>
                         </select>
                     </form>
                 </div>
+                <br>
+                <!-- Formulaire de connexion -->
+                <form class="login-form" action="login.php" method="POST">
+                    <h2 class="form-title"><?= t('login_form_title'); ?></h2>
 
-                <form class="login-form signup-form" action="login.php" method="POST">
-                    <h2 class="form-title">Login</h2>
-
-                    <!-- Affichage des messages d'erreur -->
+                    <!-- Messages d'erreur -->
                     <?php if (!empty($erreurs['email']) || !empty($erreurs['password'])): ?>
-                        <p class="error-message"><?= htmlspecialchars($erreurs['email']) ?></p>
+                        <p class="error-message"><?= htmlspecialchars($erreurs['email']); ?></p>
                     <?php endif; ?>
 
                     <!-- Champ email -->
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email"><?= t('login_form_email'); ?></label>
                         <input type="email" id="email" name="email" value="<?= htmlspecialchars($email); ?>" required>
                         <p style="color:red;"><?= $erreurs['email']; ?></p>
                     </div>
 
                     <!-- Champ mot de passe -->
                     <div class="form-group">
-                        <label for="password">Mot de passe</label>
+                        <label for="password"><?= t('login_form_password'); ?></label>
                         <input type="password" id="password" name="password" required>
                         <p style="color:red;"><?= $erreurs['password']; ?></p>
                     </div>
 
                     <!-- Bouton de connexion -->
-                    <button type="submit" class="submit-btn">Connexion</button>
+                    <button type="submit" class="submit-btn"><?= t('login_form_button'); ?></button>
                 </form>
 
-                <br>
                 <!-- Lien vers la création de compte -->
                 <p class="register-link">
-                    Vous n'avez pas encore de compte ? <a href="signUp.php">Créer un compte</a>
+                    <?= t('login_no_account'); ?> <a href="signUp.php"><?= t('login_sign_up'); ?></a>
                 </p>
             </div>
         </div>

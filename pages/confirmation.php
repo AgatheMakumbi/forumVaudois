@@ -1,9 +1,11 @@
 <?php
+
 /**
- * Script de confirmation de compte utilisateur.
+ * Script de confirmation suite à la création d'un compte utilisateur
  * Ce script traite la validation d'un utilisateur en fonction d'un token envoyé par email.
  */
 
+// Inclut les dépendances nécessaires 
 require_once '../vendor/autoload.php'; // Chargement des dépendances via Composer
 
 use M521\ForumVaudois\CRUDManager\DbManagerCRUD; // Import de la classe pour gérer les opérations CRUD

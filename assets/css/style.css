@@ -405,6 +405,52 @@ section {
 .back-link svg {
     margin-right: 5px;
 }
+.language-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.language-selector label {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.language-selector select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-selector select:hover {
+    border-color: #48c774;
+    background-color: #f9f9f9;
+}
+
+.language-selector select:focus {
+    outline: none;
+    border-color: #48c774;
+    box-shadow: 0 0 3px rgba(72, 199, 116, 0.5);
+}
+
+.language-selector select option {
+    padding: 5px;
+    font-size: 14px;
+}
+
 /* ==========================
    STYLES POUR SIGNUP.PHP
 ========================== */
@@ -741,6 +787,29 @@ section {
     font-size: 0.9rem;
     color: #666;
 }
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto; /* Ajoute un espacement autour du formulaire */
+    text-align: center;
+}
+
+.filter-form label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.filter-form select {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+}
+
 
 /* ==========================
    STYLES POUR PROFIL.PHP
@@ -758,7 +827,7 @@ section {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: #d0edcc;
+    background-color: #15A64F;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -770,17 +839,17 @@ section {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 2px solid #28a745;
+    border: 2px solid #D0EDDC;
 }
 
 .profile-info h1 {
     font-size: 1.8rem;
-    color: #107d3f;
+    color: black;
 }
 
 .profile-info p {
     font-size: 1rem;
-    color: #555;
+    color: white
 }
 
 .profile-posts {
@@ -790,7 +859,7 @@ section {
 
 .profile-posts h2 {
     text-align: center;
-    color: #28a745;
+    color: #15A64F;
     font-size: 2rem;
     margin-bottom: 2rem;
 }
@@ -807,13 +876,28 @@ section {
 
 .post-header h2 {
     font-size: 1.5rem;
-    color: #333;
+    color: black; /* Garde le texte en noir */
     margin: 0 0 0.5rem;
+    text-decoration: underline; /* Ajoute un soulignement */
 }
+.post-header h2 a {
+    color: black; /* Forcer la couleur noire */
+    text-decoration: underline; /* Ajouter le soulignement */
+}
+
+.post-header h2 a:visited {
+    color: black; /* Garder noir même après avoir cliqué */
+}
+
+.post-header h2 a:hover {
+    color: #107d3f; /* Une couleur différente au survol, par exemple vert foncé */
+    text-decoration: none; /* Retirer le soulignement au survol (optionnel) */
+}
+
 
 .post-card p {
     font-size: 1rem;
-    color: #555;
+    color: black;
     margin-bottom: 1rem;
     line-height: 1.6;
 }
@@ -822,20 +906,6 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.btn-response {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-response:hover {
-    background-color: #218838;
 }
 
 .post-location {
@@ -993,7 +1063,7 @@ section {
 
 .post-media {
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -1020,29 +1090,32 @@ section {
     margin-top: 2rem;
 }
 
+/* Style pour le champ de texte */
 .add-comment-form textarea {
     width: 100%;
+    max-width: 600px ; /* Limite la largeur du champ */
+    height: 150px; /* Augmente la hauteur du champ */
     padding: 0.8rem;
-    border-radius: 5px;
+    border-radius: 8px; /* Coins arrondis */
     border: 1px solid #ccc;
-    resize: vertical;
+    resize: none; /* Désactive le redimensionnement manuel */
+    font-size: 1rem;
     margin-bottom: 1rem;
+    background-color: #f9f9f9; /* Couleur de fond légère */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.submit-comment-button {
-    background-color: #28a745;
-    color: #fff;
+/* Style pour le bouton d'envoi */
+.add-comment-form button {
+    background-color:#d0edcc; /* Couleur bleue */
+    color: white;
     padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.submit-comment-button:hover {
-    background-color: #218838;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .like-button {
@@ -1060,6 +1133,16 @@ section {
 .like-button:hover {
     background-color: #107d3f;
 }
+
+.media-container img {
+    width: 100%;
+    max-width: 600px; /* Ajustez cette valeur pour la taille maximale souhaitée */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem; /* Ajoute un espace entre les images */
+}
+
 
 /* ==========================
    FOOTER
@@ -1097,12 +1180,12 @@ section {
 }
 
 /* Style pour le sélecteur de langue */
-.footer-content .language-selector {
+.footer-content .footer-language-selector {
     margin-bottom: 1rem; /* Ajoute un espacement avec le titre */
     text-align: left; /* Aligner le sélecteur à gauche */
 }
 
-.footer-content .language-selector label {
+.footer-content .footer-language-selector label {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -1110,7 +1193,7 @@ section {
     color: #ffffff;
 }
 
-.footer-content .language-selector select {
+.footer-content .footer-language-selector select {
     width: 100%; /* Ajuste la largeur pour un look uniforme */
     padding: 0.8rem;
     font-size: 1rem;
@@ -1124,7 +1207,7 @@ section {
     transition: box-shadow 0.3s ease;
 }
 
-.footer-content .language-selector select:focus {
+.footer-content .footer-language-selector select:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Effet de surbrillance */
 }

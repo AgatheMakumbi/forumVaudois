@@ -63,27 +63,43 @@ return array(
     'about_team_joa_name' => "Mayor Joanah",
     'about_team_joa_role' => "Experte en base de données",
 
-    //Login & Signup
-    'login_link_backHome' => "Retour à l'accueil",
-
     //Login
-    'login_title' => "Le forum de la région",
+    'login_left_title' => "Rejoignez le forum de la région !",
+    'login_title' => "Connexion",
+    'login_back_home' => "Retour à l'accueil",
     'login_form_title' => "Connexion",
     'login_form_email' => "Email",
     'login_form_password' => "Mot de passe",
-    'login_form_button' => "Connexion",
-    'login_text_noAccount' => "Vous n'avez pas encore de compte ?",
-    'login_link_signup' => "Créer un compte",
+    'login_form_button' => "Se connecter",
+    'login_no_account' => "Vous n'avez pas encore de compte ?",
+    'login_sign_up' => "Créer un compte",
+    'login_error_email' => "Veuillez renseigner votre adresse e-mail",
+    'login_error_password' => "Veuillez renseigner votre mot de passe",
+    'login_error_credentials' => "Adresse e-mail ou mot de passe incorrect",
 
-    //Signup
-    'signup_title' => "Rejoignez le forum de la région !",
-    'signup_form_title' => "Cérer un compte",
-    'signup_form_username' => "Nom d'utilisateur",
-    'signup_form_email' => "Email",
-    'signup_form_password' => "Mot de passe",
-    'signup_form_button' => "S'inscrire",
-    'signup_text_alreadyAccount' => "Vous avez déjà un compte ?",
-    'signup_link_login' => "Connectez-vous",
+    // Signup 
+    'signup_back_to_home' => 'Retour à l\'accueil',
+    'signup_change_language' => 'Changer la langue :',
+    'signup_title' => 'Rejoignez le forum de la région !',
+    'signup_form_title' => 'Créer un compte',
+    'signup_form_username' => 'Nom d’utilisateur',
+    'signup_form_email' => 'Email',
+    'signup_form_password' => 'Mot de passe',
+    'signup_form_button' => 'S\'inscrire',
+    'signup_text_already_account' => 'Vous avez déjà un compte ?',
+    'signup_link_login' => 'Connectez-vous',
+    'signup_error_username' => 'est invalide (max 20 caractères).',
+    'signup_error_username_taken' => 'Ce nom d’utilisateur est déjà pris.',
+    'signup_error_email_invalid' => 'L\'adresse e-mail doit être valide.',
+    'signup_error_email_taken' => 'Un compte existe déjà avec cette adresse e-mail.',
+    'signup_error_email_empty' => 'Veuillez saisir une adresse e-mail valide.',
+    'signup_error_password' => 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.',
+    'signup_email_subject' => 'Confirmez votre inscription',
+    'signup_email_body' => 'Veuillez confirmer votre email en cliquant sur le lien suivant',
+    'signup_email_link' => 'Confirmer mon inscription',
+    'signup_success' => 'Inscription réussie ! Un email de confirmation a été envoyé.',
+    'signup_error_general' => 'Une erreur est survenue. Veuillez réessayer.',
+    'signup_error_exception' => 'Erreur :',
 
     //CreatePost
     'create_post_title' => 'Créer un post',
@@ -109,4 +125,7 @@ return array(
     'profile_no_posts' => 'Aucun post trouvé.',
     'profile_add_response' => 'Ajouter une réponse',
 
+    // News.php
+    'filter_by_city' => 'Filtrer par ville',
+    'all_cities' => 'Toutes les villes',
 );
