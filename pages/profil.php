@@ -96,7 +96,7 @@ $posts = $db->getPostsByUser($loggedUserID);
                                     </a>
                                     <!-- Icône de supression -->
                                     <a href="deletePost.php?id_post=<?= htmlspecialchars($post->getId()) ?>" class="edit-icon" title="Suprimmer la publication">
-                                        <img src="../assets/images/update.png" alt="delete" style="width: 30px; height: 30px;">
+                                        <img src="../assets/images/trash.png" alt="delete" style="width: 30px; height: 30px;">
                                     </a>
                                     
                                 </div>
